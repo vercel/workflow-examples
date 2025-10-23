@@ -55,35 +55,52 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-3xl tracking-tight font-semibold max-w-sm text-center">
-        Workflow Patterns in AI SDK using Workflow DevKit
-      </h1>
-      <div className="mt-6 w-[225px]">
-        <Select
-          defaultValue={PATTERNS[0].value}
-          onValueChange={setPattern}
-          value={pattern}
-        >
-          <SelectTrigger className="!w-full">
-            <SelectValue placeholder="Select a pattern" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Patterns</SelectLabel>
-              {PATTERNS.map((pattern) => (
-                <SelectItem key={pattern.name} value={pattern.value}>
-                  {pattern.name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Button className="mt-2 w-full" onClick={onSubmit}>
-          Run Workflow
-        </Button>
+    <div className="min-h-dvh flex items-center justify-center px-6">
+      <div className="w-full max-w-xl text-center">
+        <h1 className="text-5xl md:text-6xl font-medium tracking-tight leading-tight text-balance">
+          Workflow Patterns
+        </h1>
+        <p className="mt-2 text-xs text-muted-foreground">
+          AI SDK + Workflow DevKit
+        </p>
+
+        <div className="mt-10 mx-auto w-full max-w-md">
+          <div className="flex items-center gap-3">
+            <Select
+              defaultValue={PATTERNS[0].value}
+              onValueChange={setPattern}
+              value={pattern}
+            >
+              <SelectTrigger className="h-11 w-full rounded-full bg-secondary text-secondary-foreground px-5">
+                <SelectValue placeholder="Select a pattern" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {PATTERNS.map((pattern) => (
+                    <SelectItem key={pattern.name} value={pattern.value}>
+                      {pattern.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="rounded-full px-4 shadow-none"
+              onClick={onSubmit}
+            >
+              Run
+            </Button>
+          </div>
+        </div>
+
+        {success && (
+          <p className="mt-3 text-xs text-muted-foreground" aria-live="polite">
+            Workflow triggered — check server logs.
+          </p>
+        )}
       </div>
-      {success && <p className="mt-2">Workflow triggered, check server logs</p>}
     </div>
   );
 }

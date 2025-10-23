@@ -1,0 +1,51 @@
+{
+  "name": "workflow-ai-sdk-rag-agent",
+  "version": "0.1.3",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx lib/db/migrate.ts",
+    "db:drop": "drizzle-kit drop",
+    "db:pull": "drizzle-kit introspect",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:check": "drizzle-kit check"
+  },
+  "dependencies": {
+    "@ai-sdk/react": "^2.0.48",
+    "@next/env": "^15.5.4",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "workflow": "workspace:*",
+    "@workflow/ai": "workspace:*",
+    "ai": "^5.0.48",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "drizzle-orm": "^0.31.2",
+    "drizzle-zod": "^0.5.1",
+    "nanoid": "^5.1.6",
+    "next": "15.5.3",
+    "postgres": "^3.4.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "drizzle-kit": "^0.22.7",
+    "pg": "^8.12.0",
+    "postcss": "^8",
+    "tailwindcss": "^4.1.13",
+    "tsx": "^4.15.7",
+    "typescript": "^5.9.2"
+  }
+}

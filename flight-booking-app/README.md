@@ -10,11 +10,9 @@ This example shows how to use Workflow to make AI agents more reliable and produ
 
 ### Local Development
 
-1. Clone the repository and install dependencies:
+1. Clone this example and install dependencies:
 
    ```bash
-   git clone https://github.com/vercel/workflow
-   cd workflow
    pnpm install
    ```
 

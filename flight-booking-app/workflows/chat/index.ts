@@ -1,47 +1,32 @@
 import {
-  convertToModelMessages,
-  type FinishReason,
-  type ModelMessage,
-  type UIMessage,
-  type UIMessageChunk,
-} from 'ai';
-import { getWritable } from 'workflow';
-import { endStream, startStream, streamTextStep } from './steps/stream';
-
-const MAX_STEPS = 10;
+	convertToModelMessages,
+	type UIMessage,
+	type UIMessageChunk,
+} from "ai";
+import { getWritable } from "workflow";
+import { DurableAgent } from "@workflow/ai/agent";
+import { FLIGHT_ASSISTANT_PROMPT, flightBookingTools } from "./steps/tools";
 
 /**
  * The main chat workflow
  */
 export async function chat(messages: UIMessage[]) {
-  'use workflow';
+	"use workflow";
 
-  console.log('Starting workflow');
+	console.log("Starting workflow");
 
-  const writable = getWritable<UIMessageChunk>();
+	const writable = getWritable<UIMessageChunk>();
 
-  // Write the "start" message to the client
-  await startStream(writable);
+	const agent = new DurableAgent({
+		model: "bedrock/claude-4-sonnet-20250514-v1",
+		system: FLIGHT_ASSISTANT_PROMPT,
+		tools: flightBookingTools,
+	});
 
-  const currMessages: ModelMessage[] = convertToModelMessages(messages);
-  let finishReason: FinishReason = 'unknown';
+	await agent.stream({
+		messages: convertToModelMessages(messages),
+		writable,
+	});
 
-  // Run `streamText` in a loop while we have tool calls
-  for (let i = 0; i < MAX_STEPS; i++) {
-    console.log(`Running step ${i + 1}`);
-
-    const result = await streamTextStep(i, currMessages, writable);
-
-    currMessages.push(...result.messages);
-    finishReason = result.finishReason;
-
-    if (finishReason !== 'tool-calls') {
-      break;
-    }
-  }
-
-  // Write the "finish" message to the client
-  await endStream(writable);
-
-  console.log('Finished workflow');
+	console.log("Finished workflow");
 }

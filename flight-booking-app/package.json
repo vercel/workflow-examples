@@ -25,7 +25,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@radix-ui/react-use-controllable-state": "^1.2.2",
     "@vercel/otel": "^1.13.0",
-    "@workflow/ai": "4.0.1-beta.1",
+    "@workflow/ai": "4.0.1-beta.4",
     "@xyflow/react": "^12.9.0",
     "ai": "^5.0.76",
     "class-variance-authority": "^0.7.1",
@@ -46,12 +46,13 @@
     "tokenlens": "^1.3.1",
     "typescript": "^5.9.3",
     "use-stick-to-bottom": "^1.1.1",
-    "workflow": "4.0.1-beta.1",
+    "workflow": "4.0.1-beta.4",
     "zod": "^4.1.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/lodash.chunk": "^4.2.9",
+    "@types/node": "24.9.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-syntax-highlighter": "^15.5.13",

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { resumeHook } from "workflow/api";
-import type { CounterEvent } from "@/workflows/counter-actor";
+import { counterActorHook, type CounterEvent } from "@/workflows/counter-actor";
 
 /**
  * POST /api/actor/[actorId]/event
@@ -22,10 +21,10 @@ export async function POST(
       );
     }
 
-    // Resume the hook with the event
+    // Resume the hook with the event using the defined hook for type safety
     // The token format matches what we used in the workflow
     const token = `counter_actor:${actorId}`;
-    const result = await resumeHook(token, event);
+    const result = await counterActorHook.resume(token, event);
 
     if (result) {
       return NextResponse.json({

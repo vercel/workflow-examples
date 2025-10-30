@@ -1,4 +1,4 @@
-import { createHook, getWorkflowMetadata } from "workflow";
+import { defineHook, getWorkflowMetadata } from "workflow";
 import { actorStateStore } from "@/lib/actor-state-store";
 
 // Define the actor's state
@@ -14,6 +14,9 @@ export type CounterEvent =
   | { type: "decrement"; amount?: number }
   | { type: "reset" }
   | { type: "getState" };
+
+// Define the hook once for type safety across workflow and API routes
+export const counterActorHook = defineHook<CounterEvent>();
 
 // Initial state factory
 export function createInitialState(): CounterState {
@@ -42,9 +45,9 @@ export async function counterActor(initialState: CounterState) {
   // Initialize the actor's state
   await setState(actorId, initialState);
 
-  // Create the hook outside the loop (as recommended by Pranay)
+  // Create the hook outside the loop
   // The hook is an async iterator that can receive multiple events
-  const receiveEvent = createHook<CounterEvent>({
+  const receiveEvent = counterActorHook.create({
     token: `counter_actor:${actorId}`,
   });
 

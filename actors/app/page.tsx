@@ -21,6 +21,8 @@ export default function Home() {
   const [status, setStatus] = useState<string>("");
   const [state, setState] = useState<CounterState | null>(null);
   const [loadingState, setLoadingState] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [reconnectId, setReconnectId] = useState<string>("");
 
   // Poll for state updates when we have an actorId
   useEffect(() => {
@@ -54,6 +56,9 @@ export default function Home() {
     setError(null);
     setStatus("");
     setState(null);
+    // Clear previous actor if any
+    setActorId(null);
+    setReconnectId("");
 
     try {
       const response = await fetch("/api/actor", {
@@ -75,7 +80,10 @@ export default function Home() {
       }
 
       setActorId(data.actorId);
-      setStatus(`Actor started with ID: ${data.actorId}`);
+      setStatus(`Actor started with ID: ${data.actorId.slice(0, 20)}...`);
+
+      // Clear status after 2 seconds
+      setTimeout(() => setStatus(""), 2000);
 
       // Set initial state
       setState({
@@ -83,6 +91,61 @@ export default function Home() {
         lastUpdated: new Date().toISOString(),
         history: [],
       });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const copyActorId = async () => {
+    if (!actorId) return;
+
+    try {
+      await navigator.clipboard.writeText(actorId);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      setError("Failed to copy actor ID");
+    }
+  };
+
+  const reconnectToActor = async () => {
+    if (!reconnectId.trim()) {
+      setError("Please enter an actor ID");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setStatus("");
+
+    try {
+      // Check if the actor exists by fetching its state
+      const response = await fetch(`/api/actor/${reconnectId.trim()}/state`);
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error(
+            "Actor not found. Make sure the actor ID is correct."
+          );
+        }
+        throw new Error("Failed to reconnect to actor");
+      }
+
+      const data = await response.json();
+
+      if (data.success && data.state) {
+        setActorId(reconnectId.trim());
+        setState(data.state);
+        setStatus("Successfully reconnected to actor");
+        setReconnectId("");
+
+        // Clear status after 2 seconds
+        setTimeout(() => setStatus(""), 2000);
+      } else {
+        throw new Error("Actor state not found");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
@@ -180,23 +243,113 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <div className="flex gap-4 items-center">
-            <button
-              onClick={startActor}
-              disabled={loading || !!actorId}
-              className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-            >
-              {loading ? "Starting..." : "Start Actor"}
-            </button>
-            {actorId && (
-              <div className="text-sm text-zinc-600 dark:text-zinc-400">
-                Actor ID:{" "}
-                <code className="bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded">
-                  {actorId.slice(0, 20)}...
-                </code>
+          {!actorId ? (
+            <div className="flex flex-col gap-4">
+              {/* Start new actor */}
+              <div className="flex gap-4 items-center">
+                <button
+                  onClick={startActor}
+                  disabled={loading}
+                  className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                >
+                  {loading ? "Starting..." : "Start New Actor"}
+                </button>
               </div>
-            )}
-          </div>
+
+              {/* Reconnect to existing actor */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                  Or reconnect to an existing actor:
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={reconnectId}
+                    onChange={(e) => setReconnectId(e.target.value)}
+                    placeholder="Enter actor ID..."
+                    className="flex-1 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-black dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !loading) {
+                        reconnectToActor();
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={reconnectToActor}
+                    disabled={loading || !reconnectId.trim()}
+                    className="px-6 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {loading ? "Connecting..." : "Reconnect"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2 items-center">
+                <button
+                  onClick={startActor}
+                  disabled={loading}
+                  className="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-sm"
+                >
+                  Start New
+                </button>
+                <button
+                  onClick={() => {
+                    setActorId(null);
+                    setState(null);
+                    setStatus("");
+                    setError(null);
+                    setReconnectId("");
+                  }}
+                  disabled={loading}
+                  className="px-4 py-2 rounded-lg bg-gray-600 text-white font-medium hover:bg-gray-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-sm"
+                >
+                  Disconnect
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-zinc-600 dark:text-zinc-400">
+                  Actor ID:
+                </span>
+                <button
+                  onClick={copyActorId}
+                  className="flex items-center gap-2 px-3 py-1 rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors group"
+                  title="Click to copy"
+                >
+                  <code className="text-sm font-mono text-zinc-800 dark:text-zinc-200">
+                    {actorId}
+                  </code>
+                  <svg
+                    className={`w-4 h-4 text-zinc-600 dark:text-zinc-400 transition-opacity ${
+                      copied
+                        ? "opacity-100"
+                        : "opacity-0 group-hover:opacity-100"
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    {copied ? (
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    ) : (
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                      />
+                    )}
+                  </svg>
+                </button>
+              </div>
+            </div>
+          )}
 
           {actorId && (
             <>

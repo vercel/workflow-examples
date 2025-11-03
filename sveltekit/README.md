@@ -1,8 +1,37 @@
-# sv
+# SvelteKit Workflow Starter
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fworkflow-examples%2Ftree%2Fmain%2Fsveltekit)
 
-## Creating a project
+This starter is a template for a SvelteKit project that uses Workflow DevKit. It follows the [Workflow DevKit: SvelteKit Getting Started Guide](https://useworkflow.dev/docs/getting-started/sveltekit).
+
+## Getting Started
+
+1. Clone this example and install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+2. Create a `.env.local` file in `examples/flight-booking-app/`:
+
+   ```bash
+   cd examples/flight-booking-app
+   touch .env.local
+   ```
+
+3. Add your API key to the `.env.local` file:
+
+   ```bash
+   AI_GATEWAY_API_KEY=your_api_key_here
+   ```
+
+4. Start the development server:
+
+   ```bash
+   pnpm turbo dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) to see the app
 
 If you're seeing this, you've probably already done this step. Congrats!
 

@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - esbuild
+
+overrides:
+  workflow: link:../../../Library/pnpm/global/5/node_modules/workflow

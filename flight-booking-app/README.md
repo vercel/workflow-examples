@@ -13,13 +13,15 @@ This example shows how to use Workflow to make AI agents more reliable and produ
 1. Clone this example and install dependencies:
 
    ```bash
+   git clone https://github.com/vercel/workflow-examples
+   cd workflow-examples
    pnpm install
    ```
 
 2. Create a `.env.local` file in `examples/flight-booking-app/`:
 
    ```bash
-   cd examples/flight-booking-app
+   cd flight-booking-app
    touch .env.local
    ```
 

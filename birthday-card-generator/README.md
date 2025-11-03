@@ -99,8 +99,8 @@ No environment variables or external services required - AI Gateway handles all 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/vercel/workflow.git
-cd workflow/examples/birthday-card-generator
+git clone https://github.com/vercel/workflow-examples.git
+cd workflow-examples/birthday-card-generator
 ```
 
 2. Install dependencies:

@@ -151,6 +151,7 @@ export default function ChatPage() {
 			<Conversation className="mb-10">
 				<ConversationContent>
 					{messages.map((message, index) => {
+						console.log("message", message);
 						const hasText = message.parts.some((part) => part.type === "text");
 
 						return (
@@ -158,7 +159,9 @@ export default function ChatPage() {
 								{message.role === "assistant" &&
 									index === messages.length - 1 &&
 									(status === "submitted" || status === "streaming") &&
-									!hasText && <Shimmer>Thinking...</Shimmer>}
+									!hasText && (
+										<Shimmer className="text-sm">Thinking...</Shimmer>
+									)}
 								<Message from={message.role}>
 									<MessageContent>
 										{message.parts.map((part, partIndex) => {
@@ -171,17 +174,32 @@ export default function ChatPage() {
 												);
 											}
 
+											// Render workflow data messages
+											if (part.type === "data-workflow" && "data" in part) {
+												const data = part.data as any;
+												return (
+													<div
+														key={`${message.id}-data-${partIndex}`}
+														className="text-xs px-3 py-2 rounded-md mb-2 bg-blue-700/25 text-blue-300 border border-blue-700/25"
+													>
+														{data.message}
+													</div>
+												);
+											}
+
 											// Render tool parts
 											// Type guard to check if this is a tool invocation part
 											if (
-												"toolCallId" in part &&
-												"state" in part &&
-												(part.type === "tool-searchFlights" ||
-													part.type === "tool-checkFlightStatus" ||
-													part.type === "tool-getAirportInfo" ||
-													part.type === "tool-bookFlight" ||
-													part.type === "tool-checkBaggageAllowance")
+												part.type === "tool-searchFlights" ||
+												part.type === "tool-checkFlightStatus" ||
+												part.type === "tool-getAirportInfo" ||
+												part.type === "tool-bookFlight" ||
+												part.type === "tool-checkBaggageAllowance"
 											) {
+												// Additional type guard to ensure we have the required properties
+												if (!("toolCallId" in part) || !("state" in part)) {
+													return null;
+												}
 												return (
 													<Tool
 														key={part.toolCallId}

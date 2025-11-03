@@ -1,5 +1,6 @@
 import {
 	convertToModelMessages,
+	generateId,
 	type UIMessage,
 	type UIMessageChunk,
 } from "ai";
@@ -17,6 +18,8 @@ export async function chat(messages: UIMessage[]) {
 
 	const writable = getWritable<UIMessageChunk>();
 
+	await markStartStream(writable);
+
 	const agent = new DurableAgent({
 		model: "bedrock/claude-4-sonnet-20250514-v1",
 		system: FLIGHT_ASSISTANT_PROMPT,
@@ -29,4 +32,17 @@ export async function chat(messages: UIMessage[]) {
 	});
 
 	console.log("Finished workflow");
+}
+
+async function markStartStream(writable: WritableStream<UIMessageChunk>) {
+	"use step";
+
+	const writer = writable.getWriter();
+
+	await writer.write({
+		id: generateId(),
+		type: "data-workflow",
+		data: { message: "Starting workflow stream..." },
+	});
+	writer.releaseLock();
 }

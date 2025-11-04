@@ -4,7 +4,7 @@ import {
 	type UIMessageChunk,
 } from "ai";
 import { getWritable } from "workflow";
-import { DurableAgent } from "@workflow/ai/agent";
+import { DurableAgent } from "@workflow/ai";
 import { z } from "zod";
 import { createResource } from "./createResource";
 import { findRelevant } from "./findRelevant";

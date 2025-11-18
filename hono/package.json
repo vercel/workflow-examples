@@ -1,0 +1,21 @@
+{
+  "name": "hono",
+  "type": "module",
+  "scripts": {
+    "dev": "nitro dev",
+    "build": "nitro build",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.6",
+    "hono": "^4.10.6",
+    "nitro": "3.0.1-alpha.1",
+    "rollup": "^4.53.2",
+    "workflow": "4.0.1-beta.15"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "tsx": "^4.7.1",
+    "typescript": "^5.8.3"
+  }
+}

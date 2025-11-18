@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite dev",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "nitro": "latest",
+    "vite": "npm:rolldown-vite"
+  },
+  "dependencies": {
+    "workflow": "4.0.1-beta.15"
+  }
+}

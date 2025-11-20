@@ -221,10 +221,6 @@ export default function ChatPage() {
                         return (
                           <Tool
                             key={part.toolCallId}
-                            defaultOpen={
-                              part.state === "output-available" ||
-                              part.state === "output-error"
-                            }
                             className="hover:bg-secondary/25 transition-colors"
                           >
                             <ToolHeader type={part.type} state={part.state} />

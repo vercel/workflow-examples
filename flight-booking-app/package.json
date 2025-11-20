@@ -25,7 +25,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@radix-ui/react-use-controllable-state": "^1.2.2",
     "@vercel/otel": "^1.13.0",
-    "@workflow/ai": "4.0.1-beta.17",
+    "@workflow/ai": "https://workflow-docs-o49ht25ry.vercel.sh/workflow-ai.tgz",
     "@xyflow/react": "^12.9.0",
     "ai": "^5.0.76",
     "class-variance-authority": "^0.7.1",

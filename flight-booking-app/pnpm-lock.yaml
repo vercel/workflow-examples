@@ -54,8 +54,8 @@ importers:
         specifier: ^1.13.0
         version: 1.14.0(@opentelemetry/api-logs@0.57.2)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/resources@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))
       '@workflow/ai':
-        specifier: 4.0.1-beta.17
-        version: 4.0.1-beta.17(ai@5.0.76(zod@4.1.12))(workflow@4.0.1-beta.17(@aws-sdk/client-sts@3.914.0)(@opentelemetry/api@1.9.0)(next@15.5.3(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))
+        specifier: https://workflow-docs-o49ht25ry.vercel.sh/workflow-ai.tgz
+        version: https://workflow-docs-o49ht25ry.vercel.sh/workflow-ai.tgz(ai@5.0.76(zod@4.1.12))(workflow@4.0.1-beta.17(@aws-sdk/client-sts@3.914.0)(@opentelemetry/api@1.9.0)(next@15.5.3(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))
       '@xyflow/react':
         specifier: ^12.9.0
         version: 12.9.0(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -2067,8 +2067,9 @@ packages:
     engines: {node: '>=20.0.0'}
     hasBin: true
 
-  '@workflow/ai@4.0.1-beta.17':
-    resolution: {integrity: sha512-cSH2r/vULWqqhbKk7SxHjNjuw62iMQM6Xg+8eEKSEaFLVtcjTkuu59HGZgJvdVJruLt+MWptT14bwxnyWLykGA==}
+  '@workflow/ai@https://workflow-docs-o49ht25ry.vercel.sh/workflow-ai.tgz':
+    resolution: {tarball: https://workflow-docs-o49ht25ry.vercel.sh/workflow-ai.tgz}
+    version: 4.0.1-beta.17-12eb40d
     peerDependencies:
       ai: ^5
       workflow: 4.0.1-beta.17
@@ -6274,7 +6275,7 @@ snapshots:
       '@vercel/oidc': 3.0.5
       mixpart: 0.0.5-alpha.1
 
-  '@workflow/ai@4.0.1-beta.17(ai@5.0.76(zod@4.1.12))(workflow@4.0.1-beta.17(@aws-sdk/client-sts@3.914.0)(@opentelemetry/api@1.9.0)(next@15.5.3(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))':
+  '@workflow/ai@https://workflow-docs-o49ht25ry.vercel.sh/workflow-ai.tgz(ai@5.0.76(zod@4.1.12))(workflow@4.0.1-beta.17(@aws-sdk/client-sts@3.914.0)(@opentelemetry/api@1.9.0)(next@15.5.3(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))':
     dependencies:
       '@ai-sdk/provider': 2.0.0
       ai: 5.0.76(zod@4.1.12)

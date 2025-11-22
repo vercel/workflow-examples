@@ -13,7 +13,7 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "next": "16.0.1",
-    "workflow": "latest"
+    "workflow": "4.0.1-beta.19"
   },
   "devDependencies": {
     "typescript": "^5",

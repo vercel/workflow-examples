@@ -59,30 +59,47 @@ For non-Vercel deployments, you can configure a PostgreSQL World to handle workf
 1. **Set up a PostgreSQL database** (Supabase, Neon, etc.)
 2. **Add environment variables:**
 
-    ```bash
-    WORKFLOW_TARGET_WORLD="@workflow/world-postgres"
-    WORKFLOW_POSTGRES_URL="postgres://postgres:password@db.yourdb.co:5432/postgres"
-    WORKFLOW_POSTGRES_JOB_PREFIX="workflow_"
-    WORKFLOW_POSTGRES_WORKER_CONCURRENCY=10
-    ```
+   ```bash
+   WORKFLOW_TARGET_WORLD="@workflow/world-postgres"
+   WORKFLOW_POSTGRES_URL="postgres://postgres:password@db.yourdb.co:5432/postgres"
+   WORKFLOW_POSTGRES_JOB_PREFIX="workflow_"
+   WORKFLOW_POSTGRES_WORKER_CONCURRENCY=10
+   ```
 
 3. **Create the database schema:**
 
-    ```bash
-    pnpm exec workflow-postgres-setup
-    ```
+   ```bash
+   pnpm exec workflow-postgres-setup
+   ```
 
-4. **Deploy** to your platform of choice
+4. **Start the PostgreSQL World:**
+
+ In your Next.js `instrumentation.ts`:
+
+  ```ts
+  export async function register() {
+    if (process.env.NEXT_RUNTIME !== "edge") {
+      console.log("Starting workflow workers...");
+      import("workflow/runtime").then(async ({ getWorld }) => {
+        console.log("Starting Postgres World...");
+        await getWorld().start?.();
+      });
+      console.log("Workflow workers started!");
+    }
+  }
+  ```
+
+5. **Deploy** to your platform of choice
 
 Learn more about the Workflow PostgreSQL World [here](https://useworkflow.dev/docs/deploying/world/postgres-world).
 
-## Key Features Demonstrated
+## Key Features
 
-- **Retryable AI calls** - `streamText` calls wrapped in `'use step'` functions automatically retry on failure
-- **Multi-turn conversations** - Workflow orchestrates the tool-calling loop across multiple LLM interactions
-- **Stream reconnection** - Client can reconnect to in-progress workflows using `WorkflowChatTransport`
-- **Tool execution** - Five flight booking tools (search, status check, airport info, booking, baggage) demonstrating real-world agent patterns
-- **Error simulation** - 30% random failure rate to showcase automatic retry behavior
+- **DurableAgent** - `@workflow/ai`'s `DurableAgent` provides automatic retries, fault tolerance, and stream reconnection for AI SDK applications
+- **Multi-turn conversations** - Agent maintains conversation state across tool-calling loops and multiple LLM interactions
+- **Stream reconnection** - Client can reconnect to in-progress workflows using `WorkflowChatTransport` after network failures
+- **Tool execution** - Five flight booking tools (search, status check, airport info, booking, baggage) showing real-world agent patterns
+- **PostgreSQL World** - Optional PostgreSQL backend for custom deployment needs beyond Vercel (Railway, Render, etc.)
 
 This project uses the following stack:
 

@@ -58,7 +58,6 @@ export default function ChatInput({
               size="sm"
               onClick={async () => {
                 await stop();
-                localStorage.removeItem('active-workflow-run-id');
                 localStorage.removeItem('chat-history');
                 setMessages([]);
                 setText('');

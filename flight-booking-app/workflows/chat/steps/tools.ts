@@ -1,4 +1,3 @@
-import { FatalError } from 'workflow';
 import { z } from 'zod';
 
 export const mockAirports: Record<
@@ -43,8 +42,6 @@ export async function searchFlights({
   to: string;
   date: string;
 }) {
-  'use step';
-
   console.log(`Searching flights from ${from} to ${to} on ${date}`);
 
   // Simulate API delay
@@ -104,8 +101,6 @@ export async function checkFlightStatus({
 }: {
   flightNumber: string;
 }) {
-  'use step';
-
   console.log(`Checking status for flight ${flightNumber}`);
 
   // 10% chance of error to demonstrate retry
@@ -194,8 +189,6 @@ export async function checkFlightStatus({
 
 /** Get airport information */
 export async function getAirportInfo({ airportCode }: { airportCode: string }) {
-  'use step';
-
   console.log(`Getting information for airport ${airportCode}`);
 
   const airport = mockAirports[airportCode.toUpperCase()];
@@ -225,8 +218,6 @@ export async function bookFlight({
   passengerName: string;
   seatPreference?: string;
 }) {
-  'use step';
-
   console.log(`Booking flight ${flightNumber} for ${passengerName}`);
 
   // Simulate processing
@@ -234,7 +225,7 @@ export async function bookFlight({
 
   // 5% chance of seat unavailable
   if (Math.random() < 0.05) {
-    throw new FatalError(
+    throw new Error(
       'Selected seat preference not available. Please try a different preference.'
     );
   }
@@ -265,8 +256,6 @@ export async function checkBaggageAllowance({
   airline: string;
   ticketClass: string;
 }) {
-  'use step';
-
   console.log(`Checking baggage allowance for ${airline} ${ticketClass} class`);
 
   const allowances = {

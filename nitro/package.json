@@ -10,6 +10,6 @@
     "vite": "npm:rolldown-vite"
   },
   "dependencies": {
-    "workflow": "4.0.1-beta.15"
+    "workflow": "4.0.1-beta.19"
   }
 }

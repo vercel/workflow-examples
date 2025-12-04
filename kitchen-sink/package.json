@@ -1,18 +1,18 @@
 {
-	"name": "kitchen-sink",
-	"private": true,
-	"type": "module",
-	"version": "0.0.1",
-	"license": "MIT",
-	"dependencies": {
-		"@workflow/ai": "4.0.1-beta.13",
-		"ai": "^5.0.93",
-		"lodash.chunk": "^4.2.0",
-		"openai": "^6.9.0",
-		"workflow": "4.0.1-beta.13",
-		"zod": "^4.1.12"
-	},
-	"devDependencies": {
-		"@types/node": "^24.10.1"
-	}
+  "name": "kitchen-sink",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "@workflow/ai": "4.0.1-beta.19",
+    "ai": "^5.0.93",
+    "lodash.chunk": "^4.2.0",
+    "openai": "^6.9.0",
+    "workflow": "4.0.1-beta.19",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1"
+  }
 }

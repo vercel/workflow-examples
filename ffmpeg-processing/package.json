@@ -1,0 +1,18 @@
+{
+	"name": "ffmpeg-processing",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "tsx server.ts"
+	},
+	"dependencies": {
+		"express": "^5.1.0",
+		"workflow": "4.0.1-beta.19"
+	},
+	"devDependencies": {
+		"@types/express": "^5.0.2",
+		"@types/node": "^20.11.17",
+		"tsx": "^4.7.1",
+		"typescript": "^5.8.3"
+	}
+}

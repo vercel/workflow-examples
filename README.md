@@ -7,10 +7,12 @@ This directory contains different examples of how to use the Workflow DevKit.
 - [Custom Adapter](https://github.com/vercel/workflow-examples/tree/main/custom-adapter) - Example of building a custom adapter to run workflows on other frameworks and runtimes, like Bun.
 - [Flight Booking App](https://github.com/vercel/workflow-examples/tree/main/flight-booking-app) - Example of how to use the Workflow DevKit to build a flight booking app.
 
+- [FFmpeg Processing](https://github.com/vercel/workflow-examples/tree/main/ffmpeg-processing) - Express + Workflow DevKit example for building FFmpeg-based media processing workflows.
 - [Kitchen Sink](https://github.com/vercel/workflow-examples/tree/main/kitchen-sink) - Comprehensive reference implementation of all core workflow patterns including steps, control flow, streaming, AI integration, hooks, and batching.
 - [RAG Agent Example](https://github.com/vercel/workflow-examples/tree/main/rag-agent) - Example of how to use the AI SDK with the Workflow DevKit.
 
 ## Framework Integrations
 
+- [Express (FFmpeg Processing)](https://github.com/vercel/workflow-examples/tree/main/ffmpeg-processing)
 - [Next.js](https://github.com/vercel/workflow-examples/tree/main/nextjs)
 - [SvelteKit](https://github.com/vercel/workflow-examples/tree/main/sveltekit)

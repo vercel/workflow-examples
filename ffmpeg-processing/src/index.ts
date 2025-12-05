@@ -1,16 +1,60 @@
 import express from "express";
+import multer from "multer";
 import { start } from "workflow/api";
-import { randomNumberWorkflow } from "../workflows/random-number.js";
+import { compressAudioWorkflow } from "../workflows/audio-convert.js";
+import type { AudioPayload } from "../types.js";
 
 const app = express();
 app.use(express.json());
 
-app.get("/random-number", async (_req, res) => {
-	const run = await start(randomNumberWorkflow, []);
-	return res.json({
-		message: "Random number workflow started",
-		runId: run.runId,
-	});
+app.use((req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+	res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+	if (req.method === "OPTIONS") {
+		return res.sendStatus(200);
+	}
+	next();
+});
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+app.post("/convert", upload.single("file"), async (req, res) => {
+	try {
+		if (!req.file) {
+			return res
+				.status(400)
+				.json({ error: "No file uploaded. Use field name 'file'." });
+		}
+
+		console.log(
+			`[Route /convert] Received file: ${req.file.originalname}, ${req.file.size} bytes`,
+		);
+
+		const payload: AudioPayload = {
+			data: req.file.buffer.toString("base64"),
+			filename: req.file.originalname,
+			mimeType: req.file.mimetype,
+		};
+
+		const run = await start(compressAudioWorkflow, [payload]);
+		const result = await run.returnValue;
+		const outputBuffer = Buffer.from(result.data, "base64");
+
+		res.setHeader("Content-Type", result.mimeType);
+		res.setHeader(
+			"Content-Disposition",
+			`attachment; filename="${result.filename}"`,
+		);
+		res.setHeader("Content-Length", outputBuffer.length);
+		return res.send(outputBuffer);
+	} catch (err) {
+		console.error("[Route /convert] Error:", err);
+		return res.status(500).json({
+			error: "Failed to compress audio",
+			details: err instanceof Error ? err.message : String(err),
+		});
+	}
 });
 
 export default app;

@@ -41,9 +41,11 @@ Currently, the example includes a simple workflow that generates a random number
 
 ```
 ffmpeg-processing/
-├── server.ts              # Express server with workflow endpoint
+├── src/
+│   └── index.ts           # Express app with workflow endpoint
 ├── workflows/
 │   └── random-number.ts   # Example workflow that generates a random number
+├── nitro.config.ts        # Nitro configuration with workflow module
 ├── package.json
 ├── tsconfig.json
 └── README.md

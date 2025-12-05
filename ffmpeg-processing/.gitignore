@@ -45,3 +45,8 @@ next-env.d.ts
 .well-known
 .swc
 dist
+.workflow-data
+
+# nitro
+.output
+.nitro

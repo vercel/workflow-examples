@@ -5,7 +5,7 @@ This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) 
 ## Features
 
 - **In-memory processing**: No audio files are saved to disk; everything stays in memory via base64 encoding
-- **Workflow orchestration**: Audio compression is broken into multiple steps (`normalizeMetadata` → `transcodeAndCompress` → `finalizeResponse`)
+- **Workflow orchestration**: Audio compression is broken into multiple steps (`normalizeMetadata` → `transcodeAndCompress`)
 - **Await workflow results**: Express route uses `await run.returnValue` to get the compressed audio synchronously
 - **FFmpeg compression**: Converts audio to AAC codec in M4A container at 128kbps
 
@@ -13,7 +13,7 @@ This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) 
 
 ### Prerequisites
 
-FFmpeg must be available. This example includes `ffmpeg-static` which provides a portable FFmpeg binary, so no system installation is required. Alternatively, install FFmpeg via your package manager:
+FFmpeg must be installed on your system. Install it via your package manager:
 
 ```bash
 # macOS
@@ -72,10 +72,9 @@ curl -X POST -F "file=@podcast.wav" http://localhost:3000/convert --output podca
 
 1. **Express route** receives the upload via `multer.memoryStorage()` (no disk I/O)
 2. **Audio payload** is converted to base64 and passed to the workflow
-3. **Workflow orchestrates** three steps:
+3. **Workflow orchestrates** two steps:
    - `normalizeMetadataStep`: Validates MIME type and filename
-   - `transcodeAndCompressStep`: Runs FFmpeg in-memory using Node streams
-   - `finalizeResponseStep`: Prepares the final response payload
+   - `transcodeAndCompressStep`: Spawns system FFmpeg via `child_process`
 4. **Express awaits** `run.result` to get the compressed audio
 5. **Response** sends the compressed bytes directly to the client
 
@@ -86,7 +85,7 @@ ffmpeg-processing/
 ├── src/
 │   └── index.ts              # Express app with /random-number and /convert routes
 ├── workflows/
-│   └── audio-convert.ts      # FFmpeg compression workflow with 3 steps
+│   └── audio-convert.ts      # FFmpeg compression workflow with 2 steps
 ├── types.ts                  # Shared AudioPayload type
 ├── nitro.config.ts           # Nitro configuration with workflow module
 ├── package.json
@@ -98,4 +97,4 @@ ffmpeg-processing/
 
 - [Workflow DevKit Documentation](https://useworkflow.dev)
 - [Express Getting Started Guide](https://useworkflow.dev/docs/getting-started/express)
-- [fluent-ffmpeg Documentation](https://github.com/fluent-ffmpeg/node-fluent-ffmpeg)
+- [FFmpeg Documentation](https://ffmpeg.org/documentation.html)

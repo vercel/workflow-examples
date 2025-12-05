@@ -7,19 +7,16 @@
 		"build": "nitro build"
 	},
 	"dependencies": {
-		"express": "^5.1.0",
-		"ffmpeg-static": "^5.2.0",
-		"fluent-ffmpeg": "^2.1.3",
-		"multer": "^1.4.5-lts.1",
+		"express": "^5.2.1",
+		"multer": "^2.0.0",
 		"nitro": "3.0.1-alpha.1",
-		"rollup": "^4.53.2",
+		"rollup": "^4.53.3",
 		"workflow": "4.0.1-beta.19"
 	},
 	"devDependencies": {
-		"@types/express": "^5.0.2",
-		"@types/fluent-ffmpeg": "^2.1.27",
-		"@types/multer": "^1.4.12",
-		"@types/node": "^20.11.17",
-		"typescript": "^5.8.3"
+		"@types/express": "^5.0.6",
+		"@types/multer": "^2.0.0",
+		"@types/node": "^20.19.25",
+		"typescript": "^5.9.3"
 	}
 }

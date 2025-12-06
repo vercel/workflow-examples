@@ -1,6 +1,7 @@
 import { Sandbox } from "@vercel/sandbox";
 import ms from "ms";
-import type { AudioPayload } from "../../../types.js";
+import { FatalError, getWritable } from "workflow";
+import type { AudioMetadata, StreamingAudioInput } from "../../../../types.js";
 
 const FFMPEG_DOWNLOAD_URL =
 	"https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz";
@@ -14,26 +15,9 @@ const SANDBOX_CONFIG = {
 	},
 };
 
-export async function normalizeMetadataStep(input: AudioPayload) {
-	"use step";
-
-	const safeFilename =
-		input.filename && input.filename.trim().length > 0
-			? input.filename
-			: "audio.wav";
-
-	if (!input.mimeType.startsWith("audio/")) {
-		throw new Error(
-			`Unsupported MIME type: ${input.mimeType}. Expected audio/*`,
-		);
-	}
-
-	return { ...input, filename: safeFilename };
-}
-
 export async function transcodeAndCompressStep(
-	input: AudioPayload,
-): Promise<AudioPayload> {
+	input: StreamingAudioInput,
+): Promise<AudioMetadata> {
 	"use step";
 	console.log("[Sandbox] Creating sandbox...");
 
@@ -49,7 +33,24 @@ export async function transcodeAndCompressStep(
 		const inputPath = "/tmp/input-audio";
 		const outputPath = "/tmp/output-audio.m4a";
 
-		const inputBuffer = Buffer.from(input.data, "base64");
+		// Read input stream into buffer for sandbox
+		const inputChunks: Uint8Array[] = [];
+		const reader = input.stream.getReader();
+		try {
+			while (true) {
+				const { done, value } = await reader.read();
+				if (done) break;
+				inputChunks.push(value);
+			}
+		} catch (err) {
+			// Stream errors cannot be retried, fail immediately
+			throw new FatalError(
+				`Input stream failed: ${err instanceof Error ? err.message : String(err)}`,
+			);
+		} finally {
+			reader.releaseLock();
+		}
+		const inputBuffer = Buffer.concat(inputChunks);
 		console.log(
 			`[Sandbox] Writing input (${Math.round(inputBuffer.length / 1024)} KB)...`,
 		);
@@ -84,18 +85,34 @@ export async function transcodeAndCompressStep(
 		if (!outputStream) {
 			throw new Error("Failed to read output file");
 		}
-		const chunks: Buffer[] = [];
-		for await (const chunk of outputStream) {
-			chunks.push(Buffer.from(chunk));
+
+		// Stream the output to the workflow's writable stream
+		const writable = getWritable<Uint8Array>();
+		const writer = writable.getWriter();
+		let totalBytes = 0;
+		try {
+			for await (const chunk of outputStream) {
+				// Handle both Buffer and string chunks from sandbox.readFile
+				const buffer =
+					typeof chunk === "string"
+						? new TextEncoder().encode(chunk)
+						: new Uint8Array(chunk);
+				await writer.write(buffer);
+				totalBytes += buffer.length;
+			}
+			await writer.close();
+		} catch (err) {
+			// Output stream errors cannot be retried, fail immediately
+			throw new FatalError(
+				`Output stream failed: ${err instanceof Error ? err.message : String(err)}`,
+			);
 		}
-		const outputBuffer = Buffer.concat(chunks);
 		console.log(
-			`[Sandbox] Done (${Math.round(outputBuffer.length / 1024)} KB)`,
+			`[Sandbox] Streamed output (${Math.round(totalBytes / 1024)} KB)`,
 		);
 
 		return {
-			data: outputBuffer.toString("base64"),
-			filename: replaceExtension(input.filename, ".m4a"),
+			filename: replaceExtension(input.metadata.filename, ".m4a"),
 			mimeType: "audio/mp4",
 		};
 	} finally {

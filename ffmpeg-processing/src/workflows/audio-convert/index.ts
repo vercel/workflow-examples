@@ -1,11 +1,14 @@
-import type { AudioPayload } from "../../../types.js";
-import { normalizeMetadataStep, transcodeAndCompressStep } from "./steps.js";
+import type { StreamingAudioInput } from "../../../types.js";
+import {
+	normalizeMetadataStep,
+	transcodeAndCompressStep,
+} from "./steps/index.js";
 
-export async function compressAudioWorkflow(input: AudioPayload) {
+export async function compressAudioWorkflow(input: StreamingAudioInput) {
 	"use workflow";
 
 	const normalized = await normalizeMetadataStep(input);
-	const compressed = await transcodeAndCompressStep(normalized);
+	const metadata = await transcodeAndCompressStep(normalized);
 
-	return compressed;
+	return metadata;
 }

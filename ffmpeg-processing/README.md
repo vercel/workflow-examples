@@ -13,7 +13,9 @@ This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) 
 
 ### Prerequisites
 
-FFmpeg must be installed on your system. Install it via your package manager:
+- **Vercel Sandboxes**: This example is designed to run inside a Vercel Sandbox so that long‑running FFmpeg work can be isolated and metered. Make sure you have access to Vercel Sandboxes in your project.
+- **`VERCEL_OIDC_TOKEN`**: The workflow runtime expects the `VERCEL_OIDC_TOKEN` environment variable to be present. When running inside a Vercel Sandbox this is injected automatically; if you run the server outside of Vercel, you must provide a valid OIDC token yourself.
+- **FFmpeg binary**: FFmpeg must be installed on your system. Install it via your package manager:
 
 ```bash
 # macOS
@@ -43,7 +45,7 @@ sudo apt install ffmpeg
 
    ```bash
    # Convert a WAV file to compressed M4A
-   curl -X POST -F "file=@input.wav" http://localhost:3000/convert --output compressed.m4a
+   curl -X POST -F "file=@input.wav;type=audio/wav" =H "Expect:" http://localhost:3000/convert --output compressed.m4a
    ```
 
    The endpoint accepts any audio file and returns a compressed M4A file.

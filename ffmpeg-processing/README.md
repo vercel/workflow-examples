@@ -45,7 +45,7 @@ sudo apt install ffmpeg
 
    ```bash
    # Convert a WAV file to compressed M4A
-   curl -X POST -F "file=@input.wav;type=audio/wav" =H "Expect:" http://localhost:3000/convert --output compressed.m4a
+   curl -X POST -F "file=@input.wav;type=audio/wav" =H "Expect:" http://localhost:3000/convert --output output.m4a
    ```
 
    The endpoint accepts any audio file and returns a compressed M4A file.

@@ -1,12 +1,12 @@
 # FFmpeg Processing Example
 
-This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) with Express to build an **in-memory audio compression service**. Audio files are uploaded via multipart/form-data, processed by FFmpeg within a durable workflow, and returned directly in the HTTP response—all without writing any files to disk.
+This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) with Express and Vercel Sandbox to build an **audio compression service**. Audio files are uploaded via multipart/form-data, processed by FFmpeg within a durable workflow running in an isolated sandbox, and streamed directly back in the HTTP response.
 
 ## Features
 
-- **In-memory processing**: No audio files are saved to disk; everything stays in memory via base64 encoding
-- **Workflow orchestration**: Audio compression is broken into multiple steps (`normalizeMetadata` → `transcodeAndCompress`)
-- **Await workflow results**: Express route uses `await run.returnValue` to get the compressed audio synchronously
+- **Sandbox isolation**: FFmpeg runs in a Vercel Sandbox for secure, isolated processing
+- **Workflow orchestration**: Audio compression is broken into multiple steps (`createSandbox` → `setupFfmpeg` → `transcode` → `streamOutput` → `stopSandbox`)
+- **Streaming support**: Results are streamed back to the client as they're produced
 - **FFmpeg compression**: Converts audio to AAC codec in M4A container at 128kbps
 
 ## Getting Started
@@ -15,15 +15,7 @@ This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) 
 
 - **Vercel Sandboxes**: This example is designed to run inside a Vercel Sandbox so that long‑running FFmpeg work can be isolated and metered. Make sure you have access to Vercel Sandboxes in your project.
 - **`VERCEL_OIDC_TOKEN`**: The workflow runtime expects the `VERCEL_OIDC_TOKEN` environment variable to be present. When running inside a Vercel Sandbox this is injected automatically; if you run the server outside of Vercel, you must provide a valid OIDC token yourself.
-- **FFmpeg binary**: FFmpeg must be installed on your system. Install it via your package manager:
-
-```bash
-# macOS
-brew install ffmpeg
-
-# Ubuntu/Debian
-sudo apt install ffmpeg
-```
+- **FFmpeg**: FFmpeg is automatically downloaded and installed inside the sandbox at runtime—no local installation required.
 
 ### Local Development
 
@@ -72,23 +64,31 @@ curl -X POST -F "file=@podcast.wav" http://localhost:3000/convert --output podca
 
 ## How It Works
 
-1. **Express route** receives the upload via `multer.memoryStorage()` (no disk I/O)
-2. **Audio payload** is converted to base64 and passed to the workflow
-3. **Workflow orchestrates** two steps:
-   - `normalizeMetadataStep`: Validates MIME type and filename
-   - `transcodeAndCompressStep`: Spawns system FFmpeg via `child_process`
-4. **Express awaits** `run.result` to get the compressed audio
-5. **Response** sends the compressed bytes directly to the client
+1. **Express route** receives the upload via `multer.memoryStorage()`
+2. **Workflow orchestrates** five steps:
+   - `createSandbox`: Provisions a Vercel Sandbox instance
+   - `setupFfmpeg`: Downloads and installs FFmpeg in the sandbox
+   - `transcode`: Writes input to sandbox, runs FFmpeg to compress audio
+   - `streamOutput`: Streams the compressed file back to the workflow
+   - `stopSandbox`: Cleans up the sandbox instance
+3. **Response** streams the compressed bytes directly to the client
 
 ## Project Structure
 
 ```
 ffmpeg-processing/
 ├── src/
-│   └── index.ts              # Express app with /random-number and /convert routes
-├── workflows/
-│   └── audio-convert.ts      # FFmpeg compression workflow with 2 steps
-├── nitro.config.ts           # Nitro configuration with workflow module
+│   ├── index.ts                          # Express app with /convert route
+│   └── workflows/
+│       └── audio-convert/
+│           ├── index.ts                  # Main workflow orchestration
+│           └── steps/                    # Individual workflow steps
+│               ├── create-sandbox.ts
+│               ├── setup-ffmpeg.ts
+│               ├── transcode.ts
+│               ├── stream-output.ts
+│               └── stop-sandbox.ts
+├── nitro.config.ts                       # Nitro configuration with workflow module
 ├── package.json
 ├── tsconfig.json
 └── README.md

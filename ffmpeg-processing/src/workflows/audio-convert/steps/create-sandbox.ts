@@ -5,9 +5,6 @@ const SANDBOX_CONFIG = {
   timeout: ms("5m"),
   vcpus: 2,
   runtime: "node22" as const,
-  commandTimeouts: {
-    download: ms("2m"),
-  },
 };
 
 export async function createSandbox() {

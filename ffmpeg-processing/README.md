@@ -1,5 +1,7 @@
 # FFmpeg Processing Example
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fworkflow-examples%2Ftree%2Fmain%2Fffmpeg-processing)
+
 This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) with Express and Vercel Sandbox to build an **audio compression service**. Audio files are uploaded via multipart/form-data, processed by FFmpeg within a durable workflow running in an isolated sandbox, and streamed directly back in the HTTP response.
 
 ## Features

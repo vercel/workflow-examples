@@ -5,5 +5,7 @@ export async function stopSandbox(sandboxId: string): Promise<void> {
 
   console.log("[Sandbox] Stopping...");
   const sandbox = await Sandbox.get({ sandboxId });
-  await sandbox.stop().catch(() => {});
+  await sandbox.stop().catch((err) => {
+    console.error("[Sandbox] Stop failed:", err);
+  });
 }

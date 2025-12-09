@@ -4,7 +4,7 @@ import {
 	transcode,
 	streamOutput,
 	stopSandbox,
-} from "./steps/index.js";
+} from "./steps";
 
 export async function compressAudioWorkflow(input: ReadableStream<Uint8Array>) {
 	"use workflow";

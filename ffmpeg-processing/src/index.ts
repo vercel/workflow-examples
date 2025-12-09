@@ -4,7 +4,7 @@ import multer from "multer";
 import { Readable } from "node:stream";
 import type { ReadableStream as WebReadableStream } from "stream/web";
 import { start } from "workflow/api";
-import { compressAudioWorkflow } from "./workflows/audio-convert/index.js";
+import { compressAudioWorkflow } from "./workflows/audio-convert";
 
 const app = express();
 app.use(cors());

@@ -7,7 +7,7 @@ This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) 
 ## Features
 
 - **Sandbox isolation**: FFmpeg runs in a Vercel Sandbox for secure, isolated processing
-- **Workflow orchestration**: Audio compression is broken into multiple steps (`createSandbox` → `setupFfmpeg` → `transcode` → `streamOutput` → `stopSandbox`)
+- **Workflow orchestration**: Audio compression is broken into multiple steps (`createSandbox` -> `setupFfmpeg` -> `transcode` -> `streamOutput` -> `stopSandbox`)
 - **Streaming support**: Results are streamed back to the client as they're produced
 - **FFmpeg compression**: Converts audio to AAC codec in M4A container at 128kbps
 
@@ -15,9 +15,7 @@ This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) 
 
 ### Prerequisites
 
-- **Vercel Sandboxes**: This example is designed to run inside a Vercel Sandbox so that long‑running FFmpeg work can be isolated and metered. Make sure you have access to Vercel Sandboxes in your project.
-- **`VERCEL_OIDC_TOKEN`**: The workflow runtime expects the `VERCEL_OIDC_TOKEN` environment variable to be present. When running inside a Vercel Sandbox this is injected automatically; if you run the server outside of Vercel, you must provide a valid OIDC token yourself.
-- **FFmpeg**: FFmpeg is automatically downloaded and installed inside the sandbox at runtime—no local installation required.
+- **`VERCEL_OIDC_TOKEN`**: The workflow runtime expects the `VERCEL_OIDC_TOKEN` environment variable to be present for `@vercel/sandbox`. When running inside a Vercel Sandbox this is injected automatically; if you run the server outside of Vercel, you must provide a valid OIDC token yourself.
 
 ### Local Development
 
@@ -29,13 +27,24 @@ This example demonstrates how to use [Workflow DevKit](https://useworkflow.dev) 
    pnpm install
    ```
 
-2. Start the development server:
+2. Link your Vercel project:
+
+   ```bash
+   npx vercel link
+   ```
+3. Fetch the `VERCEL_OIDC_TOKEN`:
+
+   ```bash
+   npx vercel env pull
+   ```
+
+4. Start the development server:
 
    ```bash
    pnpm dev
    ```
 
-3. **Test the audio compression workflow**:
+5. **Test the audio compression workflow**:
 
    ```bash
    # Convert a WAV file to compressed M4A
@@ -61,7 +70,7 @@ Compresses an uploaded audio file using FFmpeg within a workflow.
 
 **Example:**
 ```bash
-curl -X POST -F "file=@podcast.wav" http://localhost:3000/convert --output podcast.m4a
+curl -X POST -F "file=@podcast.wav;type=audio/wav" -H "Expect:" http://localhost:3000/convert --output podcast.m4a
 ```
 
 ## How It Works

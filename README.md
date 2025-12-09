@@ -12,6 +12,5 @@ This directory contains different examples of how to use the Workflow DevKit.
 
 ## Framework Integrations
 
-- [Express (FFmpeg Processing)](https://github.com/vercel/workflow-examples/tree/main/ffmpeg-processing)
 - [Next.js](https://github.com/vercel/workflow-examples/tree/main/nextjs)
 - [SvelteKit](https://github.com/vercel/workflow-examples/tree/main/sveltekit)

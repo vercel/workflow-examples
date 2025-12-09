@@ -88,7 +88,6 @@ ffmpeg-processing/
 │   └── index.ts              # Express app with /random-number and /convert routes
 ├── workflows/
 │   └── audio-convert.ts      # FFmpeg compression workflow with 2 steps
-├── types.ts                  # Shared AudioPayload type
 ├── nitro.config.ts           # Nitro configuration with workflow module
 ├── package.json
 ├── tsconfig.json

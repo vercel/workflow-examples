@@ -27,13 +27,13 @@
     "drizzle-orm": "^0.31.2",
     "drizzle-zod": "^0.5.1",
     "nanoid": "^5.1.6",
-    "next": "15.5.3",
+    "next": "16.0.10",
     "postgres": "^3.4.4",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "workflow": "4.0.1-beta.19",
+    "workflow": "4.0.1-beta.29",
     "zod": "^3.25.76"
   },
   "devDependencies": {

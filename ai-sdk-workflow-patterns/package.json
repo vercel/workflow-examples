@@ -16,12 +16,12 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.544.0",
-    "next": "15.5.3",
+    "next": "16.0.10",
     "next-themes": "^0.4.6",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "tailwind-merge": "^3.3.1",
-    "workflow": "4.0.1-beta.19",
+    "workflow": "4.0.1-beta.29",
     "zod": "^4.1.9"
   },
   "devDependencies": {

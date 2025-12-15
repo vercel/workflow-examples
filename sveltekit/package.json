@@ -21,6 +21,6 @@
     "vite": "^7.1.10"
   },
   "dependencies": {
-    "workflow": "4.0.1-beta.19"
+    "workflow": "4.0.1-beta.29"
   }
 }

@@ -1,5 +1,4 @@
-import { sleep } from "workflow";
-import { FatalError } from "workflow";
+import { sleep, FatalError } from "workflow";
 
 export async function handleUserSignup(email: string) {
 	"use workflow";

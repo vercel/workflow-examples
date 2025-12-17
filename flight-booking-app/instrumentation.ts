@@ -1,11 +1,9 @@
-// Optional: If you want to use a Postgres World for workflows
+// Optional: If you are using a world with asynchronous workers, like Postgres World
 export async function register() {
-  if (process.env.NEXT_RUNTIME !== "edge") {
-    console.log("Starting workflow workers...");
-    import("workflow/runtime").then(async ({ getWorld }) => {
-      console.log("Starting Postgres World...");
+  if (process.env.NEXT_RUNTIME !== 'edge') {
+    import('workflow/runtime').then(async ({ getWorld }) => {
+      console.log('Calling world.start()');
       await getWorld().start?.();
     });
-    console.log("Workflow workers started!");
   }
 }

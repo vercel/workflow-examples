@@ -1,12 +1,6 @@
-import { defineHook, FatalError, sleep } from 'workflow';
+import { FatalError, sleep } from 'workflow';
 import { z } from 'zod';
-
-export const bookingApprovalHook = defineHook({
-  schema: z.object({
-    approved: z.boolean(),
-    comment: z.string().optional(),
-  }),
-});
+import { bookingApprovalHook } from '../hooks/approval';
 
 export const mockAirports: Record<
   string,
@@ -305,7 +299,6 @@ async function executeBookingApproval(
   {
     flightNumber,
     passengerName,
-    price,
   }: { flightNumber: string; passengerName: string; price: number },
   { toolCallId }: { toolCallId: string }
 ) {

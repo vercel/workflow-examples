@@ -29,10 +29,18 @@ export default function ChatInput({
 }) {
   const [text, setText] = useState('');
 
+  const isStreaming = status === 'submitted' || status === 'streaming';
+
   return (
     <div className="fixed bottom-2 w-full max-w-2xl bg-background">
       <PromptInput
         onSubmit={(message: PromptInputMessage) => {
+          // If streaming, stop instead of submitting
+          if (isStreaming) {
+            stop();
+            return;
+          }
+
           const hasText = Boolean(message.text);
           if (!hasText) return;
 
@@ -67,7 +75,10 @@ export default function ChatInput({
               New Chat
             </Button>
           </PromptInputTools>
-          <PromptInputSubmit status={status} disabled={!text.trim()} />
+          <PromptInputSubmit
+            status={status}
+            disabled={!isStreaming && !text.trim()}
+          />
         </PromptInputFooter>
       </PromptInput>
     </div>

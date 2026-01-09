@@ -8,8 +8,20 @@ import { chat } from '@/workflows/chat';
 //export const maxDuration = 8;
 
 export async function POST(req: Request) {
-  const { threadId, messages }: { threadId: string; messages: UIMessage[] } =
-    await req.json();
+  const body = await req.json();
+  
+  // Extract threadId from either the body directly or from the first message's metadata
+  const threadId: string = body.threadId || body.messages?.[0]?.metadata?.threadId;
+  const messages: UIMessage[] = body.messages || [];
+
+  if (!threadId) {
+    return Response.json(
+      { error: 'threadId is required' },
+      { status: 400 }
+    );
+  }
+
+  console.log('Starting chat workflow for thread:', threadId, 'with', messages.length, 'messages');
 
   const run = await start(chat, [threadId, messages]);
   const workflowStream = run.readable;
@@ -17,8 +29,7 @@ export async function POST(req: Request) {
   return createUIMessageStreamResponse({
     stream: workflowStream,
     headers: {
-      // The workflow run ID is stored into `localStorage` on the client side,
-      // which influences the `resume` flag in the `useChat` hook.
+      // The workflow run ID is stored on the client side for reconnection
       'x-workflow-run-id': run.runId,
     },
   });

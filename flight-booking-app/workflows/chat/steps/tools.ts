@@ -1,5 +1,12 @@
-import { FatalError } from 'workflow';
+import { defineHook, FatalError, sleep } from 'workflow';
 import { z } from 'zod';
+
+export const bookingApprovalHook = defineHook({
+  schema: z.object({
+    approved: z.boolean(),
+    comment: z.string().optional(),
+  }),
+});
 
 export const mockAirports: Record<
   string,
@@ -288,6 +295,31 @@ export async function checkBaggageAllowance({
   };
 }
 
+async function executeSleep({ durationMs }: { durationMs: number }) {
+  // Note: No "use step" here - sleep is a workflow-level function
+  await sleep(durationMs);
+  return { message: `Slept for ${durationMs}ms` };
+}
+
+async function executeBookingApproval(
+  {
+    flightNumber,
+    passengerName,
+    price,
+  }: { flightNumber: string; passengerName: string; price: number },
+  { toolCallId }: { toolCallId: string }
+) {
+  // Note: No "use step" here - hooks are workflow-level primitives
+  // Use the toolCallId as the hook token so the UI can reference it
+  const hook = bookingApprovalHook.create({ token: toolCallId });
+  // Workflow pauses here until the hook is resolved
+  const { approved, comment } = await hook;
+  if (!approved) {
+    return `Booking rejected: ${comment || 'No reason provided'}`;
+  }
+  return `Booking approved for ${passengerName} on flight ${flightNumber}${comment ? ` - Note: ${comment}` : ''}`;
+}
+
 // Tool definitions
 export const flightBookingTools = {
   searchFlights: {
@@ -336,6 +368,22 @@ export const flightBookingTools = {
         .describe('Ticket class: economy, business, or first'),
     }),
     execute: checkBaggageAllowance,
+  },
+  sleep: {
+    description: 'Pause execution for a specified duration',
+    inputSchema: z.object({
+      durationMs: z.number().describe('Duration to sleep in milliseconds'),
+    }),
+    execute: executeSleep,
+  },
+  bookingApproval: {
+    description: 'Request human approval before booking a flight',
+    inputSchema: z.object({
+      flightNumber: z.string().describe('Flight number to book'),
+      passengerName: z.string().describe('Name of the passenger'),
+      price: z.number().describe('Total price of the booking'),
+    }),
+    execute: executeBookingApproval,
   },
 };
 

@@ -172,15 +172,10 @@ export default function ChatPage() {
         <ConversationContent>
           {messages.map((message, index) => {
             const hasText = message.parts.some((part) => part.type === 'text');
+            const isLastMessage = index === messages.length - 1;
 
             return (
               <div key={message.id}>
-                {message.role === 'assistant' &&
-                  index === messages.length - 1 &&
-                  (status === 'submitted' || status === 'streaming') &&
-                  !hasText && (
-                    <Shimmer className="text-sm">Thinking...</Shimmer>
-                  )}
                 <Message from={message.role}>
                   <MessageContent>
                     {message.parts.map((part, partIndex) => {
@@ -243,7 +238,6 @@ export default function ChatPage() {
                         );
                       }
                       if (part.type === 'tool-bookingApproval') {
-                        console.log('tool-bookingApproval', part);
                         return (
                           <BookingApproval
                             key={partIndex}
@@ -261,11 +255,40 @@ export default function ChatPage() {
                       }
                       return null;
                     })}
+                    {/* Loading indicators */}
+                    {message.role === 'assistant' &&
+                      isLastMessage &&
+                      !hasText && (
+                        <>
+                          {status === 'submitted' && (
+                            <Shimmer className="text-sm">
+                              Sending message...
+                            </Shimmer>
+                          )}
+                          {status === 'streaming' && (
+                            <Shimmer className="text-sm">
+                              Waiting for response...
+                            </Shimmer>
+                          )}
+                        </>
+                      )}
                   </MessageContent>
                 </Message>
               </div>
             );
           })}
+          {/* Show loading indicator when message is sent but no assistant response yet */}
+          {messages.length > 0 &&
+            messages[messages.length - 1].role === 'user' &&
+            status === 'submitted' && (
+              <Message from="assistant">
+                <MessageContent>
+                  <Shimmer className="text-sm">
+                    Processing your request...
+                  </Shimmer>
+                </MessageContent>
+              </Message>
+            )}
         </ConversationContent>
         <ConversationScrollButton />
       </Conversation>

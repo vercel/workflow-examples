@@ -13,6 +13,17 @@ import { chatMessageHook } from './hooks/chat-message';
 
 /**
  * The main chat workflow with multi-turn support
+ *
+ * Once @workflow/ai is updated with the accumulateUIMessages feature,
+ * this workflow can use it to get server-side UIMessage[]:
+ *
+ * ```typescript
+ * const { messages, uiMessages } = await agent.stream({
+ *   messages: modelMessages,
+ *   writable,
+ *   accumulateUIMessages: true, // Enable UIMessage accumulation
+ * });
+ * ```
  */
 export async function chat(threadId: string, initialMessages: UIMessage[]) {
   'use workflow';
@@ -40,10 +51,11 @@ export async function chat(threadId: string, initialMessages: UIMessage[]) {
       messages: modelMessages,
       writable,
       preventClose: true, // Keep stream open for follow-ups
+      // TODO: Enable once @workflow/ai is updated:
+      // accumulateUIMessages: true,
     });
 
     // Update model messages with the result
-    // The result contains all messages including the new assistant responses
     modelMessages = resultMessages;
 
     // Wait for next user message via hook
@@ -70,9 +82,8 @@ export async function chat(threadId: string, initialMessages: UIMessage[]) {
     'messages'
   );
 
-  // Note: The client already has the full UIMessage[] array via the stream.
-  // The return value here is mainly for logging/debugging purposes.
-  // If you need to persist messages server-side, do it before returning.
+  // Note: The client has the full UIMessage[] via the stream.
+  // Once accumulateUIMessages is enabled, uiMessages will be available here.
   return {
     threadId,
     messageCount: modelMessages.length,

@@ -1,6 +1,5 @@
 'use client';
 
-import { useChat } from '@ai-sdk/react';
 import { WorkflowChatTransport } from '@workflow/ai';
 import { useEffect, useMemo, useRef } from 'react';
 import {

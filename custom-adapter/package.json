@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "@workflow/world-local": "^4.0.1-beta.17",
-    "workflow": "^4.0.1-beta.42"
+    "workflow": "^4.0.1-beta.44"
   }
 }

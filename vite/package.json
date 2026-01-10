@@ -13,7 +13,7 @@
     "nitro": "3.0.1-alpha.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "workflow": "4.0.1-beta.42"
+    "workflow": "4.0.1-beta.44"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

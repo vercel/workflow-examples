@@ -10,6 +10,6 @@
   },
   "dependencies": {
     "astro": "^5.16.4",
-    "workflow": "4.0.1-beta.42"
+    "workflow": "4.0.1-beta.44"
   }
 }

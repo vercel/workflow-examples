@@ -14,7 +14,7 @@
     "next": "16.0.10",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "workflow": "^4.0.1-beta.42"
+    "workflow": "^4.0.1-beta.44"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

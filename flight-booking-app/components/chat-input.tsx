@@ -36,6 +36,8 @@ export default function ChatInput({
           const hasText = Boolean(message.text);
           if (!hasText) return;
 
+          // Always send the message - the hook will handle routing
+          // (either as new message or follow-up to existing thread)
           sendMessage({
             text: message.text || '',
             metadata: { createdAt: Date.now() },

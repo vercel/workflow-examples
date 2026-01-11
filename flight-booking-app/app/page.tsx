@@ -1,55 +1,56 @@
-"use client";
+'use client';
 
-import { useChat } from "@ai-sdk/react";
-import { WorkflowChatTransport } from "@workflow/ai";
-import { useEffect, useMemo, useRef } from "react";
+import { WorkflowChatTransport } from '@workflow/ai';
+import { useEffect, useMemo, useRef } from 'react';
 import {
   Conversation,
   ConversationContent,
   ConversationScrollButton,
-} from "@/components/ai-elements/conversation";
-import { Message, MessageContent } from "@/components/ai-elements/message";
-import { Response } from "@/components/ai-elements/response";
-import { Shimmer } from "@/components/ai-elements/shimmer";
-import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
+} from '@/components/ai-elements/conversation';
+import { Message, MessageContent } from '@/components/ai-elements/message';
+import { Response } from '@/components/ai-elements/response';
+import { Shimmer } from '@/components/ai-elements/shimmer';
+import { Suggestion, Suggestions } from '@/components/ai-elements/suggestion';
 import {
   Tool,
   ToolContent,
   ToolHeader,
   ToolInput,
   ToolOutput,
-} from "@/components/ai-elements/tool";
-import ChatInput from "@/components/chat-input";
-import type { MyUIMessage } from "@/schemas/chat";
+} from '@/components/ai-elements/tool';
+import ChatInput from '@/components/chat-input';
+import type { MyUIMessage } from '@/schemas/chat';
+import { BookingApproval } from '@/components/booking-approval';
+import { useMultiTurnChat } from '@/components/use-multi-turn-chat';
 
 const SUGGESTIONS = [
-  "Find me flights from San Francisco to Los Angeles",
+  'Find me flights from San Francisco to Los Angeles',
   "What's the status of flight UA123?",
-  "Tell me about SFO airport",
+  'Tell me about SFO airport',
   "What's the baggage allowance for United Airlines economy?",
-  "Book a flight from New York to Miami",
+  'Book a flight from New York to Miami',
 ];
 
 export default function ChatPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const activeWorkflowRunId = useMemo(() => {
-    if (typeof window === "undefined") return;
-    return localStorage.getItem("active-workflow-run-id") ?? undefined;
+    if (typeof window === 'undefined') return;
+    return localStorage.getItem('active-workflow-run-id') ?? undefined;
   }, []);
 
-  const { stop, messages, sendMessage, status, setMessages } =
-    useChat<MyUIMessage>({
+  const { stop, messages, sendMessage, status, setMessages, error } =
+    useMultiTurnChat<MyUIMessage>({
       resume: !!activeWorkflowRunId,
       onError(error) {
-        console.error("onError", error);
+        console.error('onError', error);
       },
       onFinish(data) {
-        console.log("onFinish", data);
+        console.log('onFinish', data);
 
         // Update the chat history in `localStorage` to include the latest bot message
-        console.log("Saving chat history to localStorage", data.messages);
-        localStorage.setItem("chat-history", JSON.stringify(data.messages));
+        console.log('Saving chat history to localStorage', data.messages);
+        localStorage.setItem('chat-history', JSON.stringify(data.messages));
 
         requestAnimationFrame(() => {
           textareaRef.current?.focus();
@@ -58,36 +59,36 @@ export default function ChatPage() {
 
       transport: new WorkflowChatTransport({
         onChatSendMessage: (response, options) => {
-          console.log("onChatSendMessage", response, options);
+          console.log('onChatSendMessage', response, options);
 
           // Update the chat history in `localStorage` to include the latest user message
           localStorage.setItem(
-            "chat-history",
-            JSON.stringify(options.messages),
+            'chat-history',
+            JSON.stringify(options.messages)
           );
 
           // We'll store the workflow run ID in `localStorage` to allow the client
           // to resume the chat session after a page refresh or network interruption
-          const workflowRunId = response.headers.get("x-workflow-run-id");
+          const workflowRunId = response.headers.get('x-workflow-run-id');
           if (!workflowRunId) {
             throw new Error(
-              'Workflow run ID not found in "x-workflow-run-id" response header',
+              'Workflow run ID not found in "x-workflow-run-id" response header'
             );
           }
-          localStorage.setItem("active-workflow-run-id", workflowRunId);
+          localStorage.setItem('active-workflow-run-id', workflowRunId);
         },
         onChatEnd: ({ chatId, chunkIndex }) => {
-          console.log("onChatEnd", chatId, chunkIndex);
+          console.log('onChatEnd', chatId, chunkIndex);
 
           // Once the chat stream ends, we can remove the workflow run ID from `localStorage`
-          localStorage.removeItem("active-workflow-run-id");
+          localStorage.removeItem('active-workflow-run-id');
         },
         // Configure reconnection to use the stored workflow run ID
         prepareReconnectToStreamRequest: ({ id, api, ...rest }) => {
-          console.log("prepareReconnectToStreamRequest", id);
-          const workflowRunId = localStorage.getItem("active-workflow-run-id");
+          console.log('prepareReconnectToStreamRequest', id);
+          const workflowRunId = localStorage.getItem('active-workflow-run-id');
           if (!workflowRunId) {
-            throw new Error("No active workflow run ID found");
+            throw new Error('No active workflow run ID found');
           }
           // Use the workflow run ID instead of the chat ID for reconnection
           return {
@@ -104,7 +105,7 @@ export default function ChatPage() {
   // this would likely be done on the server side and loaded from a database,
   // but for the purposes of this demo, we'll load it from `localStorage`.
   useEffect(() => {
-    const chatHistory = localStorage.getItem("chat-history");
+    const chatHistory = localStorage.getItem('chat-history');
     if (!chatHistory) return;
     setMessages(JSON.parse(chatHistory) as MyUIMessage[]);
   }, [setMessages]);
@@ -120,6 +121,16 @@ export default function ChatPage() {
         <h1 className="text-3xl font-bold mb-2">Flight Booking Agent</h1>
         <p className="text-muted-foreground">Book a flight using workflows</p>
       </div>
+
+      {/* Error display */}
+      {error && (
+        <div className="text-sm mb-4 p-4 rounded-lg border border-red-500/50 bg-red-500/10 text-red-600 dark:text-red-400">
+          <div className="flex items-start gap-2">
+            <span className="font-medium">Error:</span>
+            <span className="flex-1">{error.message}</span>
+          </div>
+        </div>
+      )}
 
       {messages.length === 0 && (
         <div className="mb-8 space-y-4">
@@ -154,7 +165,7 @@ export default function ChatPage() {
               type="button"
               onClick={() => {
                 sendMessage({
-                  text: "Book me the cheapest flight from San Francisco to Los Angeles for July 27 2025. My name is Pranay Prakash. I like window seats. Don't ask me for confirmation.",
+                  text: "Book me the cheapest flight from San Francisco to Los Angeles for July 27 2025. My name is Pranay Prakash. I like window seats. Don't ask me for confirmation until it's time for final approval.",
                   metadata: { createdAt: Date.now() },
                 });
               }}
@@ -162,7 +173,7 @@ export default function ChatPage() {
             >
               Book me the cheapest flight from San Francisco to Los Angeles for
               July 27 2025. My name is Pranay Prakash. I like window seats.
-              Don't ask me for confirmation.
+              Don't ask me for confirmation until it's time for final approval.
             </button>
           </div>
         </div>
@@ -170,21 +181,16 @@ export default function ChatPage() {
       <Conversation className="mb-10">
         <ConversationContent>
           {messages.map((message, index) => {
-            const hasText = message.parts.some((part) => part.type === "text");
+            const hasText = message.parts.some((part) => part.type === 'text');
+            const isLastMessage = index === messages.length - 1;
 
             return (
               <div key={message.id}>
-                {message.role === "assistant" &&
-                  index === messages.length - 1 &&
-                  (status === "submitted" || status === "streaming") &&
-                  !hasText && (
-                    <Shimmer className="text-sm">Thinking...</Shimmer>
-                  )}
                 <Message from={message.role}>
                   <MessageContent>
                     {message.parts.map((part, partIndex) => {
                       // Render text parts
-                      if (part.type === "text") {
+                      if (part.type === 'text') {
                         return (
                           <Response key={`${message.id}-text-${partIndex}`}>
                             {part.text}
@@ -193,7 +199,7 @@ export default function ChatPage() {
                       }
 
                       // Render workflow data messages
-                      if (part.type === "data-workflow" && "data" in part) {
+                      if (part.type === 'data-workflow' && 'data' in part) {
                         const data = part.data as any;
                         return (
                           <div
@@ -208,14 +214,15 @@ export default function ChatPage() {
                       // Render tool parts
                       // Type guard to check if this is a tool invocation part
                       if (
-                        part.type === "tool-searchFlights" ||
-                        part.type === "tool-checkFlightStatus" ||
-                        part.type === "tool-getAirportInfo" ||
-                        part.type === "tool-bookFlight" ||
-                        part.type === "tool-checkBaggageAllowance"
+                        part.type === 'tool-searchFlights' ||
+                        part.type === 'tool-checkFlightStatus' ||
+                        part.type === 'tool-getAirportInfo' ||
+                        part.type === 'tool-bookFlight' ||
+                        part.type === 'tool-checkBaggageAllowance' ||
+                        part.type === 'tool-sleep'
                       ) {
                         // Additional type guard to ensure we have the required properties
-                        if (!("toolCallId" in part) || !("state" in part)) {
+                        if (!('toolCallId' in part) || !('state' in part)) {
                           return null;
                         }
                         return (
@@ -230,7 +237,7 @@ export default function ChatPage() {
                               ) : null}
                               <ToolOutput
                                 output={
-                                  part.state === "output-available"
+                                  part.state === 'output-available'
                                     ? renderToolOutput(part)
                                     : undefined
                                 }
@@ -240,13 +247,58 @@ export default function ChatPage() {
                           </Tool>
                         );
                       }
+                      if (part.type === 'tool-bookingApproval') {
+                        return (
+                          <BookingApproval
+                            key={partIndex}
+                            toolCallId={part.toolCallId}
+                            input={
+                              part.input as {
+                                flightNumber: string;
+                                passengerName: string;
+                                price: number;
+                              }
+                            }
+                            output={part.output as string}
+                          />
+                        );
+                      }
                       return null;
                     })}
+                    {/* Loading indicators */}
+                    {message.role === 'assistant' &&
+                      isLastMessage &&
+                      !hasText && (
+                        <>
+                          {status === 'submitted' && (
+                            <Shimmer className="text-sm">
+                              Sending message...
+                            </Shimmer>
+                          )}
+                          {status === 'streaming' && (
+                            <Shimmer className="text-sm">
+                              Waiting for response...
+                            </Shimmer>
+                          )}
+                        </>
+                      )}
                   </MessageContent>
                 </Message>
               </div>
             );
           })}
+          {/* Show loading indicator when message is sent but no assistant response yet */}
+          {messages.length > 0 &&
+            messages[messages.length - 1].role === 'user' &&
+            status === 'submitted' && (
+              <Message from="assistant">
+                <MessageContent>
+                  <Shimmer className="text-sm">
+                    Processing your request...
+                  </Shimmer>
+                </MessageContent>
+              </Message>
+            )}
         </ConversationContent>
         <ConversationScrollButton />
       </Conversation>
@@ -257,7 +309,7 @@ export default function ChatPage() {
         setMessages={setMessages}
         sendMessage={(message) => {
           sendMessage({
-            text: message.text || "",
+            text: message.text || '',
             metadata: message.metadata,
           });
         }}
@@ -278,7 +330,7 @@ function renderToolOutput(part: any) {
   const parsedOutput = JSON.parse(output);
 
   switch (part.type) {
-    case "tool-searchFlights": {
+    case 'tool-searchFlights': {
       const flights = parsedOutput?.flights || [];
       return (
         <div className="space-y-2">
@@ -298,12 +350,12 @@ function renderToolOutput(part: any) {
                 Departure: {new Date(flight.departure).toLocaleString()}
               </div>
               <div>
-                Status:{" "}
+                Status:{' '}
                 <span
                   className={
-                    flight.status === "On Time"
-                      ? "text-green-600"
-                      : "text-orange-600"
+                    flight.status === 'On Time'
+                      ? 'text-green-600'
+                      : 'text-orange-600'
                   }
                 >
                   {flight.status}
@@ -316,18 +368,18 @@ function renderToolOutput(part: any) {
       );
     }
 
-    case "tool-checkFlightStatus": {
+    case 'tool-checkFlightStatus': {
       const status = parsedOutput;
       return (
         <div className="space-y-1 text-sm">
           <div className="font-medium">Flight {status.flightNumber}</div>
           <div>
-            Status:{" "}
+            Status:{' '}
             <span
               className={
-                status.status === "On Time"
-                  ? "text-green-600 font-medium"
-                  : "text-orange-600 font-medium"
+                status.status === 'On Time'
+                  ? 'text-green-600 font-medium'
+                  : 'text-orange-600 font-medium'
               }
             >
               {status.status}
@@ -348,7 +400,7 @@ function renderToolOutput(part: any) {
       );
     }
 
-    case "tool-getAirportInfo": {
+    case 'tool-getAirportInfo': {
       const airport = parsedOutput;
       if (airport.error) {
         return (
@@ -377,7 +429,7 @@ function renderToolOutput(part: any) {
       );
     }
 
-    case "tool-bookFlight": {
+    case 'tool-bookFlight': {
       const booking = parsedOutput;
 
       return (
@@ -385,7 +437,7 @@ function renderToolOutput(part: any) {
           <div className="text-sm font-medium">✅ Booking Confirmed!</div>
           <div className="space-y-1 text-sm">
             <div>
-              Confirmation #:{" "}
+              Confirmation #:{' '}
               <span className="font-mono font-medium">
                 {booking.confirmationNumber}
               </span>
@@ -399,7 +451,7 @@ function renderToolOutput(part: any) {
       );
     }
 
-    case "tool-checkBaggageAllowance": {
+    case 'tool-checkBaggageAllowance': {
       const baggage = parsedOutput;
       return (
         <div className="space-y-1 text-sm">
@@ -410,6 +462,16 @@ function renderToolOutput(part: any) {
           <div>Checked bags: {baggage.checkedBags}</div>
           <div>Max weight per bag: {baggage.maxWeightPerBag}</div>
           <div>Oversize fee: {baggage.oversizeFee}</div>
+        </div>
+      );
+    }
+
+    case 'tool-sleep': {
+      return (
+        <div className="space-y-2">
+          <p className="text-sm font-medium">
+            Sleeping for {part.input.durationMs}ms...
+          </p>
         </div>
       );
     }

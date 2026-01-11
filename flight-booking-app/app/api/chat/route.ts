@@ -33,6 +33,8 @@ export async function POST(req: Request) {
     headers: {
       // The workflow run ID is stored on the client side for reconnection
       'x-workflow-run-id': run.runId,
+      // The thread ID is used for sending follow-up messages via hooks
+      'x-thread-id': threadId,
     },
   });
 }

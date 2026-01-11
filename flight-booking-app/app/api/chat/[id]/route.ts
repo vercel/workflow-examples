@@ -7,7 +7,18 @@ export async function POST(
   const { message } = await req.json();
   const { id: threadId } = await params;
 
-  await chatMessageHook.resume(`thread:${threadId}`, { message });
+  console.log('Resuming hook for thread:', threadId, 'with message:', message);
 
-  return Response.json({ success: true });
+  try {
+    await chatMessageHook.resume(`thread:${threadId}`, { message });
+    return Response.json({ success: true });
+  } catch (error) {
+    console.error('Error resuming hook for thread:', threadId, error);
+    return Response.json(
+      {
+        error: `Failed to resume hook: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      },
+      { status: 500 }
+    );
+  }
 }

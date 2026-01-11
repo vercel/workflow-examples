@@ -30,6 +30,8 @@ const SUGGESTIONS = [
   "What's the baggage allowance for United Airlines economy?",
   'Book a flight from New York to Miami',
 ];
+const FULL_EXAMPLE_PROMPT =
+  "Book me the cheapest flight from San Francisco to Los Angeles for July 27 2025. My name is Pranay Prakash. I like window seats. Don't ask me for approval.";
 
 export default function ChatPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -39,67 +41,79 @@ export default function ChatPage() {
     return localStorage.getItem('active-workflow-run-id') ?? undefined;
   }, []);
 
-  const { stop, messages, sendMessage, status, setMessages, error } =
-    useMultiTurnChat<MyUIMessage>({
-      resume: !!activeWorkflowRunId,
-      onError(error) {
-        console.error('onError', error);
-      },
-      onFinish(data) {
-        console.log('onFinish', data);
+  const {
+    stop,
+    messages,
+    sendMessage,
+    status,
+    setMessages,
+    error,
+    setThreadId,
+  } = useMultiTurnChat<MyUIMessage>({
+    resume: !!activeWorkflowRunId,
+    onError(error) {
+      console.error('onError', error);
+    },
+    onFinish(data) {
+      console.log('onFinish', data);
 
-        // Update the chat history in `localStorage` to include the latest bot message
-        console.log('Saving chat history to localStorage', data.messages);
-        localStorage.setItem('chat-history', JSON.stringify(data.messages));
+      // Update the chat history in `localStorage` to include the latest message
+      console.log('Saving chat history to localStorage', data.messages);
+      localStorage.setItem('chat-history', JSON.stringify(data.messages));
 
-        requestAnimationFrame(() => {
-          textareaRef.current?.focus();
-        });
-      },
+      requestAnimationFrame(() => {
+        textareaRef.current?.focus();
+      });
+    },
 
-      transport: new WorkflowChatTransport({
-        onChatSendMessage: (response, options) => {
-          console.log('onChatSendMessage', response, options);
+    transport: new WorkflowChatTransport({
+      onChatSendMessage: (response, options) => {
+        console.log('onChatSendMessage', response, options);
 
-          // Update the chat history in `localStorage` to include the latest user message
-          localStorage.setItem(
-            'chat-history',
-            JSON.stringify(options.messages)
+        // Update the chat history in `localStorage` to include the latest user message
+        localStorage.setItem('chat-history', JSON.stringify(options.messages));
+
+        // Capture the thread ID from the server for follow-up messages
+        const serverThreadId = response.headers.get('x-thread-id');
+        if (serverThreadId) {
+          setThreadId(serverThreadId);
+          localStorage.setItem('active-thread-id', serverThreadId);
+        }
+
+        // We'll store the workflow run ID in `localStorage` to allow the client
+        // to resume the chat session after a page refresh or network interruption
+        const workflowRunId = response.headers.get('x-workflow-run-id');
+        if (!workflowRunId) {
+          throw new Error(
+            'Workflow run ID not found in "x-workflow-run-id" response header'
           );
+        }
+        localStorage.setItem('active-workflow-run-id', workflowRunId);
+      },
+      onChatEnd: ({ chatId, chunkIndex }) => {
+        console.log('onChatEnd', chatId, chunkIndex);
 
-          // We'll store the workflow run ID in `localStorage` to allow the client
-          // to resume the chat session after a page refresh or network interruption
-          const workflowRunId = response.headers.get('x-workflow-run-id');
-          if (!workflowRunId) {
-            throw new Error(
-              'Workflow run ID not found in "x-workflow-run-id" response header'
-            );
-          }
-          localStorage.setItem('active-workflow-run-id', workflowRunId);
-        },
-        onChatEnd: ({ chatId, chunkIndex }) => {
-          console.log('onChatEnd', chatId, chunkIndex);
-
-          // Once the chat stream ends, we can remove the workflow run ID from `localStorage`
-          localStorage.removeItem('active-workflow-run-id');
-        },
-        // Configure reconnection to use the stored workflow run ID
-        prepareReconnectToStreamRequest: ({ id, api, ...rest }) => {
-          console.log('prepareReconnectToStreamRequest', id);
-          const workflowRunId = localStorage.getItem('active-workflow-run-id');
-          if (!workflowRunId) {
-            throw new Error('No active workflow run ID found');
-          }
-          // Use the workflow run ID instead of the chat ID for reconnection
-          return {
-            ...rest,
-            api: `/api/chat/${encodeURIComponent(workflowRunId)}/stream`,
-          };
-        },
-        // Optional: Configure error handling for reconnection attempts
-        maxConsecutiveErrors: 5,
-      }),
-    });
+        // Once the chat stream ends, we can remove the workflow run ID from `localStorage`
+        // Note: We keep the thread ID for potential follow-up messages
+        localStorage.removeItem('active-workflow-run-id');
+      },
+      // Configure reconnection to use the stored workflow run ID
+      prepareReconnectToStreamRequest: ({ id, api, ...rest }) => {
+        console.log('prepareReconnectToStreamRequest', id);
+        const workflowRunId = localStorage.getItem('active-workflow-run-id');
+        if (!workflowRunId) {
+          throw new Error('No active workflow run ID found');
+        }
+        // Use the workflow run ID instead of the chat ID for reconnection
+        return {
+          ...rest,
+          api: `/api/chat/${encodeURIComponent(workflowRunId)}/stream`,
+        };
+      },
+      // Optional: Configure error handling for reconnection attempts
+      maxConsecutiveErrors: 5,
+    }),
+  });
 
   // Load chat history from `localStorage`. In a real-world application,
   // this would likely be done on the server side and loaded from a database,
@@ -165,15 +179,13 @@ export default function ChatPage() {
               type="button"
               onClick={() => {
                 sendMessage({
-                  text: "Book me the cheapest flight from San Francisco to Los Angeles for July 27 2025. My name is Pranay Prakash. I like window seats. Don't ask me for confirmation until it's time for final approval.",
+                  text: FULL_EXAMPLE_PROMPT,
                   metadata: { createdAt: Date.now() },
                 });
               }}
               className="text-sm border px-3 py-2 rounded-md bg-muted/50 text-left hover:bg-muted/75 transition-colors cursor-pointer"
             >
-              Book me the cheapest flight from San Francisco to Los Angeles for
-              July 27 2025. My name is Pranay Prakash. I like window seats.
-              Don't ask me for confirmation until it's time for final approval.
+              {FULL_EXAMPLE_PROMPT}
             </button>
           </div>
         </div>

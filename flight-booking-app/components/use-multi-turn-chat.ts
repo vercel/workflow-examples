@@ -99,10 +99,10 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
       }
 
       // First message - start a new workflow
-      const newThreadId = crypto.randomUUID();
-      threadIdRef.current = newThreadId;
-      setThreadId(newThreadId);
-      console.log('Starting new thread:', newThreadId);
+      // Note: The actual threadId will be set from the server response via setThreadId
+      console.log(
+        'Starting new chat (threadId will be set from server response)'
+      );
 
       return originalSendMessage(message, requestOptions);
     },
@@ -111,6 +111,13 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
 
   // Expose sendFollowUp for explicit use
   const sendFollowUp = sendFollowUpInternal;
+
+  // Function to update threadId from server response
+  const updateThreadId = useCallback((newThreadId: string) => {
+    console.log('Setting threadId from server:', newThreadId);
+    threadIdRef.current = newThreadId;
+    setThreadId(newThreadId);
+  }, []);
 
   // End the current multi-turn session
   const endSession = useCallback(async () => {
@@ -150,6 +157,7 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
     setMessages: wrappedSetMessages,
     // Multi-turn specific
     threadId,
+    setThreadId: updateThreadId,
     sendFollowUp,
     endSession,
     isSessionActive: threadId !== null,

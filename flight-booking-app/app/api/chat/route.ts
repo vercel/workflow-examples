@@ -9,19 +9,21 @@ import { chat } from '@/workflows/chat';
 
 export async function POST(req: Request) {
   const body = await req.json();
-  
-  // Extract threadId from either the body directly or from the first message's metadata
-  const threadId: string = body.threadId || body.messages?.[0]?.metadata?.threadId;
+
+  // Extract threadId from body or generate one if not provided
+  const threadId: string =
+    body.threadId ||
+    body.messages?.[0]?.metadata?.threadId ||
+    crypto.randomUUID();
   const messages: UIMessage[] = body.messages || [];
 
-  if (!threadId) {
-    return Response.json(
-      { error: 'threadId is required' },
-      { status: 400 }
-    );
-  }
-
-  console.log('Starting chat workflow for thread:', threadId, 'with', messages.length, 'messages');
+  console.log(
+    'Starting chat workflow for thread:',
+    threadId,
+    'with',
+    messages.length,
+    'messages'
+  );
 
   const run = await start(chat, [threadId, messages]);
   const workflowStream = run.readable;

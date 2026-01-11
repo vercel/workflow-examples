@@ -39,7 +39,7 @@ export default function ChatPage() {
     return localStorage.getItem('active-workflow-run-id') ?? undefined;
   }, []);
 
-  const { stop, messages, sendMessage, status, setMessages } =
+  const { stop, messages, sendMessage, status, setMessages, error } =
     useMultiTurnChat<MyUIMessage>({
       resume: !!activeWorkflowRunId,
       onError(error) {
@@ -121,6 +121,16 @@ export default function ChatPage() {
         <h1 className="text-3xl font-bold mb-2">Flight Booking Agent</h1>
         <p className="text-muted-foreground">Book a flight using workflows</p>
       </div>
+
+      {/* Error display */}
+      {error && (
+        <div className="text-sm mb-4 p-4 rounded-lg border border-red-500/50 bg-red-500/10 text-red-600 dark:text-red-400">
+          <div className="flex items-start gap-2">
+            <span className="font-medium">Error:</span>
+            <span className="flex-1">{error.message}</span>
+          </div>
+        </div>
+      )}
 
       {messages.length === 0 && (
         <div className="mb-8 space-y-4">

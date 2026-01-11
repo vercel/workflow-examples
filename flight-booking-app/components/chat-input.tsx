@@ -29,21 +29,15 @@ export default function ChatInput({
 }) {
   const [text, setText] = useState('');
 
-  const isStreaming = status === 'submitted' || status === 'streaming';
-
   return (
     <div className="fixed bottom-2 w-full max-w-2xl bg-background">
       <PromptInput
         onSubmit={(message: PromptInputMessage) => {
-          // If streaming, stop instead of submitting
-          if (isStreaming) {
-            stop();
-            return;
-          }
-
           const hasText = Boolean(message.text);
           if (!hasText) return;
 
+          // Always send the message - the hook will handle routing
+          // (either as new message or follow-up to existing thread)
           sendMessage({
             text: message.text || '',
             metadata: { createdAt: Date.now() },
@@ -75,10 +69,7 @@ export default function ChatInput({
               New Chat
             </Button>
           </PromptInputTools>
-          <PromptInputSubmit
-            status={status}
-            disabled={!isStreaming && !text.trim()}
-          />
+          <PromptInputSubmit status={status} disabled={!text.trim()} />
         </PromptInputFooter>
       </PromptInput>
     </div>

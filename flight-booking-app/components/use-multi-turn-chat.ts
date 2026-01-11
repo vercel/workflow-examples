@@ -36,34 +36,12 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
 
   const { sendMessage: originalSendMessage, setMessages } = chatHelpers;
 
-  // Wrap sendMessage to handle multi-turn logic
-  const sendMessage = useCallback(
-    async (
-      message?: Parameters<typeof originalSendMessage>[0],
-      requestOptions?: Parameters<typeof originalSendMessage>[1]
-    ) => {
-      // If no active thread, generate one and include it in metadata
-      if (!threadIdRef.current) {
-        const newThreadId = crypto.randomUUID();
-        threadIdRef.current = newThreadId;
-        setThreadId(newThreadId);
-      }
-
-      // Call the original sendMessage
-      // The thread ID will be picked up from the message metadata
-      // if the transport/workflow needs it
-      return originalSendMessage(message, requestOptions);
-    },
-    [originalSendMessage]
-  );
-
-  // Send a follow-up message to the running workflow via hook
-  const sendFollowUp = useCallback(
+  // Internal function to send follow-up message via hook endpoint
+  const sendFollowUpInternal = useCallback(
     async (messageText: string) => {
       const currentThreadId = threadIdRef.current;
       if (!currentThreadId) {
-        console.error('No active thread. Send an initial message first.');
-        return;
+        throw new Error('No active thread');
       }
 
       // Optimistically add user message to UI
@@ -96,6 +74,43 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
     },
     [setMessages]
   );
+
+  // Smart sendMessage - uses follow-up for subsequent messages in same thread
+  const sendMessage = useCallback(
+    async (
+      message?: Parameters<typeof originalSendMessage>[0],
+      requestOptions?: Parameters<typeof originalSendMessage>[1]
+    ) => {
+      // Extract message text
+      const messageText =
+        typeof message === 'string'
+          ? message
+          : message && 'text' in message
+            ? message.text || ''
+            : '';
+
+      // If we already have a thread, send as follow-up to existing workflow
+      if (threadIdRef.current && messageText) {
+        console.log(
+          'Sending follow-up to existing thread:',
+          threadIdRef.current
+        );
+        return sendFollowUpInternal(messageText);
+      }
+
+      // First message - start a new workflow
+      const newThreadId = crypto.randomUUID();
+      threadIdRef.current = newThreadId;
+      setThreadId(newThreadId);
+      console.log('Starting new thread:', newThreadId);
+
+      return originalSendMessage(message, requestOptions);
+    },
+    [originalSendMessage, sendFollowUpInternal]
+  );
+
+  // Expose sendFollowUp for explicit use
+  const sendFollowUp = sendFollowUpInternal;
 
   // End the current multi-turn session
   const endSession = useCallback(async () => {

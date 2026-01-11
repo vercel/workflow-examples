@@ -1,6 +1,6 @@
-import { createUIMessageStreamResponse, type UIMessage } from "ai";
-import { start } from "workflow/api";
-import { chat } from "@/workflows/chat";
+import { createUIMessageStreamResponse, type UIMessage } from 'ai';
+import { start } from 'workflow/api';
+import { chat } from '@/workflows/chat';
 
 // Uncomment to simulate a long running Vercel Function timing
 // out due to a long running agent. The client-side will
@@ -8,17 +8,31 @@ import { chat } from "@/workflows/chat";
 //export const maxDuration = 8;
 
 export async function POST(req: Request) {
-	const { messages }: { messages: UIMessage[] } = await req.json();
+  const body = await req.json();
 
-	const run = await start(chat, [messages]);
-	const workflowStream = run.readable;
+  // Extract threadId from body or generate one if not provided
+  const threadId: string =
+    body.threadId ||
+    body.messages?.[0]?.metadata?.threadId ||
+    crypto.randomUUID();
+  const messages: UIMessage[] = body.messages || [];
 
-	return createUIMessageStreamResponse({
-		stream: workflowStream,
-		headers: {
-			// The workflow run ID is stored into `localStorage` on the client side,
-			// which influences the `resume` flag in the `useChat` hook.
-			"x-workflow-run-id": run.runId,
-		},
-	});
+  console.log(
+    'Starting chat workflow for thread:',
+    threadId,
+    'with',
+    messages.length,
+    'messages'
+  );
+
+  const run = await start(chat, [threadId, messages]);
+  const workflowStream = run.readable;
+
+  return createUIMessageStreamResponse({
+    stream: workflowStream,
+    headers: {
+      // The workflow run ID is stored on the client side for reconnection
+      'x-workflow-run-id': run.runId,
+    },
+  });
 }

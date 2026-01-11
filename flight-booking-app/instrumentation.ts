@@ -2,7 +2,7 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME !== 'edge') {
     import('workflow/runtime').then(async ({ getWorld }) => {
-      console.log('Calling world.start()');
+      console.log('Initializing workflow World');
       await getWorld().start?.();
     });
   }

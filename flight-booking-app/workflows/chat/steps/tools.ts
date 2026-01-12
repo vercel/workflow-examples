@@ -299,6 +299,7 @@ async function executeBookingApproval(
   {
     flightNumber,
     passengerName,
+    price,
   }: { flightNumber: string; passengerName: string; price: number },
   { toolCallId }: { toolCallId: string }
 ) {
@@ -310,7 +311,7 @@ async function executeBookingApproval(
   if (!approved) {
     return `Booking rejected: ${comment || 'No reason provided'}`;
   }
-  return `Booking approved for ${passengerName} on flight ${flightNumber}${comment ? ` - Note: ${comment}` : ''}`;
+  return `Booking approved for ${passengerName} on flight ${flightNumber} (Price: ${price})${comment ? ` - Note: ${comment}` : ''}`;
 }
 
 // Tool definitions

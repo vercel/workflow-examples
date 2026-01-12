@@ -42,7 +42,7 @@ export default function ChatPage() {
     return localStorage.getItem("active-workflow-run-id") ?? undefined;
   }, []);
 
-  const { stop, messages, sendMessage, status, setMessages } =
+  const { stop, error, messages, sendMessage, status, setMessages } =
     useChat<MyUIMessage>({
       resume: !!activeWorkflowRunId,
       onError(error) {
@@ -67,7 +67,7 @@ export default function ChatPage() {
           // Update the chat history in `localStorage` to include the latest user message
           localStorage.setItem(
             "chat-history",
-            JSON.stringify(options.messages),
+            JSON.stringify(options.messages)
           );
 
           // We'll store the workflow run ID in `localStorage` to allow the client
@@ -75,7 +75,7 @@ export default function ChatPage() {
           const workflowRunId = response.headers.get("x-workflow-run-id");
           if (!workflowRunId) {
             throw new Error(
-              'Workflow run ID not found in "x-workflow-run-id" response header',
+              'Workflow run ID not found in "x-workflow-run-id" response header'
             );
           }
           localStorage.setItem("active-workflow-run-id", workflowRunId);

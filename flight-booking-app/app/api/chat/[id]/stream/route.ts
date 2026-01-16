@@ -1,5 +1,5 @@
-import { createUIMessageStreamResponse } from 'ai';
-import { getRun } from 'workflow/api';
+import { createUIMessageStreamResponse } from "ai";
+import { getRun } from "workflow/api";
 
 // Uncomment to simulate a long running Vercel Function timing
 // out due to a long running agent. The client-side will
@@ -13,7 +13,7 @@ export async function GET(
   const { id } = await params;
   const { searchParams } = new URL(request.url);
 
-  const startIndexParam = searchParams.get('startIndex');
+  const startIndexParam = searchParams.get("startIndex");
   const startIndex =
     startIndexParam !== null ? parseInt(startIndexParam, 10) : undefined;
 

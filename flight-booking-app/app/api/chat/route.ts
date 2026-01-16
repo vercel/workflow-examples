@@ -1,6 +1,6 @@
-import { createUIMessageStreamResponse, type UIMessage } from 'ai';
-import { start } from 'workflow/api';
-import { chat } from '@/workflows/chat';
+import { createUIMessageStreamResponse, type UIMessage } from "ai";
+import { start } from "workflow/api";
+import { chat } from "@/workflows/chat";
 
 // Uncomment to simulate a long running Vercel Function timing
 // out due to a long running agent. The client-side will
@@ -18,11 +18,11 @@ export async function POST(req: Request) {
   const messages: UIMessage[] = body.messages || [];
 
   console.log(
-    'Starting chat workflow for thread:',
+    "Starting chat workflow for thread:",
     threadId,
-    'with',
+    "with",
     messages.length,
-    'messages'
+    "messages"
   );
 
   const run = await start(chat, [threadId, messages]);
@@ -32,9 +32,9 @@ export async function POST(req: Request) {
     stream: workflowStream,
     headers: {
       // The workflow run ID is stored on the client side for reconnection
-      'x-workflow-run-id': run.runId,
+      "x-workflow-run-id": run.runId,
       // The thread ID is used for sending follow-up messages via hooks
-      'x-thread-id': threadId,
+      "x-thread-id": threadId,
     },
   });
 }

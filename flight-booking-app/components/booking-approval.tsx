@@ -1,5 +1,5 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 interface BookingApprovalProps {
   toolCallId: string;
   input?: {
@@ -14,7 +14,7 @@ export function BookingApproval({
   input,
   output,
 }: BookingApprovalProps) {
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -42,18 +42,21 @@ export function BookingApproval({
     setIsSubmitting(true);
     setError(null);
     try {
-      const response = await fetch('/api/hooks/approval', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/hooks/approval", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ toolCallId, approved, comment }),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.text();
-        throw new Error(`API error: ${response.status} - ${errorData || response.statusText}`);
+        throw new Error(
+          `API error: ${response.status} - ${errorData || response.statusText}`
+        );
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to submit approval';
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to submit approval";
       setError(errorMessage);
       setIsSubmitting(false);
       return;
@@ -93,7 +96,7 @@ export function BookingApproval({
           disabled={isSubmitting}
           className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
         >
-          {isSubmitting ? 'Submitting...' : 'Approve'}
+          {isSubmitting ? "Submitting..." : "Approve"}
         </button>
         <button
           type="button"
@@ -101,7 +104,7 @@ export function BookingApproval({
           disabled={isSubmitting}
           className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
         >
-          {isSubmitting ? 'Submitting...' : 'Reject'}
+          {isSubmitting ? "Submitting..." : "Reject"}
         </button>
       </div>
     </div>

@@ -12,7 +12,17 @@ import { FLIGHT_ASSISTANT_PROMPT, flightBookingTools } from "./steps/tools";
 import { chatMessageHook } from "./hooks/chat-message";
 
 /**
- * The main chat workflow with multi-turn support
+ * The main chat workflow with multi-turn support.
+ *
+ * This workflow:
+ * 1. Takes initial messages and streams assistant responses
+ * 2. Waits for follow-up messages via hook
+ * 3. Loops until "/done" is received
+ *
+ * Note: User messages are NOT emitted to the stream. The client is responsible
+ * for displaying user messages based on:
+ * - Initial messages passed to the workflow (shown from client state)
+ * - Follow-up messages (shown as pending until assistant responds)
  */
 export async function chat(threadId: string, initialMessages: UIMessage[]) {
   "use workflow";
@@ -41,7 +51,6 @@ export async function chat(threadId: string, initialMessages: UIMessage[]) {
       messages: modelMessages,
       writable,
       preventClose: true, // Keep stream open for follow-ups
-      // TODO: Enable once @workflow/ai is updated:
     });
 
     // Update model messages with the result
@@ -62,7 +71,7 @@ export async function chat(threadId: string, initialMessages: UIMessage[]) {
       content: message,
     });
 
-    console.log("Added user message, continuing conversation...");
+    console.log("Received follow-up message, continuing conversation...");
   }
 
   console.log(

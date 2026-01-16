@@ -1,26 +1,45 @@
 'use client';
 
-// This is a drop-in replacement for `useChat` from @ai-sdk/react.
-// It wraps useChat and adds multi-turn session support via workflow hooks.
+// A hook for multi-turn chat sessions with workflow-based agents.
+//
+// In multi-turn mode:
+// - The first message starts a new workflow and is handled by useChat
+// - Follow-up messages are sent via hook to the running workflow
+// - The stream provides assistant messages; user messages are tracked locally
+//
+// This approach avoids the complexity of emitting user messages to the stream,
+// which would require step-level persistence in the workflow.
 
 import { useChat, type UseChatOptions } from '@ai-sdk/react';
 import type { UIMessage } from 'ai';
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
+
+// A follow-up message that was sent via hook
+interface FollowUpMessage {
+  id: string;
+  content: string;
+  timestamp: number;
+  // Whether this message has been "acknowledged" by an assistant response
+  acknowledged: boolean;
+}
 
 /**
- * A drop-in replacement for `useChat` that adds multi-turn session support.
+ * A hook for multi-turn chat sessions.
  *
- * This hook manages chat sessions where follow-up messages can be sent to
- * a running workflow via hooks, rather than starting a new workflow each time.
+ * This hook:
+ * - Starts a new workflow for the first message
+ * - Sends follow-up messages to the running workflow via hooks
+ * - Tracks follow-up user messages locally for display
  *
  * @example
  * ```typescript
- * const { messages, sendMessage, status, setMessages } = useMultiTurnChat<MyUIMessage>({
- *   resume: !!activeWorkflowRunId,
- *   onFinish: (data) => {
- *     console.log('Chat finished', data);
- *   },
- *   transport: new WorkflowChatTransport({ ... }),
+ * const { messages, sendMessage, status } = useMultiTurnChat<MyUIMessage>({
+ *   transport: new WorkflowChatTransport({
+ *     onChatSendMessage: (response) => {
+ *       const threadId = response.headers.get('x-thread-id');
+ *       if (threadId) setThreadId(threadId);
+ *     },
+ *   }),
  * });
  * ```
  */
@@ -31,10 +50,73 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
   const [threadId, setThreadId] = useState<string | null>(null);
   const threadIdRef = useRef<string | null>(null);
 
+  // Track follow-up messages that were sent via hook
+  const [followUpMessages, setFollowUpMessages] = useState<FollowUpMessage[]>([]);
+
+  // Track pending message for UI feedback while waiting
+  const [pendingMessage, setPendingMessage] = useState<string | null>(null);
+
   // Use the underlying useChat hook with all options passed through
   const chatHelpers = useChat<TUIMessage>(options);
 
-  const { sendMessage: originalSendMessage, setMessages } = chatHelpers;
+  const { sendMessage: originalSendMessage, messages: streamMessages, status } = chatHelpers;
+
+  // Update ref when threadId changes
+  useEffect(() => {
+    threadIdRef.current = threadId;
+  }, [threadId]);
+
+  // Mark follow-up messages as acknowledged when we get a new assistant message
+  // This is a heuristic: when assistant responds, we assume pending messages were received
+  useEffect(() => {
+    if (status === 'streaming' || status === 'ready') {
+      // Find the last assistant message
+      const lastAssistantIdx = streamMessages.findLastIndex(m => m.role === 'assistant');
+      if (lastAssistantIdx >= 0) {
+        setFollowUpMessages(prev =>
+          prev.map(msg => ({ ...msg, acknowledged: true }))
+        );
+        setPendingMessage(null);
+      }
+    }
+  }, [streamMessages, status]);
+
+  // Combine stream messages with follow-up user messages for display
+  const messages = useMemo(() => {
+    // If no follow-up messages, just return stream messages
+    if (followUpMessages.length === 0) {
+      return streamMessages;
+    }
+
+    // Insert acknowledged follow-up messages before the corresponding assistant responses
+    // For now, just append acknowledged follow-ups after the last assistant message
+    const result: TUIMessage[] = [];
+
+    for (const msg of streamMessages) {
+      result.push(msg);
+    }
+
+    // Add acknowledged follow-up messages as synthetic user messages
+    for (const followUp of followUpMessages.filter(f => f.acknowledged)) {
+      // Create a synthetic user message
+      const syntheticMsg = {
+        id: followUp.id,
+        role: 'user' as const,
+        content: followUp.content,
+        parts: [{ type: 'text' as const, text: followUp.content }],
+      } as TUIMessage;
+      
+      // Insert before the last assistant message if possible
+      const lastAssistantIdx = result.findLastIndex(m => m.role === 'assistant');
+      if (lastAssistantIdx >= 0) {
+        result.splice(lastAssistantIdx, 0, syntheticMsg);
+      } else {
+        result.push(syntheticMsg);
+      }
+    }
+
+    return result;
+  }, [streamMessages, followUpMessages]);
 
   // Internal function to send follow-up message via hook endpoint
   const sendFollowUpInternal = useCallback(
@@ -44,15 +126,15 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
         throw new Error('No active thread');
       }
 
-      // Optimistically add user message to UI
-      const userMessage = {
-        id: crypto.randomUUID(),
-        role: 'user' as const,
-        content: messageText,
-        parts: [{ type: 'text' as const, text: messageText }],
-      } as unknown as TUIMessage;
+      // Set pending message for UI feedback
+      setPendingMessage(messageText);
 
-      setMessages((prev) => [...prev, userMessage]);
+      // Track this message locally
+      const followUpId = `followup-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+      setFollowUpMessages(prev => [
+        ...prev,
+        { id: followUpId, content: messageText, timestamp: Date.now(), acknowledged: false },
+      ]);
 
       // Send message to resume workflow via hook endpoint
       try {
@@ -63,16 +145,18 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
         });
 
         if (!response.ok) {
-          throw new Error('Failed to send follow-up message');
+          const errorText = await response.text();
+          throw new Error(`Failed to send follow-up message: ${errorText}`);
         }
       } catch (error) {
         console.error('Error sending follow-up message:', error);
-        // Remove optimistically added message on error
-        setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
+        // Remove the failed message from tracking
+        setFollowUpMessages(prev => prev.filter(m => m.id !== followUpId));
+        setPendingMessage(null);
         throw error;
       }
     },
-    [setMessages]
+    []
   );
 
   // Smart sendMessage - uses follow-up for subsequent messages in same thread
@@ -99,7 +183,6 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
       }
 
       // First message - start a new workflow
-      // Note: The actual threadId will be set from the server response via setThreadId
       console.log(
         'Starting new chat (threadId will be set from server response)'
       );
@@ -108,9 +191,6 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
     },
     [originalSendMessage, sendFollowUpInternal]
   );
-
-  // Expose sendFollowUp for explicit use
-  const sendFollowUp = sendFollowUpInternal;
 
   // Function to update threadId from server response
   const updateThreadId = useCallback((newThreadId: string) => {
@@ -135,31 +215,40 @@ export function useMultiTurnChat<TUIMessage extends UIMessage = UIMessage>(
     } finally {
       threadIdRef.current = null;
       setThreadId(null);
+      setFollowUpMessages([]);
     }
   }, []);
 
-  // Reset thread when messages are cleared
+  // Reset thread when messages are explicitly cleared
   const wrappedSetMessages = useCallback(
-    (messages: TUIMessage[] | ((messages: TUIMessage[]) => TUIMessage[])) => {
+    (
+      newMessages: TUIMessage[] | ((messages: TUIMessage[]) => TUIMessage[])
+    ) => {
       // If messages are being cleared, also clear the thread
-      if (Array.isArray(messages) && messages.length === 0) {
+      if (Array.isArray(newMessages) && newMessages.length === 0) {
+        console.log('Clearing chat state');
         threadIdRef.current = null;
         setThreadId(null);
+        setFollowUpMessages([]);
+        setPendingMessage(null);
       }
-      return setMessages(messages);
+      // Call the underlying setMessages directly
+      chatHelpers.setMessages(newMessages);
     },
-    [setMessages]
+    [chatHelpers.setMessages]
   );
 
   return {
     ...chatHelpers,
+    messages,
     sendMessage,
     setMessages: wrappedSetMessages,
     // Multi-turn specific
     threadId,
     setThreadId: updateThreadId,
-    sendFollowUp,
+    sendFollowUp: sendFollowUpInternal,
     endSession,
     isSessionActive: threadId !== null,
+    pendingMessage, // For showing "sending..." feedback
   };
 }

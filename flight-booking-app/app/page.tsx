@@ -256,159 +256,222 @@ function renderToolOutput(part: any) {
   if (!partOutput) {
     return null;
   }
-  const parsedPartOutput = JSON.parse(partOutput);
-  const output = parsedPartOutput.output.value;
-  const parsedOutput = JSON.parse(output);
 
-  switch (part.type) {
-    case "tool-searchFlights": {
-      const flights = parsedOutput?.flights || [];
+  // Check if output is a raw error string (not JSON)
+  // This happens when a FatalError is thrown
+  if (
+    typeof partOutput === "string" &&
+    (partOutput.startsWith("FatalError") ||
+      partOutput.startsWith("Error") ||
+      !partOutput.startsWith("{"))
+  ) {
+    // Extract the error message (remove "FatalError: " prefix if present)
+    const errorMessage = partOutput
+      .replace(/^FatalError:\s*/, "")
+      .replace(/^Error:\s*/, "");
+    return (
+      <div className="text-sm p-3 rounded-md bg-red-500/10 border border-red-500/30 text-red-400">
+        <span className="font-medium">Error:</span> {errorMessage}
+      </div>
+    );
+  }
+
+  try {
+    const parsedPartOutput = JSON.parse(partOutput);
+
+    // Check if this is an error output
+    if (parsedPartOutput.error) {
+      const errorMsg = parsedPartOutput.error.message || parsedPartOutput.error;
       return (
-        <div className="space-y-2">
-          <p className="text-sm font-medium">{parsedOutput?.message}</p>
-          {flights.map((flight: any) => (
-            <div
-              key={flight.flightNumber}
-              className="p-3 bg-muted rounded-md space-y-1 text-sm"
-            >
-              <div className="font-medium">
-                {flight.airline} - {flight.flightNumber}
-              </div>
-              <div className="text-muted-foreground">
-                {flight.from} → {flight.to}
-              </div>
-              <div className="text-muted-foreground">
-                Departure: {new Date(flight.departure).toLocaleString()}
-              </div>
-              <div>
-                Status:{" "}
-                <span
-                  className={
-                    flight.status === "On Time"
-                      ? "text-green-600"
-                      : "text-orange-600"
-                  }
-                >
-                  {flight.status}
-                </span>
-              </div>
-              <div className="font-medium">${flight.price}</div>
-            </div>
-          ))}
+        <div className="text-sm p-3 rounded-md bg-red-500/10 border border-red-500/30 text-red-400">
+          <span className="font-medium">Error:</span> {errorMsg}
         </div>
       );
     }
 
-    case "tool-checkFlightStatus": {
-      const flightStatus = parsedOutput;
+    // Check for output.value structure (normal case)
+    if (!parsedPartOutput.output?.value) {
+      return null;
+    }
+
+    const output = parsedPartOutput.output.value;
+    const parsedOutput = JSON.parse(output);
+
+    // Check if the parsed output itself is an error
+    if (parsedOutput.error) {
       return (
-        <div className="space-y-1 text-sm">
-          <div className="font-medium">Flight {flightStatus.flightNumber}</div>
-          <div>
-            Status:{" "}
-            <span
-              className={
-                flightStatus.status === "On Time"
-                  ? "text-green-600 font-medium"
-                  : "text-orange-600 font-medium"
-              }
-            >
-              {flightStatus.status}
-            </span>
-          </div>
-          <div className="text-muted-foreground">
-            {flightStatus.from} → {flightStatus.to}
-          </div>
-          <div className="text-muted-foreground">
-            Airline: {flightStatus.airline}
-          </div>
-          <div className="text-muted-foreground">
-            Departure: {new Date(flightStatus.departure).toLocaleString()}
-          </div>
-          <div className="text-muted-foreground">
-            Arrival: {new Date(flightStatus.arrival).toLocaleString()}
-          </div>
-          <div>Gate: {flightStatus.gate}</div>
+        <div className="text-sm p-3 rounded-md bg-red-500/10 border border-red-500/30 text-red-400">
+          <span className="font-medium">Error:</span> {parsedOutput.error}
         </div>
       );
     }
 
-    case "tool-getAirportInfo": {
-      const airport = parsedOutput;
-      if (airport.error) {
+    switch (part.type) {
+      case "tool-searchFlights": {
+        const flights = parsedOutput?.flights || [];
         return (
-          <div className="space-y-1 text-sm">
-            <div>{airport.error}</div>
-            <div className="text-muted-foreground">{airport.suggestion}</div>
+          <div className="space-y-2">
+            <p className="text-sm font-medium">{parsedOutput?.message}</p>
+            {flights.map((flight: any) => (
+              <div
+                key={flight.flightNumber}
+                className="p-3 bg-muted rounded-md space-y-1 text-sm"
+              >
+                <div className="font-medium">
+                  {flight.airline} - {flight.flightNumber}
+                </div>
+                <div className="text-muted-foreground">
+                  {flight.from} → {flight.to}
+                </div>
+                <div className="text-muted-foreground">
+                  Departure: {new Date(flight.departure).toLocaleString()}
+                </div>
+                <div>
+                  Status:{" "}
+                  <span
+                    className={
+                      flight.status === "On Time"
+                        ? "text-green-600"
+                        : "text-orange-600"
+                    }
+                  >
+                    {flight.status}
+                  </span>
+                </div>
+                <div className="font-medium">${flight.price}</div>
+              </div>
+            ))}
           </div>
         );
       }
-      return (
-        <div className="space-y-1 text-sm">
-          <div className="font-medium">
-            {airport.code} - {airport.name}
-          </div>
-          <div className="text-muted-foreground">City: {airport.city}</div>
-          <div className="text-muted-foreground">
-            Timezone: {airport.timezone}
-          </div>
-          <div className="text-muted-foreground">
-            Terminals: {airport.terminals}
-          </div>
-          <div className="text-muted-foreground">
-            Average Delay: {airport.averageDelay}
-          </div>
-        </div>
-      );
-    }
 
-    case "tool-bookFlight": {
-      const booking = parsedOutput;
-      return (
-        <div className="space-y-2">
-          <div className="text-sm font-medium">✅ Booking Confirmed!</div>
+      case "tool-checkFlightStatus": {
+        const flightStatus = parsedOutput;
+        return (
           <div className="space-y-1 text-sm">
+            <div className="font-medium">
+              Flight {flightStatus.flightNumber}
+            </div>
             <div>
-              Confirmation #:{" "}
-              <span className="font-mono font-medium">
-                {booking.confirmationNumber}
+              Status:{" "}
+              <span
+                className={
+                  flightStatus.status === "On Time"
+                    ? "text-green-600 font-medium"
+                    : "text-orange-600 font-medium"
+                }
+              >
+                {flightStatus.status}
               </span>
             </div>
-            <div>Passenger: {booking.passengerName}</div>
-            <div>Flight: {booking.flightNumber}</div>
-            <div>Seat: {booking.seatNumber}</div>
-            <div className="text-muted-foreground mt-2">{booking.message}</div>
+            <div className="text-muted-foreground">
+              {flightStatus.from} → {flightStatus.to}
+            </div>
+            <div className="text-muted-foreground">
+              Airline: {flightStatus.airline}
+            </div>
+            <div className="text-muted-foreground">
+              Departure: {new Date(flightStatus.departure).toLocaleString()}
+            </div>
+            <div className="text-muted-foreground">
+              Arrival: {new Date(flightStatus.arrival).toLocaleString()}
+            </div>
+            <div>Gate: {flightStatus.gate}</div>
           </div>
-        </div>
-      );
-    }
+        );
+      }
 
-    case "tool-checkBaggageAllowance": {
-      const baggage = parsedOutput;
-      return (
-        <div className="space-y-1 text-sm">
-          <div className="font-medium">
-            {baggage.airline} - {baggage.class} Class
+      case "tool-getAirportInfo": {
+        const airport = parsedOutput;
+        if (airport.error) {
+          return (
+            <div className="space-y-1 text-sm">
+              <div>{airport.error}</div>
+              <div className="text-muted-foreground">{airport.suggestion}</div>
+            </div>
+          );
+        }
+        return (
+          <div className="space-y-1 text-sm">
+            <div className="font-medium">
+              {airport.code} - {airport.name}
+            </div>
+            <div className="text-muted-foreground">City: {airport.city}</div>
+            <div className="text-muted-foreground">
+              Timezone: {airport.timezone}
+            </div>
+            <div className="text-muted-foreground">
+              Terminals: {airport.terminals}
+            </div>
+            <div className="text-muted-foreground">
+              Average Delay: {airport.averageDelay}
+            </div>
           </div>
-          <div>Carry-on bags: {baggage.carryOnBags}</div>
-          <div>Checked bags: {baggage.checkedBags}</div>
-          <div>Max weight per bag: {baggage.maxWeightPerBag}</div>
-          <div>Oversize fee: {baggage.oversizeFee}</div>
-        </div>
-      );
-    }
+        );
+      }
 
-    case "tool-sleep": {
-      return (
-        <div className="space-y-2">
-          <p className="text-sm font-medium">
-            Sleeping for {part.input.durationMs}ms...
-          </p>
-        </div>
-      );
-    }
+      case "tool-bookFlight": {
+        const booking = parsedOutput;
+        return (
+          <div className="space-y-2">
+            <div className="text-sm font-medium">✅ Booking Confirmed!</div>
+            <div className="space-y-1 text-sm">
+              <div>
+                Confirmation #:{" "}
+                <span className="font-mono font-medium">
+                  {booking.confirmationNumber}
+                </span>
+              </div>
+              <div>Passenger: {booking.passengerName}</div>
+              <div>Flight: {booking.flightNumber}</div>
+              <div>Seat: {booking.seatNumber}</div>
+              <div className="text-muted-foreground mt-2">
+                {booking.message}
+              </div>
+            </div>
+          </div>
+        );
+      }
 
-    default:
-      return null;
+      case "tool-checkBaggageAllowance": {
+        const baggage = parsedOutput;
+        return (
+          <div className="space-y-1 text-sm">
+            <div className="font-medium">
+              {baggage.airline} - {baggage.class} Class
+            </div>
+            <div>Carry-on bags: {baggage.carryOnBags}</div>
+            <div>Checked bags: {baggage.checkedBags}</div>
+            <div>Max weight per bag: {baggage.maxWeightPerBag}</div>
+            <div>Oversize fee: {baggage.oversizeFee}</div>
+          </div>
+        );
+      }
+
+      case "tool-sleep": {
+        return (
+          <div className="space-y-2">
+            <p className="text-sm font-medium">
+              Sleeping for {part.input.durationMs}ms...
+            </p>
+          </div>
+        );
+      }
+
+      default:
+        return null;
+    }
+  } catch {
+    // If parsing fails, show the raw output as an error
+    // This handles cases like FatalError strings that aren't valid JSON
+    const errorMessage =
+      typeof partOutput === "string"
+        ? partOutput.replace(/^FatalError:\s*/, "").replace(/^Error:\s*/, "")
+        : "Failed to parse tool output";
+    return (
+      <div className="text-sm p-3 rounded-md bg-red-500/10 border border-red-500/30 text-red-400">
+        <span className="font-medium">Error:</span> {errorMessage}
+      </div>
+    );
   }
 }

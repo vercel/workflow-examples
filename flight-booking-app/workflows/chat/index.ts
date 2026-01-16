@@ -8,33 +8,7 @@ import { DurableAgent } from '@workflow/ai/agent';
 import { FLIGHT_ASSISTANT_PROMPT, flightBookingTools } from './steps/tools';
 import { getWritable, getWorkflowMetadata } from 'workflow';
 import { chatMessageHook } from './hooks/chat-message';
-
-/**
- * Write a data message to the stream to mark user message turns.
- * This allows the client to reconstruct the conversation on replay.
- */
-async function writeUserMessageMarker(
-  writable: WritableStream<UIMessageChunk>,
-  content: string,
-  messageId: string
-) {
-  'use step';
-  const writer = writable.getWriter();
-  try {
-    // Write a data chunk that the client can use to reconstruct user messages
-    await writer.write({
-      type: 'data-workflow',
-      data: {
-        type: 'user-message',
-        id: messageId,
-        content,
-        timestamp: Date.now(),
-      },
-    } as UIMessageChunk);
-  } finally {
-    writer.releaseLock();
-  }
-}
+import { writeUserMessageMarker, writeStreamClose } from './steps/writer';
 
 /**
  * Multi-turn chat workflow.
@@ -123,9 +97,7 @@ export async function chat(initialMessages: UIMessage[]) {
   }
 
   // Close the stream
-  const writer = writable.getWriter();
-  await writer.write({ type: 'finish' });
-  await writer.close();
+  await writeStreamClose(writable);
 
   return { messages };
 }

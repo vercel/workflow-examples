@@ -2,20 +2,73 @@ import {
   convertToModelMessages,
   type UIMessageChunk,
   type UIMessage,
+  type ModelMessage,
 } from 'ai';
 import { DurableAgent } from '@workflow/ai/agent';
 import { FLIGHT_ASSISTANT_PROMPT, flightBookingTools } from './steps/tools';
-import { getWritable } from 'workflow';
+import { getWritable, getWorkflowMetadata } from 'workflow';
+import { chatMessageHook } from './hooks/chat-message';
 
 /**
- * The main chat workflow
+ * Write a data message to the stream to mark user message turns.
+ * This allows the client to reconstruct the conversation on replay.
  */
-export async function chat(messages: UIMessage[]) {
+async function writeUserMessageMarker(
+  writable: WritableStream<UIMessageChunk>,
+  content: string,
+  messageId: string
+) {
+  'use step';
+  const writer = writable.getWriter();
+  try {
+    // Write a data chunk that the client can use to reconstruct user messages
+    await writer.write({
+      type: 'data-workflow',
+      data: {
+        type: 'user-message',
+        id: messageId,
+        content,
+        timestamp: Date.now(),
+      },
+    } as UIMessageChunk);
+  } finally {
+    writer.releaseLock();
+  }
+}
+
+/**
+ * Multi-turn chat workflow.
+ *
+ * A single workflow handles the entire conversation session across multiple turns.
+ * The workflow owns the conversation state, and follow-up messages are injected via hooks.
+ *
+ * @param initialMessages - The initial messages to start the conversation
+ */
+export async function chat(initialMessages: UIMessage[]) {
   'use workflow';
 
-  console.log('Starting workflow');
-
+  const { workflowRunId: runId } = getWorkflowMetadata();
   const writable = getWritable<UIMessageChunk>();
+
+  console.log(
+    `Starting chat workflow ${runId} with ${initialMessages.length} messages`
+  );
+
+  // Convert UI messages to model messages for the agent
+  const messages: ModelMessage[] = convertToModelMessages(initialMessages);
+
+  // Write markers for initial user messages (for replay purposes)
+  for (const msg of initialMessages) {
+    if (msg.role === 'user') {
+      const textContent = msg.parts
+        .filter((p) => p.type === 'text')
+        .map((p) => (p as { type: 'text'; text: string }).text)
+        .join('');
+      if (textContent) {
+        await writeUserMessageMarker(writable, textContent, msg.id);
+      }
+    }
+  }
 
   const agent = new DurableAgent({
     model: 'bedrock/claude-haiku-4-5-20251001-v1',
@@ -23,10 +76,56 @@ export async function chat(messages: UIMessage[]) {
     tools: flightBookingTools,
   });
 
-  await agent.stream({
-    messages: convertToModelMessages(messages),
-    writable,
-  });
+  // Create a hook that uses the run ID as the token for resumption
+  // This allows clients to send follow-up messages using just the run ID
+  const hook = chatMessageHook.create({ token: runId });
 
-  console.log('Finished workflow');
+  let turnNumber = 0;
+
+  // Main conversation loop - process turns until session ends
+  while (true) {
+    turnNumber++;
+    console.log(`Turn ${turnNumber} starting`);
+
+    // Process the current messages with the agent
+    const result = await agent.stream({
+      messages,
+      writable,
+      preventClose: true, // Keep stream open for follow-up messages
+      sendStart: turnNumber === 1, // Only send start on first turn
+      sendFinish: false, // We'll send finish when session ends
+    });
+
+    // Update messages with the agent's response
+    messages.push(...result.messages.slice(messages.length));
+
+    // Wait for the next user message via the hook
+    // The client will call the follow-up API to inject messages
+    const { message: followUp } = await hook;
+
+    // Check for session end signal
+    if (followUp === '/done') {
+      console.log(`Ending workflow session`);
+      console.log(`Finished workflow session with ${messages.length} messages`);
+      break;
+    }
+
+    console.log(`Turn ${turnNumber}: follow-up received`);
+
+    // Generate a unique ID for the follow-up message
+    const followUpId = `user-${runId}-${turnNumber}`;
+
+    // Write a marker for the follow-up message
+    await writeUserMessageMarker(writable, followUp, followUpId);
+
+    // Add the follow-up message to the conversation
+    messages.push({ role: 'user', content: followUp });
+  }
+
+  // Close the stream
+  const writer = writable.getWriter();
+  await writer.write({ type: 'finish' });
+  await writer.close();
+
+  return { messages };
 }

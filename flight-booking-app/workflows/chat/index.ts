@@ -7,22 +7,22 @@ import { getWritable } from "workflow";
  * The main chat workflow
  */
 export async function chat(messages: UIMessage[]) {
-	"use workflow";
+  "use workflow";
 
-	console.log("Starting workflow");
+  console.log("Starting workflow");
 
-	const writable = getWritable<UIMessageChunk>();
+  const writable = getWritable<UIMessageChunk>();
 
-	const agent = new DurableAgent({
-		model: "bedrock/claude-4-sonnet-20250514-v1",
-		system: FLIGHT_ASSISTANT_PROMPT,
-		tools: flightBookingTools,
-	});
+  const agent = new DurableAgent({
+    model: "bedrock/claude-haiku-4-5-20251001-v1",
+    system: FLIGHT_ASSISTANT_PROMPT,
+    tools: flightBookingTools,
+  });
 
-	await agent.stream({
-		messages: convertToModelMessages(messages),
-		writable,
-	});
+  await agent.stream({
+    messages: convertToModelMessages(messages),
+    writable,
+  });
 
-	console.log("Finished workflow");
+  console.log("Finished workflow");
 }

@@ -79,7 +79,9 @@ export async function searchFlights({
 
     // Generate flight number
     const airlineCode = ['UA', 'AA', 'DL', 'WN', 'B6'][index % 5];
-    const flightNumber = `${airlineCode}${Math.floor(Math.random() * 900) + 100}`;
+    const flightNumber = `${airlineCode}${
+      Math.floor(Math.random() * 900) + 100
+    }`;
 
     return {
       flightNumber,
@@ -161,9 +163,13 @@ export async function checkFlightStatus({
   // Determine gate based on status
   const status = statuses[Math.floor(Math.random() * statuses.length)];
   const gate = ['Boarding', 'Departed', 'In Flight', 'Landed'].includes(status)
-    ? `${['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]}${Math.floor(Math.random() * 30) + 1}`
+    ? `${['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]}${
+        Math.floor(Math.random() * 30) + 1
+      }`
     : Math.random() < 0.7
-      ? `${['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]}${Math.floor(Math.random() * 30) + 1}`
+      ? `${['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]}${
+          Math.floor(Math.random() * 30) + 1
+        }`
       : 'TBD';
 
   // Add delay information if status is "Delayed"
@@ -240,7 +246,10 @@ export async function bookFlight({
     );
   }
 
-  const confirmationNumber = `BK${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+  const confirmationNumber = `BK${Math.random()
+    .toString(36)
+    .substring(2, 8)
+    .toUpperCase()}`;
   const seatNumber =
     seatPreference === 'window'
       ? `${Math.floor(Math.random() * 30) + 1}A`
@@ -311,7 +320,9 @@ async function executeBookingApproval(
   if (!approved) {
     return `Booking rejected: ${comment || 'No reason provided'}`;
   }
-  return `Booking approved for ${passengerName} on flight ${flightNumber} (Price: ${price})${comment ? ` - Note: ${comment}` : ''}`;
+  return `Booking approved for ${passengerName} on flight ${flightNumber} (Price: ${price})${
+    comment ? ` - Note: ${comment}` : ''
+  }`;
 }
 
 // Tool definitions

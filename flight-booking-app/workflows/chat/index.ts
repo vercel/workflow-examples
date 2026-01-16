@@ -1,32 +1,33 @@
-import { DurableAgent } from '@workflow/ai/agent';
+import { DurableAgent } from "@workflow/ai/agent";
 import {
   type UIMessageChunk,
   type UIMessage,
   type ModelMessage,
   convertToModelMessages,
-} from 'ai';
+} from "ai";
 
-import { getWritable } from 'workflow';
+import { getWritable } from "workflow";
 
-import { FLIGHT_ASSISTANT_PROMPT, flightBookingTools } from './steps/tools';
-import { chatMessageHook } from './hooks/chat-message';
+import { FLIGHT_ASSISTANT_PROMPT, flightBookingTools } from "./steps/tools";
+import { chatMessageHook } from "./hooks/chat-message";
 
 /**
  * The main chat workflow with multi-turn support
  */
 export async function chat(threadId: string, initialMessages: UIMessage[]) {
-  'use workflow';
+  "use workflow";
 
-  console.log('Starting workflow for thread:', threadId);
+  console.log("Starting workflow for thread:", threadId);
 
   const writable = getWritable<UIMessageChunk>();
 
   // Keep track of messages in ModelMessage format for the agent
-  let modelMessages: ModelMessage[] =
-    await convertToModelMessages(initialMessages);
+  let modelMessages: ModelMessage[] = await convertToModelMessages(
+    initialMessages
+  );
 
   const agent = new DurableAgent({
-    model: 'bedrock/claude-4-sonnet-20250514-v1',
+    model: "bedrock/claude-4-haiku-4-5-20251001-v1",
     system: FLIGHT_ASSISTANT_PROMPT,
     tools: flightBookingTools,
   });
@@ -50,29 +51,29 @@ export async function chat(threadId: string, initialMessages: UIMessage[]) {
     const { message } = await hook;
 
     // Check if session should end
-    if (message === '/done') {
-      console.log('Ending workflow session for thread:', threadId);
+    if (message === "/done") {
+      console.log("Ending workflow session for thread:", threadId);
       break;
     }
 
     // Add user message to conversation in ModelMessage format
     modelMessages.push({
-      role: 'user',
+      role: "user",
       content: message,
     });
 
-    console.log('Added user message, continuing conversation...');
+    console.log("Added user message, continuing conversation...");
   }
 
   console.log(
-    'Finished workflow session with',
+    "Finished workflow session with",
     modelMessages.length,
-    'messages'
+    "messages"
   );
 
   return {
     threadId,
     messageCount: modelMessages.length,
-    status: 'completed' as const,
+    status: "completed" as const,
   };
 }

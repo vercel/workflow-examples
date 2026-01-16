@@ -32,5 +32,5 @@ export async function writeStreamClose(
 ) {
   const writer = writable.getWriter();
   await writer.write({ type: 'finish' });
-  await writer.close();
+  await writer.releaseLock();
 }

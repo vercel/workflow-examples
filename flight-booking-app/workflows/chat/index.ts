@@ -27,7 +27,7 @@ export async function chat(threadId: string, initialMessages: UIMessage[]) {
   );
 
   const agent = new DurableAgent({
-    model: "bedrock/claude-4-haiku-4-5-20251001-v1",
+    model: "bedrock/claude-haiku-4-5-20251001-v1",
     system: FLIGHT_ASSISTANT_PROMPT,
     tools: flightBookingTools,
   });

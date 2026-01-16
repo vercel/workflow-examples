@@ -35,6 +35,8 @@ export interface UseMultiTurnChatReturn<
   runId: string | null;
   /** Whether we're currently in an active session */
   isActive: boolean;
+  /** Message currently being sent (shown as pending) */
+  pendingMessage: string | null;
   /**
    * Send a message. If no session exists, starts a new one.
    * If a session exists, sends as a follow-up.
@@ -57,19 +59,32 @@ interface UserMessageData {
 }
 
 /**
+ * Check if a message part is a user-message marker
+ */
+function isUserMessageMarker(
+  part: unknown
+): part is { type: 'data-workflow'; data: UserMessageData } {
+  if (typeof part !== 'object' || part === null) return false;
+  const p = part as Record<string, unknown>;
+  if (p.type !== 'data-workflow' || !('data' in p)) return false;
+  const data = p.data as Record<string, unknown>;
+  return data?.type === 'user-message';
+}
+
+/**
  * A hook that wraps useChat to provide multi-turn chat session management.
  *
  * Key features:
+ * - All messages come from the stream (single source of truth)
+ * - Shows pending message for immediate feedback while waiting for stream
+ * - No deduplication needed - simpler message reconstruction
  * - Automatically detects and resumes existing sessions from localStorage
  * - Routes first messages to POST /api/chat (starts new workflow)
  * - Routes follow-up messages to POST /api/chat/[runId] (resumes hook)
- * - Handles stream reconnection on page refresh
- * - Reconstructs user messages from data markers in the stream
- * - Only stores the run ID in localStorage
  *
  * @example
  * ```tsx
- * const { messages, sendMessage, status, endSession } = useMultiTurnChat();
+ * const { messages, pendingMessage, sendMessage, status, endSession } = useMultiTurnChat();
  *
  * // Send a message (automatically starts or continues session)
  * await sendMessage("What's the status of flight UA123?");
@@ -89,12 +104,12 @@ export function useMultiTurnChat<
   const [runId, setRunId] = useState<string | null>(null);
   // Track whether we should resume an existing session
   const [shouldResume, setShouldResume] = useState(false);
-  // Track user messages from data markers
-  const userMessagesRef = useRef<
-    Map<string, UIMessage<TMetadata, UIDataTypes>>
-  >(new Map());
-  // Track sent follow-ups to avoid duplicates
-  const sentFollowUpsRef = useRef<Set<string>>(new Set());
+  // Track the message currently being sent (for immediate UI feedback)
+  const [pendingMessage, setPendingMessage] = useState<string | null>(null);
+  // Track sent messages to avoid duplicates
+  const sentMessagesRef = useRef<Set<string>>(new Set());
+  // Track which message content we've seen from stream (to clear pending)
+  const seenFromStreamRef = useRef<Set<string>>(new Set());
 
   // Initialize from localStorage on mount
   useEffect(() => {
@@ -124,8 +139,9 @@ export function useMultiTurnChat<
           // Session ended - clear the stored run ID
           setRunId(null);
           localStorage.removeItem(STORAGE_KEY);
-          userMessagesRef.current.clear();
-          sentFollowUpsRef.current.clear();
+          sentMessagesRef.current.clear();
+          seenFromStreamRef.current.clear();
+          setPendingMessage(null);
         },
         // Configure reconnection to use the stored workflow run ID
         prepareReconnectToStreamRequest: ({ api, ...rest }) => {
@@ -155,6 +171,7 @@ export function useMultiTurnChat<
     resume: shouldResume,
     onError: (err) => {
       console.error('Chat error:', err);
+      setPendingMessage(null);
       onError?.(err);
     },
     onFinish: (data) => {
@@ -163,83 +180,59 @@ export function useMultiTurnChat<
     transport,
   });
 
-  // Process messages to reconstruct the correct conversation order.
-  // The stream contains user-message markers (data-workflow chunks) that need to be
-  // converted into proper user messages and placed in the correct position.
-  // Key insight: parts within an assistant message preserve chunk arrival order,
-  // so we process parts sequentially and split on user-message markers.
+  // Process messages from the stream.
+  // All user messages come from stream markers (data-workflow chunks).
+  // No deduplication needed - single source of truth.
   const messages = useMemo(() => {
     const result: UIMessage<TMetadata, UIDataTypes>[] = [];
-    const seenUserMessageIds = new Set<string>();
-    const seenUserMessageContent = new Set<string>();
-
-    // First pass: collect user message content from actual user messages (optimistic sends)
-    for (const msg of rawMessages) {
-      if (msg.role === 'user') {
-        const content = msg.parts
-          .filter((p) => p.type === 'text')
-          .map((p) => (p as { type: 'text'; text: string }).text)
-          .join('');
-        if (content) {
-          seenUserMessageContent.add(content);
-        }
-      }
-    }
 
     for (const msg of rawMessages) {
+      // Skip user messages from useChat (we only use stream markers)
       if (msg.role === 'user') {
-        // Add user messages directly (these are optimistic sends from useChat)
-        result.push(msg);
         continue;
       }
 
       if (msg.role === 'assistant') {
-        // Process assistant message parts in order, splitting on user-message markers
+        // Process parts in order, extracting user messages from markers
         let currentAssistantParts: typeof msg.parts = [];
         let partIndex = 0;
 
         for (const part of msg.parts) {
-          // Check if this is a user-message marker
-          if (part.type === 'data-workflow' && 'data' in part) {
-            const data = part.data as UserMessageData;
-            if (data?.type === 'user-message') {
-              // First, flush any accumulated assistant parts as an assistant message
-              if (currentAssistantParts.length > 0) {
-                result.push({
-                  ...msg,
-                  id: `${msg.id}-part-${partIndex++}`,
-                  parts: currentAssistantParts,
-                });
-                currentAssistantParts = [];
-              }
+          if (isUserMessageMarker(part)) {
+            const data = part.data;
 
-              // Skip if we already have this user message (from optimistic send or duplicate)
-              if (
-                seenUserMessageIds.has(data.id) ||
-                seenUserMessageContent.has(data.content)
-              ) {
-                continue;
-              }
-              seenUserMessageIds.add(data.id);
-              seenUserMessageContent.add(data.content);
-
-              // Add the user message at this position
-              const userMsg: UIMessage<TMetadata, UIDataTypes> = {
-                id: data.id,
-                role: 'user',
-                parts: [{ type: 'text', text: data.content }],
-              };
-              result.push(userMsg);
-              userMessagesRef.current.set(data.id, userMsg);
-              continue;
+            // Flush any accumulated assistant parts
+            if (currentAssistantParts.length > 0) {
+              result.push({
+                ...msg,
+                id: `${msg.id}-part-${partIndex++}`,
+                parts: currentAssistantParts,
+              });
+              currentAssistantParts = [];
             }
+
+            // Track that we've seen this content from the stream
+            seenFromStreamRef.current.add(data.content);
+
+            // Clear pending message if it matches
+            if (pendingMessage === data.content) {
+              setPendingMessage(null);
+            }
+
+            // Add the user message
+            result.push({
+              id: data.id,
+              role: 'user',
+              parts: [{ type: 'text', text: data.content }],
+            } as UIMessage<TMetadata, UIDataTypes>);
+            continue;
           }
 
-          // Accumulate non-user-marker parts
+          // Accumulate non-marker parts
           currentAssistantParts.push(part);
         }
 
-        // Flush any remaining assistant parts
+        // Flush remaining assistant parts
         if (currentAssistantParts.length > 0) {
           result.push({
             ...msg,
@@ -251,7 +244,7 @@ export function useMultiTurnChat<
     }
 
     return result;
-  }, [rawMessages]);
+  }, [rawMessages, pendingMessage]);
 
   // Send a follow-up message to the existing workflow
   const sendFollowUp = useCallback(
@@ -261,11 +254,11 @@ export function useMultiTurnChat<
       }
 
       // Create a unique key to prevent duplicate sends
-      const sendKey = `${runId}-${Date.now()}`;
-      if (sentFollowUpsRef.current.has(sendKey)) {
+      const sendKey = `${runId}-${text}-${Date.now()}`;
+      if (sentMessagesRef.current.has(sendKey)) {
         return;
       }
-      sentFollowUpsRef.current.add(sendKey);
+      sentMessagesRef.current.add(sendKey);
 
       // Send the follow-up via the hook resumption endpoint
       const response = await fetch(`/api/chat/${encodeURIComponent(runId)}`, {
@@ -275,7 +268,7 @@ export function useMultiTurnChat<
       });
 
       if (!response.ok) {
-        sentFollowUpsRef.current.delete(sendKey);
+        sentMessagesRef.current.delete(sendKey);
         const errorData = await response.json();
         throw new Error(
           errorData.details || 'Failed to send follow-up message'
@@ -285,18 +278,28 @@ export function useMultiTurnChat<
     [runId]
   );
 
-  // Main send message function - routes to appropriate endpoint
+  // Main send message function
   const sendMessage = useCallback(
     async (text: string) => {
-      if (runId) {
-        // We have an active session - send as follow-up
-        await sendFollowUp(text);
-      } else {
-        // Send the initial message to start the workflow
-        await baseSendMessage({
-          text,
-          metadata: { createdAt: Date.now() } as unknown as TMetadata,
-        });
+      // Show pending message immediately for instant feedback
+      setPendingMessage(text);
+
+      try {
+        if (runId) {
+          // We have an active session - send as follow-up
+          await sendFollowUp(text);
+        } else {
+          // First message - start the workflow via useChat
+          // This connects us to the stream and sets up the run ID
+          await baseSendMessage({
+            text,
+            metadata: { createdAt: Date.now() } as unknown as TMetadata,
+          });
+        }
+      } catch (err) {
+        // Clear pending on error
+        setPendingMessage(null);
+        throw err;
       }
     },
     [runId, baseSendMessage, sendFollowUp]
@@ -320,8 +323,9 @@ export function useMultiTurnChat<
     setRunId(null);
     setShouldResume(false);
     localStorage.removeItem(STORAGE_KEY);
-    userMessagesRef.current.clear();
-    sentFollowUpsRef.current.clear();
+    sentMessagesRef.current.clear();
+    seenFromStreamRef.current.clear();
+    setPendingMessage(null);
     setMessages([]);
     stop();
   }, [runId, setMessages, stop]);
@@ -332,6 +336,7 @@ export function useMultiTurnChat<
     error,
     runId,
     isActive: !!runId,
+    pendingMessage,
     sendMessage,
     stop,
     endSession,

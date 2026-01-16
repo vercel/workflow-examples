@@ -36,15 +36,22 @@ const FULL_EXAMPLE_PROMPT =
 export default function ChatPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const { messages, status, error, sendMessage, stop, endSession } =
-    useMultiTurnChat<MyMessageMetadata>({
-      onError: (err) => console.error("Chat error:", err),
-      onFinish: () => {
-        requestAnimationFrame(() => {
-          textareaRef.current?.focus();
-        });
-      },
-    });
+  const {
+    messages,
+    status,
+    error,
+    sendMessage,
+    stop,
+    endSession,
+    pendingMessage,
+  } = useMultiTurnChat<MyMessageMetadata>({
+    onError: (err) => console.error("Chat error:", err),
+    onFinish: () => {
+      requestAnimationFrame(() => {
+        textareaRef.current?.focus();
+      });
+    },
+  });
 
   // Focus the input on mount
   useEffect(() => {
@@ -223,10 +230,34 @@ export default function ChatPage() {
             );
           })}
 
-          {/* Loading indicator when user message sent but no assistant response yet */}
-          {messages.length > 0 &&
+          {/* Pending message - shows immediately while waiting for stream confirmation */}
+          {pendingMessage && (
+            <>
+              <Message from="user">
+                <MessageContent>
+                  <Response>{pendingMessage}</Response>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Shimmer className="text-xs text-muted-foreground">
+                      Sending...
+                    </Shimmer>
+                  </div>
+                </MessageContent>
+              </Message>
+              <Message from="assistant">
+                <MessageContent>
+                  <Shimmer className="text-sm">
+                    Processing your request...
+                  </Shimmer>
+                </MessageContent>
+              </Message>
+            </>
+          )}
+
+          {/* Loading indicator when user message confirmed but no assistant response yet */}
+          {!pendingMessage &&
+            messages.length > 0 &&
             messages[messages.length - 1].role === "user" &&
-            status === "submitted" && (
+            status === "streaming" && (
               <Message from="assistant">
                 <MessageContent>
                   <Shimmer className="text-sm">

@@ -1,8 +1,7 @@
 "use client";
 
-import { useChat } from "@ai-sdk/react";
 import { WorkflowChatTransport } from "@workflow/ai";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useCallback } from "react";
 import {
   Conversation,
   ConversationContent,
@@ -22,6 +21,7 @@ import {
 import ChatInput from "@/components/chat-input";
 import type { MyUIMessage } from "@/schemas/chat";
 import { BookingApproval } from "@/components/booking-approval";
+import { useMultiTurnChat } from "@/components/use-multi-turn-chat";
 
 const SUGGESTIONS = [
   "Find me flights from San Francisco to Los Angeles",
@@ -36,83 +36,83 @@ const FULL_EXAMPLE_PROMPT =
 export default function ChatPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // Check for an active workflow run that we should reconnect to
   const activeWorkflowRunId = useMemo(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined") return undefined;
     return localStorage.getItem("active-workflow-run-id") ?? undefined;
   }, []);
 
-  const { stop, error, messages, sendMessage, status, setMessages } =
-    useChat<MyUIMessage>({
-      resume: !!activeWorkflowRunId,
-      onError(error) {
-        console.error("onError", error);
-      },
-      onFinish(data) {
-        console.log("onFinish", data);
+  const {
+    stop,
+    messages,
+    sendMessage,
+    status,
+    setMessages,
+    error,
+    setThreadId,
+    pendingMessage,
+    endSession,
+  } = useMultiTurnChat<MyUIMessage>({
+    // Resume existing session if we have an active workflow run
+    resume: !!activeWorkflowRunId,
+    onError(error) {
+      console.error("Chat error:", error);
+    },
+    onFinish() {
+      // Focus input after response completes
+      requestAnimationFrame(() => {
+        textareaRef.current?.focus();
+      });
+    },
 
-        // Update the chat history in `localStorage` to include the latest bot message
-        console.log("Saving chat history to localStorage", data.messages);
-        localStorage.setItem("chat-history", JSON.stringify(data.messages));
+    transport: new WorkflowChatTransport({
+      onChatSendMessage: (response) => {
+        // Capture the thread ID from the server for follow-up messages
+        const serverThreadId = response.headers.get("x-thread-id");
+        if (serverThreadId) {
+          setThreadId(serverThreadId);
+          localStorage.setItem("active-thread-id", serverThreadId);
+        }
 
-        requestAnimationFrame(() => {
-          textareaRef.current?.focus();
-        });
-      },
-
-      transport: new WorkflowChatTransport({
-        onChatSendMessage: (response, options) => {
-          console.log("onChatSendMessage", response, options);
-
-          // Update the chat history in `localStorage` to include the latest user message
-          localStorage.setItem(
-            "chat-history",
-            JSON.stringify(options.messages)
-          );
-
-          // We'll store the workflow run ID in `localStorage` to allow the client
-          // to resume the chat session after a page refresh or network interruption
-          const workflowRunId = response.headers.get("x-workflow-run-id");
-          if (!workflowRunId) {
-            throw new Error(
-              'Workflow run ID not found in "x-workflow-run-id" response header'
-            );
-          }
+        // Store the workflow run ID for reconnection after page refresh
+        const workflowRunId = response.headers.get("x-workflow-run-id");
+        if (workflowRunId) {
           localStorage.setItem("active-workflow-run-id", workflowRunId);
-        },
-        onChatEnd: ({ chatId, chunkIndex }) => {
-          console.log("onChatEnd", chatId, chunkIndex);
+        }
+      },
+      onChatEnd: () => {
+        // Workflow completed - clear the run ID
+        localStorage.removeItem("active-workflow-run-id");
+      },
+      // Configure reconnection to use the stored workflow run ID
+      prepareReconnectToStreamRequest: ({ api, ...rest }) => {
+        const workflowRunId = localStorage.getItem("active-workflow-run-id");
+        if (!workflowRunId) {
+          throw new Error("No active workflow run ID found for reconnection");
+        }
+        return {
+          ...rest,
+          api: `/api/chat/${encodeURIComponent(workflowRunId)}/stream`,
+        };
+      },
+      maxConsecutiveErrors: 5,
+    }),
+  });
 
-          // Once the chat stream ends, we can remove the workflow run ID from `localStorage`
-          localStorage.removeItem("active-workflow-run-id");
-        },
-        // Configure reconnection to use the stored workflow run ID
-        prepareReconnectToStreamRequest: ({ id, api, ...rest }) => {
-          console.log("prepareReconnectToStreamRequest", id);
-          const workflowRunId = localStorage.getItem("active-workflow-run-id");
-          if (!workflowRunId) {
-            throw new Error("No active workflow run ID found");
-          }
-          // Use the workflow run ID instead of the chat ID for reconnection
-          return {
-            ...rest,
-            api: `/api/chat/${encodeURIComponent(workflowRunId)}/stream`,
-          };
-        },
-        // Optional: Configure error handling for reconnection attempts
-        maxConsecutiveErrors: 5,
-      }),
-    });
+  // Clear session and start fresh
+  const handleNewChat = useCallback(async () => {
+    try {
+      await stop();
+    } catch {
+      // Ignore abort errors when stopping
+    }
+    await endSession();
+    localStorage.removeItem("active-workflow-run-id");
+    localStorage.removeItem("active-thread-id");
+    setMessages([]);
+  }, [stop, endSession, setMessages]);
 
-  // Load chat history from `localStorage`. In a real-world application,
-  // this would likely be done on the server side and loaded from a database,
-  // but for the purposes of this demo, we'll load it from `localStorage`.
-  useEffect(() => {
-    const chatHistory = localStorage.getItem("chat-history");
-    if (!chatHistory) return;
-    setMessages(JSON.parse(chatHistory) as MyUIMessage[]);
-  }, [setMessages]);
-
-  // Activate the input field
+  // Focus input on mount
   useEffect(() => {
     textareaRef.current?.focus();
   }, []);
@@ -134,7 +134,7 @@ export default function ChatPage() {
         </div>
       )}
 
-      {messages.length === 0 && (
+      {messages.length === 0 && !pendingMessage && (
         <div className="mb-8 space-y-4">
           <div className="text-center">
             <h2 className="text-lg font-semibold mb-2">
@@ -178,6 +178,7 @@ export default function ChatPage() {
           </div>
         </div>
       )}
+
       <Conversation className="mb-10">
         <ConversationContent>
           {messages.map((message, index) => {
@@ -200,19 +201,18 @@ export default function ChatPage() {
 
                       // Render workflow data messages
                       if (part.type === "data-workflow" && "data" in part) {
-                        const data = part.data as any;
+                        const data = part.data as Record<string, unknown>;
                         return (
                           <div
                             key={`${message.id}-data-${partIndex}`}
                             className="text-xs px-3 py-2 rounded-md mb-2 bg-blue-700/25 text-blue-300 border border-blue-700/25"
                           >
-                            {data.message}
+                            {String(data.message ?? JSON.stringify(data))}
                           </div>
                         );
                       }
 
                       // Render tool parts
-                      // Type guard to check if this is a tool invocation part
                       if (
                         part.type === "tool-searchFlights" ||
                         part.type === "tool-checkFlightStatus" ||
@@ -221,7 +221,6 @@ export default function ChatPage() {
                         part.type === "tool-checkBaggageAllowance" ||
                         part.type === "tool-sleep"
                       ) {
-                        // Additional type guard to ensure we have the required properties
                         if (!("toolCallId" in part) || !("state" in part)) {
                           return null;
                         }
@@ -233,7 +232,9 @@ export default function ChatPage() {
                             <ToolHeader type={part.type} state={part.state} />
                             <ToolContent>
                               {part.input ? (
-                                <ToolInput input={part.input as any} />
+                                <ToolInput
+                                  input={part.input as Record<string, unknown>}
+                                />
                               ) : null}
                               <ToolOutput
                                 output={
@@ -247,6 +248,7 @@ export default function ChatPage() {
                           </Tool>
                         );
                       }
+
                       if (part.type === "tool-bookingApproval") {
                         return (
                           <BookingApproval
@@ -265,7 +267,8 @@ export default function ChatPage() {
                       }
                       return null;
                     })}
-                    {/* Loading indicators */}
+
+                    {/* Loading indicators for assistant messages */}
                     {message.role === "assistant" &&
                       isLastMessage &&
                       !hasText && (
@@ -287,6 +290,17 @@ export default function ChatPage() {
               </div>
             );
           })}
+
+          {/* Show pending follow-up message while waiting for stream */}
+          {pendingMessage && (
+            <Message from="user">
+              <MessageContent>
+                <Response>{pendingMessage}</Response>
+                <Shimmer className="text-xs mt-2">Sending...</Shimmer>
+              </MessageContent>
+            </Message>
+          )}
+
           {/* Show loading indicator when message is sent but no assistant response yet */}
           {messages.length > 0 &&
             messages[messages.length - 1].role === "user" &&
@@ -314,20 +328,21 @@ export default function ChatPage() {
           });
         }}
         stop={stop}
+        onNewChat={handleNewChat}
       />
     </div>
   );
 }
 
 // Helper function to render tool outputs with proper formatting
-function renderToolOutput(part: any) {
-  const partOutput = part.output as any;
+function renderToolOutput(part: Record<string, unknown>) {
+  const partOutput = part.output;
   if (!partOutput) {
     return null;
   }
-  const parsedPartOutput = JSON.parse(partOutput);
-  const output = parsedPartOutput.output.value;
-  const parsedOutput = JSON.parse(output);
+  const parsedPartOutput = JSON.parse(String(partOutput));
+  const output = parsedPartOutput.output?.value;
+  const parsedOutput = output ? JSON.parse(output) : null;
 
   switch (part.type) {
     case "tool-searchFlights": {
@@ -335,19 +350,19 @@ function renderToolOutput(part: any) {
       return (
         <div className="space-y-2">
           <p className="text-sm font-medium">{parsedOutput?.message}</p>
-          {flights.map((flight: any) => (
+          {flights.map((flight: Record<string, unknown>) => (
             <div
-              key={flight.flightNumber}
+              key={String(flight.flightNumber)}
               className="p-3 bg-muted rounded-md space-y-1 text-sm"
             >
               <div className="font-medium">
-                {flight.airline} - {flight.flightNumber}
+                {String(flight.airline)} - {String(flight.flightNumber)}
               </div>
               <div className="text-muted-foreground">
-                {flight.from} → {flight.to}
+                {String(flight.from)} → {String(flight.to)}
               </div>
               <div className="text-muted-foreground">
-                Departure: {new Date(flight.departure).toLocaleString()}
+                Departure: {new Date(String(flight.departure)).toLocaleString()}
               </div>
               <div>
                 Status:{" "}
@@ -358,10 +373,10 @@ function renderToolOutput(part: any) {
                       : "text-orange-600"
                   }
                 >
-                  {flight.status}
+                  {String(flight.status)}
                 </span>
               </div>
-              <div className="font-medium">${flight.price}</div>
+              <div className="font-medium">${String(flight.price)}</div>
             </div>
           ))}
         </div>
@@ -369,33 +384,35 @@ function renderToolOutput(part: any) {
     }
 
     case "tool-checkFlightStatus": {
-      const status = parsedOutput;
+      const flightStatus = parsedOutput;
       return (
         <div className="space-y-1 text-sm">
-          <div className="font-medium">Flight {status.flightNumber}</div>
+          <div className="font-medium">Flight {flightStatus.flightNumber}</div>
           <div>
             Status:{" "}
             <span
               className={
-                status.status === "On Time"
+                flightStatus.status === "On Time"
                   ? "text-green-600 font-medium"
                   : "text-orange-600 font-medium"
               }
             >
-              {status.status}
+              {flightStatus.status}
             </span>
           </div>
           <div className="text-muted-foreground">
-            {status.from} → {status.to}
-          </div>
-          <div className="text-muted-foreground">Airline: {status.airline}</div>
-          <div className="text-muted-foreground">
-            Departure: {new Date(status.departure).toLocaleString()}
+            {flightStatus.from} → {flightStatus.to}
           </div>
           <div className="text-muted-foreground">
-            Arrival: {new Date(status.arrival).toLocaleString()}
+            Airline: {flightStatus.airline}
           </div>
-          <div>Gate: {status.gate}</div>
+          <div className="text-muted-foreground">
+            Departure: {new Date(flightStatus.departure).toLocaleString()}
+          </div>
+          <div className="text-muted-foreground">
+            Arrival: {new Date(flightStatus.arrival).toLocaleString()}
+          </div>
+          <div>Gate: {flightStatus.gate}</div>
         </div>
       );
     }
@@ -431,7 +448,6 @@ function renderToolOutput(part: any) {
 
     case "tool-bookFlight": {
       const booking = parsedOutput;
-
       return (
         <div className="space-y-2">
           <div className="text-sm font-medium">✅ Booking Confirmed!</div>
@@ -467,10 +483,11 @@ function renderToolOutput(part: any) {
     }
 
     case "tool-sleep": {
+      const input = part.input as { durationMs?: number };
       return (
         <div className="space-y-2">
           <p className="text-sm font-medium">
-            Sleeping for {part.input.durationMs}ms...
+            Sleeping for {input?.durationMs}ms...
           </p>
         </div>
       );

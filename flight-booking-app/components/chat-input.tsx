@@ -18,6 +18,7 @@ export default function ChatInput({
   setMessages,
   sendMessage,
   stop,
+  onNewChat,
 }: {
   status: ChatStatus;
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -26,6 +27,7 @@ export default function ChatInput({
     message: PromptInputMessage & { metadata?: { createdAt: number } }
   ) => void;
   stop: () => void;
+  onNewChat?: () => void | Promise<void>;
 }) {
   const [text, setText] = useState('');
 
@@ -36,6 +38,8 @@ export default function ChatInput({
           const hasText = Boolean(message.text);
           if (!hasText) return;
 
+          // Always send the message - the hook will handle routing
+          // (either as new message or follow-up to existing thread)
           sendMessage({
             text: message.text || '',
             metadata: { createdAt: Date.now() },
@@ -58,9 +62,14 @@ export default function ChatInput({
               size="sm"
               onClick={async () => {
                 await stop();
-                localStorage.removeItem('active-workflow-run-id');
-                localStorage.removeItem('chat-history');
-                setMessages([]);
+                if (onNewChat) {
+                  await onNewChat();
+                } else {
+                  // Fallback if onNewChat not provided
+                  localStorage.removeItem('active-workflow-run-id');
+                  localStorage.removeItem('active-thread-id');
+                  setMessages([]);
+                }
                 setText('');
               }}
             >

@@ -1,4 +1,4 @@
-import { bookingApprovalHook } from '@/workflows/chat/hooks/approval';
+import { bookingApprovalHook } from "@/workflows/chat/hooks/approval";
 
 export async function POST(request: Request) {
   const { toolCallId, approved, comment } = await request.json();

@@ -21,6 +21,7 @@ import {
 import ChatInput from "@/components/chat-input";
 import type { MyUIMessage } from "@/schemas/chat";
 import { BookingApproval } from "@/components/booking-approval";
+import { useMultiTurnChat } from "@/components/use-multi-turn-chat";
 
 const SUGGESTIONS = [
   "Find me flights from San Francisco to Los Angeles",

@@ -30,6 +30,7 @@ export async function writeUserMessageMarker(
 export async function writeStreamClose(
   writable: WritableStream<UIMessageChunk>
 ) {
+  'use step';
   const writer = writable.getWriter();
   await writer.write({ type: 'finish' });
   await writer.releaseLock();

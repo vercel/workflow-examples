@@ -10,11 +10,11 @@
     "migrate": "bunx workflow-postgres-setup"
   },
   "dependencies": {
-    "@workflow/world-postgres": "^4.1.0-beta.26",
+    "@workflow/world-postgres": "^4.1.0-beta.30",
     "next": "16.0.10",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "workflow": "^4.0.1-beta.44"
+    "workflow": "^4.1.0-beta.51"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

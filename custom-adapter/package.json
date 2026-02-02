@@ -14,7 +14,7 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@workflow/world-local": "^4.0.1-beta.17",
-    "workflow": "^4.0.1-beta.44"
+    "@workflow/world-local": "4.1.0-beta.28",
+    "workflow": "4.1.0-beta.51"
   }
 }

@@ -14,8 +14,8 @@
     "@opentelemetry/api": "^1.9.0",
     "@radix-ui/react-use-controllable-state": "^1.2.2",
     "@vercel/otel": "^1.13.0",
-    "@workflow/ai": "4.0.1-beta.48",
-    "@workflow/world-postgres": "4.1.0-beta.27",
+    "@workflow/ai": "4.0.1-beta.52",
+    "@workflow/world-postgres": "4.1.0-beta.30",
     "@xyflow/react": "^12.9.0",
     "ai": "^5.0.76",
     "class-variance-authority": "^0.7.1",
@@ -37,7 +37,7 @@
     "tokenlens": "^1.3.1",
     "typescript": "^5.9.3",
     "use-stick-to-bottom": "^1.1.1",
-    "workflow": "4.0.1-beta.48",
+    "workflow": "4.1.0-beta.51",
     "zod": "^4.1.12"
   },
   "devDependencies": {

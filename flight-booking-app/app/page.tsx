@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {
   Conversation,
   ConversationContent,
@@ -21,6 +21,11 @@ import { BookingApproval } from "@/components/booking-approval";
 import { useMultiTurnChat } from "@/hooks/use-multi-turn-chat";
 import type { MyMessageMetadata } from "@/schemas/chat";
 import ChatInput from "@/components/chat-input";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const SUGGESTIONS = [
   "Find me flights from San Francisco to Los Angeles",
@@ -57,6 +62,21 @@ export default function ChatPage() {
   useEffect(() => {
     textareaRef.current?.focus();
   }, []);
+
+  // Extract t=0 from the first request-received event
+  const requestReceivedAt = useMemo(() => {
+    for (const msg of messages) {
+      for (const part of msg.parts) {
+        if (part.type === "data-workflow" && "data" in part) {
+          const data = part.data as any;
+          if (data?.type === "request-received") {
+            return data.timestamp as number;
+          }
+        }
+      }
+    }
+    return null;
+  }, [messages]);
 
   return (
     <div className="flex flex-col w-full max-w-2xl pt-12 pb-24 mx-auto stretch">
@@ -110,6 +130,7 @@ export default function ChatPage() {
         </div>
       )}
 
+
       <Conversation className="mb-10">
         <ConversationContent>
           {messages.map((message, index) => {
@@ -119,7 +140,7 @@ export default function ChatPage() {
             return (
               <div key={message.id}>
                 <Message from={message.role}>
-                  <MessageContent>
+                  <MessageContent className={message.role === "assistant" ? "w-full" : undefined}>
                     {message.parts.map((part, partIndex) => {
                       // Render text parts
                       if (part.type === "text") {
@@ -137,18 +158,14 @@ export default function ChatPage() {
                         if (data?.type === "user-message") {
                           return null;
                         }
-                        // Render other workflow data
-                        if (data?.message) {
-                          return (
-                            <div
-                              key={`${message.id}-data-${partIndex}`}
-                              className="text-xs px-3 py-2 rounded-md mb-2 bg-blue-700/25 text-blue-300 border border-blue-700/25"
-                            >
-                              {data.message}
-                            </div>
-                          );
-                        }
-                        return null;
+                        // Render observability events inline
+                        return (
+                          <WorkflowEventBadge
+                            key={`${message.id}-data-${partIndex}`}
+                            data={data}
+                            t0={requestReceivedAt}
+                          />
+                        );
                       }
 
                       // Render tool parts
@@ -281,6 +298,178 @@ export default function ChatPage() {
   );
 }
 
+// Component to render workflow observability events inline
+function WorkflowEventBadge({ data, t0 }: { data: any; t0: number | null }) {
+  if (!data?.type) return null;
+
+  // Format delta time from t0
+  const formatDelta = (timestamp: number) => {
+    if (!t0) return "";
+    const deltaMs = timestamp - t0;
+    if (deltaMs < 1000) return `+${deltaMs}ms`;
+    return `+${(deltaMs / 1000).toFixed(2)}s`;
+  };
+
+  // Helper to wrap delta timestamps with tooltip
+  const DeltaTimestamp = ({ timestamp }: { timestamp: number }) => (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className="cursor-help">{formatDelta(timestamp)}</span>
+      </TooltipTrigger>
+      <TooltipContent>Time since request received</TooltipContent>
+    </Tooltip>
+  );
+
+  switch (data.type) {
+    case "request-received":
+      return (
+        <div className="flex items-center justify-between w-full text-xs text-muted-foreground/60 mb-1">
+          <span>Request received</span>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="font-mono text-[10px] cursor-help">t=0</span>
+            </TooltipTrigger>
+            <TooltipContent>Reference time for all other timestamps</TooltipContent>
+          </Tooltip>
+        </div>
+      );
+
+    case "workflow-start":
+      return (
+        <div className="flex items-center justify-between w-full text-xs text-muted-foreground/60 mb-1">
+          <span>Workflow started</span>
+          <span className="font-mono text-[10px] flex items-center gap-1.5">
+            <span>{data.workflowRunId}</span>
+            {data.timestamp && <DeltaTimestamp timestamp={data.timestamp} />}
+          </span>
+        </div>
+      );
+
+    case "workflow-end":
+      return (
+        <div className="flex items-center justify-between w-full text-xs text-muted-foreground/60 mb-1">
+          <span>Workflow completed</span>
+          <span className="font-mono text-[10px] flex items-center gap-1.5">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="cursor-help">
+                  {data.turnCount} turn{data.turnCount !== 1 ? "s" : ""} in{" "}
+                  {(data.totalDurationMs / 1000).toFixed(1)}s
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>Total workflow duration</TooltipContent>
+            </Tooltip>
+            {data.timestamp && <DeltaTimestamp timestamp={data.timestamp} />}
+          </span>
+        </div>
+      );
+
+    case "turn-start":
+      return (
+        <div className="flex items-center justify-between w-full text-xs text-muted-foreground/60 mb-1">
+          <span>Turn {data.turnNumber} started</span>
+          {data.timestamp && (
+            <span className="font-mono text-[10px]">
+              <DeltaTimestamp timestamp={data.timestamp} />
+            </span>
+          )}
+        </div>
+      );
+
+    case "turn-end":
+      return (
+        <div className="flex items-center justify-between w-full text-xs text-muted-foreground/60 mb-1">
+          <span>Turn {data.turnNumber} completed</span>
+          <span className="font-mono text-[10px] flex items-center gap-1.5">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="cursor-help">{(data.durationMs / 1000).toFixed(1)}s</span>
+              </TooltipTrigger>
+              <TooltipContent>Duration of this turn</TooltipContent>
+            </Tooltip>
+            {data.timestamp && <DeltaTimestamp timestamp={data.timestamp} />}
+          </span>
+        </div>
+      );
+
+    case "tool-start":
+      return (
+        <div className="flex items-center justify-between w-full text-xs text-muted-foreground/60 mb-1">
+          <span>Tool started</span>
+          <span className="font-mono text-[10px] flex items-center gap-1.5">
+            <span>{data.toolName}</span>
+            {data.timestamp && <DeltaTimestamp timestamp={data.timestamp} />}
+          </span>
+        </div>
+      );
+
+    case "tool-end":
+      return (
+        <div className="flex items-center justify-between w-full text-xs text-muted-foreground/60 mb-1">
+          <span>Tool completed</span>
+          <span className="font-mono text-[10px] flex items-center gap-1.5">
+            <span>{data.toolName}</span>
+            {data.timestamp && <DeltaTimestamp timestamp={data.timestamp} />}
+          </span>
+        </div>
+      );
+
+    case "tool-call":
+      // Legacy support for old tool-call events
+      return (
+        <div className="flex items-center justify-between w-full text-xs text-muted-foreground/60 mb-1">
+          <span>{data.toolName}</span>
+          {data.timestamp && (
+            <span className="font-mono text-[10px]">
+              <DeltaTimestamp timestamp={data.timestamp} />
+            </span>
+          )}
+        </div>
+      );
+
+    case "agent-step":
+      // Skip rendering agent-step since we now have realtime tool-call events
+      return null;
+
+    default:
+      // Render generic data messages
+      if (data?.message) {
+        return (
+          <div className="text-xs px-3 py-2 rounded-md mb-2 bg-blue-700/25 text-blue-300 border border-blue-700/25">
+            {data.message}
+          </div>
+        );
+      }
+      return null;
+  }
+}
+
+// Helper function to parse tool output with various formats
+function parseToolOutput(partOutput: any): any {
+  // If already an object, return it
+  if (typeof partOutput === "object" && partOutput !== null) {
+    // Check for nested output.value structure
+    if (partOutput.output?.value) {
+      const innerValue = partOutput.output.value;
+      return typeof innerValue === "string" ? JSON.parse(innerValue) : innerValue;
+    }
+    return partOutput;
+  }
+
+  // If it's a string, try to parse it
+  if (typeof partOutput === "string") {
+    const parsed = JSON.parse(partOutput);
+    // Check for nested output.value structure
+    if (parsed.output?.value) {
+      const innerValue = parsed.output.value;
+      return typeof innerValue === "string" ? JSON.parse(innerValue) : innerValue;
+    }
+    return parsed;
+  }
+
+  return partOutput;
+}
+
 // Helper function to render tool outputs with proper formatting
 function renderToolOutput(part: any) {
   const partOutput = part.output as any;
@@ -308,31 +497,14 @@ function renderToolOutput(part: any) {
   }
 
   try {
-    const parsedPartOutput = JSON.parse(partOutput);
+    const parsedOutput = parseToolOutput(partOutput);
 
     // Check if this is an error output
-    if (parsedPartOutput.error) {
-      const errorMsg = parsedPartOutput.error.message || parsedPartOutput.error;
+    if (parsedOutput?.error) {
+      const errorMsg = parsedOutput.error.message || parsedOutput.error;
       return (
         <div className="text-sm p-3 rounded-md bg-red-500/10 border border-red-500/30 text-red-400">
           <span className="font-medium">Error:</span> {errorMsg}
-        </div>
-      );
-    }
-
-    // Check for output.value structure (normal case)
-    if (!parsedPartOutput.output?.value) {
-      return null;
-    }
-
-    const output = parsedPartOutput.output.value;
-    const parsedOutput = JSON.parse(output);
-
-    // Check if the parsed output itself is an error
-    if (parsedOutput.error) {
-      return (
-        <div className="text-sm p-3 rounded-md bg-red-500/10 border border-red-500/30 text-red-400">
-          <span className="font-medium">Error:</span> {parsedOutput.error}
         </div>
       );
     }
@@ -341,12 +513,12 @@ function renderToolOutput(part: any) {
       case "tool-searchFlights": {
         const flights = parsedOutput?.flights || [];
         return (
-          <div className="space-y-2">
+          <div className="p-3 space-y-3">
             <p className="text-sm font-medium">{parsedOutput?.message}</p>
             {flights.map((flight: any) => (
               <div
                 key={flight.flightNumber}
-                className="p-3 bg-muted rounded-md space-y-1 text-sm"
+                className="p-3 bg-background/50 border rounded-md space-y-1 text-sm"
               >
                 <div className="font-medium">
                   {flight.airline} - {flight.flightNumber}
@@ -379,7 +551,7 @@ function renderToolOutput(part: any) {
       case "tool-checkFlightStatus": {
         const flightStatus = parsedOutput;
         return (
-          <div className="space-y-1 text-sm">
+          <div className="p-3 space-y-1 text-sm">
             <div className="font-medium">
               Flight {flightStatus.flightNumber}
             </div>
@@ -416,14 +588,14 @@ function renderToolOutput(part: any) {
         const airport = parsedOutput;
         if (airport.error) {
           return (
-            <div className="space-y-1 text-sm">
+            <div className="p-3 space-y-1 text-sm">
               <div>{airport.error}</div>
               <div className="text-muted-foreground">{airport.suggestion}</div>
             </div>
           );
         }
         return (
-          <div className="space-y-1 text-sm">
+          <div className="p-3 space-y-1 text-sm">
             <div className="font-medium">
               {airport.code} - {airport.name}
             </div>
@@ -444,7 +616,7 @@ function renderToolOutput(part: any) {
       case "tool-bookFlight": {
         const booking = parsedOutput;
         return (
-          <div className="space-y-2">
+          <div className="p-3 space-y-2">
             <div className="text-sm font-medium">✅ Booking Confirmed!</div>
             <div className="space-y-1 text-sm">
               <div>
@@ -467,7 +639,7 @@ function renderToolOutput(part: any) {
       case "tool-checkBaggageAllowance": {
         const baggage = parsedOutput;
         return (
-          <div className="space-y-1 text-sm">
+          <div className="p-3 space-y-1 text-sm">
             <div className="font-medium">
               {baggage.airline} - {baggage.class} Class
             </div>
@@ -481,7 +653,7 @@ function renderToolOutput(part: any) {
 
       case "tool-sleep": {
         return (
-          <div className="space-y-2">
+          <div className="p-3 space-y-2">
             <p className="text-sm font-medium">
               Sleeping for {part.input.durationMs}ms...
             </p>
@@ -492,9 +664,21 @@ function renderToolOutput(part: any) {
       default:
         return null;
     }
-  } catch {
-    // If parsing fails, show the raw output as an error
-    // This handles cases like FatalError strings that aren't valid JSON
+  } catch (err) {
+    // If parsing fails, log for debugging and show the raw output
+    console.error("Failed to parse tool output:", err, partOutput);
+
+    // Try to show the raw output as JSON if possible
+    if (typeof partOutput === "object") {
+      return (
+        <div className="text-sm p-3 rounded-md bg-muted/50">
+          <pre className="whitespace-pre-wrap text-xs overflow-auto">
+            {JSON.stringify(partOutput, null, 2)}
+          </pre>
+        </div>
+      );
+    }
+
     const errorMessage =
       typeof partOutput === "string"
         ? partOutput.replace(/^FatalError:\s*/, "").replace(/^Error:\s*/, "")

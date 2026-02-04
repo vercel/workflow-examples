@@ -1,6 +1,47 @@
-import { FatalError, sleep } from 'workflow';
+import { FatalError, sleep, getWritable } from 'workflow';
 import { z } from 'zod';
 import { bookingApprovalHook } from '../hooks/approval';
+import type { UIMessageChunk } from 'ai';
+
+/**
+ * Emit a tool-start event for realtime observability.
+ */
+async function emitToolStart(toolName: string) {
+  const writable = getWritable<UIMessageChunk>();
+  const writer = writable.getWriter();
+  try {
+    await writer.write({
+      type: 'data-workflow',
+      data: {
+        type: 'tool-start',
+        toolName,
+        timestamp: Date.now(),
+      },
+    } as UIMessageChunk);
+  } finally {
+    writer.releaseLock();
+  }
+}
+
+/**
+ * Emit a tool-end event for realtime observability.
+ */
+async function emitToolEnd(toolName: string) {
+  const writable = getWritable<UIMessageChunk>();
+  const writer = writable.getWriter();
+  try {
+    await writer.write({
+      type: 'data-workflow',
+      data: {
+        type: 'tool-end',
+        toolName,
+        timestamp: Date.now(),
+      },
+    } as UIMessageChunk);
+  } finally {
+    writer.releaseLock();
+  }
+}
 
 export const mockAirports: Record<
   string,
@@ -46,6 +87,7 @@ export async function searchFlights({
 }) {
   'use step';
 
+  await emitToolStart('searchFlights');
   console.log(`Searching flights from ${from} to ${to} on ${date}`);
 
   // Simulate API delay
@@ -95,10 +137,12 @@ export async function searchFlights({
     };
   });
 
-  return {
+  const result = {
     message: `Found ${generatedFlights.length} flights from ${from} to ${to} on ${date}`,
     flights: generatedFlights.sort((a, b) => a.price - b.price), // Sort by price
   };
+  await emitToolEnd('searchFlights');
+  return result;
 }
 
 /** Check flight status */
@@ -109,6 +153,7 @@ export async function checkFlightStatus({
 }) {
   'use step';
 
+  await emitToolStart('checkFlightStatus');
   console.log(`Checking status for flight ${flightNumber}`);
 
   // 10% chance of error to demonstrate retry
@@ -184,7 +229,7 @@ export async function checkFlightStatus({
       ? new Date(arrivalTime.getTime() + delayMinutes * 60 * 1000)
       : arrivalTime;
 
-  return {
+  const result = {
     flightNumber: flightNumber.toUpperCase(),
     status: status + (status === 'Delayed' ? ` (${delayMinutes} minutes)` : ''),
     departure: departureTime.toISOString(),
@@ -197,29 +242,36 @@ export async function checkFlightStatus({
     gate,
     terminal: Math.floor(Math.random() * 4) + 1,
   };
+  await emitToolEnd('checkFlightStatus');
+  return result;
 }
 
 /** Get airport information */
 export async function getAirportInfo({ airportCode }: { airportCode: string }) {
   'use step';
 
+  await emitToolStart('getAirportInfo');
   console.log(`Getting information for airport ${airportCode}`);
 
   const airport = mockAirports[airportCode.toUpperCase()];
 
   if (!airport) {
-    return {
+    const result = {
       error: `Airport code ${airportCode} not found`,
       suggestion: `Try one of these: ${Object.keys(mockAirports).join(', ')}`,
     };
+    await emitToolEnd('getAirportInfo');
+    return result;
   }
 
-  return {
+  const result = {
     code: airportCode.toUpperCase(),
     ...airport,
     terminals: Math.floor(Math.random() * 4) + 1,
     averageDelay: `${Math.floor(Math.random() * 30)} minutes`,
   };
+  await emitToolEnd('getAirportInfo');
+  return result;
 }
 
 /** Book a flight (mock) */
@@ -234,6 +286,7 @@ export async function bookFlight({
 }) {
   'use step';
 
+  await emitToolStart('bookFlight');
   console.log(`Booking flight ${flightNumber} for ${passengerName}`);
 
   // Simulate processing
@@ -257,7 +310,7 @@ export async function bookFlight({
         ? `${Math.floor(Math.random() * 30) + 1}C`
         : `${Math.floor(Math.random() * 30) + 1}B`;
 
-  return {
+  const result = {
     success: true,
     confirmationNumber,
     passengerName,
@@ -265,6 +318,8 @@ export async function bookFlight({
     seatNumber,
     message: 'Flight booked successfully! Check your email for confirmation.',
   };
+  await emitToolEnd('bookFlight');
+  return result;
 }
 
 /** Check baggage allowance */
@@ -277,6 +332,7 @@ export async function checkBaggageAllowance({
 }) {
   'use step';
 
+  await emitToolStart('checkBaggageAllowance');
   console.log(`Checking baggage allowance for ${airline} ${ticketClass} class`);
 
   const allowances = {
@@ -288,7 +344,7 @@ export async function checkBaggageAllowance({
   const classKey = ticketClass.toLowerCase() as keyof typeof allowances;
   const allowance = allowances[classKey] || allowances.economy;
 
-  return {
+  const result = {
     airline,
     class: ticketClass,
     carryOnBags: allowance.carryOn,
@@ -296,6 +352,8 @@ export async function checkBaggageAllowance({
     maxWeightPerBag: allowance.maxWeight,
     oversizeFee: '$150 per bag',
   };
+  await emitToolEnd('checkBaggageAllowance');
+  return result;
 }
 
 async function executeSleep({ durationMs }: { durationMs: number }) {

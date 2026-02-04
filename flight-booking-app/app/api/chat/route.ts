@@ -17,9 +17,10 @@ import { chat } from '@/workflows/chat';
  * the `x-workflow-run-id` header to send follow-up messages.
  */
 export async function POST(req: Request) {
+  const requestReceivedAt = Date.now(); // Capture t=0
   const { messages }: { messages: UIMessage[] } = await req.json();
 
-  const run = await start(chat, [messages]);
+  const run = await start(chat, [messages, requestReceivedAt]);
   const workflowStream = run.readable;
 
   return createUIMessageStreamResponse({

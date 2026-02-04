@@ -182,9 +182,12 @@ export function useMultiTurnChat<
 
   // Process messages from the stream.
   // All user messages come from stream markers (data-workflow chunks).
-  // No deduplication needed - single source of truth.
+  // Deduplicate by message ID to handle stream replay.
   const messages = useMemo(() => {
     const result: UIMessage<TMetadata, UIDataTypes>[] = [];
+    const seenMessageIds = new Set<string>();
+    // Track seen observability events to deduplicate (type + timestamp as key)
+    const seenObservabilityEvents = new Set<string>();
 
     for (const msg of rawMessages) {
       // Skip user messages from useChat (we only use stream markers)
@@ -200,6 +203,12 @@ export function useMultiTurnChat<
         for (const part of msg.parts) {
           if (isUserMessageMarker(part)) {
             const data = part.data;
+
+            // Skip duplicate user messages (can happen on stream replay)
+            if (seenMessageIds.has(data.id)) {
+              continue;
+            }
+            seenMessageIds.add(data.id);
 
             // Flush any accumulated assistant parts
             if (currentAssistantParts.length > 0) {
@@ -226,6 +235,23 @@ export function useMultiTurnChat<
               parts: [{ type: 'text', text: data.content }],
             } as UIMessage<TMetadata, UIDataTypes>);
             continue;
+          }
+
+          // Deduplicate observability events (data-workflow type)
+          if (
+            typeof part === 'object' &&
+            part !== null &&
+            'type' in part &&
+            part.type === 'data-workflow' &&
+            'data' in part
+          ) {
+            const data = part.data as Record<string, unknown>;
+            // Create a unique key from event type and timestamp
+            const eventKey = `${data?.type}-${data?.timestamp}`;
+            if (seenObservabilityEvents.has(eventKey)) {
+              continue; // Skip duplicate observability event
+            }
+            seenObservabilityEvents.add(eventKey);
           }
 
           // Accumulate non-marker parts

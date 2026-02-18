@@ -9,7 +9,7 @@
     "ai": "^5.0.93",
     "lodash.chunk": "^4.2.0",
     "openai": "^6.9.0",
-    "workflow": "4.1.0-beta.51",
+    "workflow": "4.1.0-beta.57",
     "zod": "^4.1.12"
   },
   "devDependencies": {

@@ -22,5 +22,10 @@
   },
   "dependencies": {
     "workflow": "4.1.0-beta.57"
+  },
+  "pnpm": {
+    "overrides": {
+      "workflow": "4.1.0-beta.57"
+    }
   }
 }

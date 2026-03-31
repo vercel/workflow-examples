@@ -1,4 +1,5 @@
-# Workflow Examples
+# Worknpm i workflow
+npm i workflow
 
 This directory contains different examples of how to use the Workflow DevKit.
 
@@ -19,3 +20,4 @@ This directory contains different examples of how to use the Workflow DevKit.
 - [Nuxt](https://github.com/vercel/workflow-examples/tree/main/nuxt)
 - [SvelteKit](https://github.com/vercel/workflow-examples/tree/main/sveltekit)
 - [Vite](https://github.com/vercel/workflow-examples/tree/main/vite)
+npx skills add vercel/workflow --skill workflow-init

@@ -37,7 +37,7 @@ const SUGGESTIONS = [
 ];
 
 const FULL_EXAMPLE_PROMPT =
-  "Book me the cheapest flight from San Francisco to Los Angeles for July 27 2025. My name is Pranay Prakash. I like window seats. Don't ask me for approval.";
+  "Book me the cheapest flight from San Francisco to Los Angeles for July 27 2026. My name is Peter Wielander. I like window seats. Don't ask me for approval.";
 
 export default function ChatPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);

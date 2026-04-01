@@ -197,14 +197,7 @@ export default function ChatPage() {
                         if (data?.type === "user-message") {
                           return null;
                         }
-                        // Render observability events inline
-                        return (
-                          <WorkflowEventBadge
-                            key={`${message.id}-data-${partIndex}`}
-                            data={data}
-                            t0={requestReceivedAt}
-                          />
-                        );
+                        return null;
                       }
 
                       // Render tool parts

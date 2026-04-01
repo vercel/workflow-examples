@@ -5,7 +5,7 @@ import {
   type ModelMessage,
 } from 'ai';
 import { DurableAgent } from '@workflow/ai/agent';
-import { FLIGHT_ASSISTANT_PROMPT, flightBookingTools } from './steps/tools';
+import { FLIGHT_ASSISTANT_PROMPT, flightBookingTools, createSandboxTools } from './steps/tools';
 import { getWritable, getWorkflowMetadata } from 'workflow';
 import { chatMessageHook } from './hooks/chat-message';
 import {
@@ -14,6 +14,7 @@ import {
   writeStreamClose,
   writeTurnEnd,
 } from './steps/writer';
+import { Sandbox } from '@vercel/sandbox';
 
 /**
  * Multi-turn chat workflow.
@@ -62,10 +63,21 @@ export async function chat(initialMessages: UIMessage[], requestReceivedAt: numb
     }
   }
 
+  // Lazy sandbox creation — only created when the agent first calls runCode
+  let sandbox: Sandbox | null = null;
+  const getOrCreateSandbox = async () => {
+    if (!sandbox) {
+      sandbox = await Sandbox.create({ runtime: 'node24', timeout: 5 * 60 * 1000 });
+    }
+    return sandbox;
+  };
+
+  const sandboxTools = createSandboxTools(getOrCreateSandbox);
+
   const agent = new DurableAgent({
     model: 'bedrock/claude-haiku-4-5-20251001-v1',
     system: FLIGHT_ASSISTANT_PROMPT,
-    tools: flightBookingTools,
+    tools: { ...flightBookingTools, ...sandboxTools },
   });
 
   // Create a hook that uses the run ID as the token for resumption

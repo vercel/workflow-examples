@@ -2,6 +2,7 @@ import { FatalError, sleep, getWritable } from 'workflow';
 import { z } from 'zod';
 import { bookingApprovalHook } from '../hooks/approval';
 import type { UIMessageChunk } from 'ai';
+import type { Sandbox } from '@vercel/sandbox';
 
 /**
  * Emit a tool-start event for realtime observability.
@@ -41,6 +42,59 @@ async function emitToolEnd(toolName: string) {
   } finally {
     writer.releaseLock();
   }
+}
+
+/**
+ * Emit a sandbox lifecycle event for realtime observability.
+ */
+async function emitSandboxEvent(event: string, details?: Record<string, any>) {
+  const writable = getWritable<UIMessageChunk>();
+  const writer = writable.getWriter();
+  try {
+    await writer.write({
+      type: 'data-workflow',
+      data: {
+        type: 'sandbox-event',
+        event,
+        ...details,
+        timestamp: Date.now(),
+      },
+    } as UIMessageChunk);
+  } finally {
+    writer.releaseLock();
+  }
+}
+
+/**
+ * Extract a meaningful error message from any thrown value.
+ * Handles cross-realm errors where instanceof Error fails.
+ */
+function extractErrorMessage(error: unknown): string {
+  if (error == null) return 'Unknown error (null)';
+  if (typeof error === 'string') return error;
+
+  // Standard Error instances (same realm)
+  if (error instanceof Error) {
+    return error.stack || error.message || error.constructor?.name || 'Error';
+  }
+
+  // Cross-realm errors or error-like objects
+  const asAny = error as any;
+  if (asAny.message) return String(asAny.message);
+  if (asAny.stack) return String(asAny.stack);
+
+  // Try JSON.stringify with all own property names
+  try {
+    const keys = Object.getOwnPropertyNames(asAny);
+    if (keys.length > 0) {
+      const obj: Record<string, any> = {};
+      for (const key of keys) obj[key] = asAny[key];
+      return JSON.stringify(obj);
+    }
+  } catch {}
+
+  const str = String(error);
+  return str !== '[object Object]' ? str : 'Unknown error (unserializable)';
 }
 
 export const mockAirports: Record<
@@ -454,6 +508,113 @@ export const flightBookingTools = {
   },
 };
 
+/**
+ * Creates sandbox tools that close over a lazily-created Sandbox instance.
+ * The sandbox persists across tool calls within the same workflow run.
+ */
+export function createSandboxTools(getOrCreateSandbox: () => Promise<Sandbox>) {
+  return {
+    runCode: {
+      description:
+        'Execute code or shell commands in an isolated cloud sandbox (Linux VM with Node.js). ' +
+        'The sandbox persists between calls — installed packages, files, and environment carry over. ' +
+        'Write files and run commands to accomplish any coding task.',
+      inputSchema: z.object({
+        files: z
+          .array(
+            z.object({
+              path: z.string().describe('File path relative to the working directory'),
+              content: z.string().describe('File content to write'),
+            })
+          )
+          .optional()
+          .describe('Files to write before running the command'),
+        command: z
+          .string()
+          .describe(
+            'Shell command to execute (e.g., "node script.js", "npm install lodash && node index.js")'
+          ),
+      }),
+      execute: async ({ files, command }: { files?: { path: string; content: string }[]; command: string }) => {
+        await emitToolStart('runCode');
+        try {
+          // Phase 1: Create or retrieve the sandbox
+          await emitSandboxEvent('creating');
+          let sandbox: Sandbox;
+          try {
+            sandbox = await getOrCreateSandbox();
+          } catch (err) {
+            const msg = extractErrorMessage(err);
+            await emitSandboxEvent('error', { phase: 'create', message: msg });
+            await emitToolEnd('runCode');
+            return { error: true, phase: 'sandbox-create', message: msg };
+          }
+          await emitSandboxEvent('ready', { sandboxId: sandbox.sandboxId });
+
+          // Phase 2: Write files if provided
+          if (files && files.length > 0) {
+            await emitSandboxEvent('writing-files', {
+              sandboxId: sandbox.sandboxId,
+              fileCount: files.length,
+              filePaths: files.map((f) => f.path),
+            });
+            try {
+              await sandbox.writeFiles(files);
+            } catch (err) {
+              const msg = extractErrorMessage(err);
+              await emitSandboxEvent('error', { phase: 'write-files', message: msg });
+              await emitToolEnd('runCode');
+              return { error: true, phase: 'write-files', message: msg };
+            }
+            await emitSandboxEvent('files-written', {
+              sandboxId: sandbox.sandboxId,
+              fileCount: files.length,
+            });
+          }
+
+          // Phase 3: Run the command
+          await emitSandboxEvent('running-command', {
+            sandboxId: sandbox.sandboxId,
+            command,
+          });
+          let stdout: string;
+          let stderr: string;
+          let exitCode: number;
+          try {
+            const result = await sandbox.runCommand('sh', ['-c', command]);
+            exitCode = result.exitCode;
+            stdout = await result.stdout();
+            stderr = await result.stderr();
+          } catch (err) {
+            const msg = extractErrorMessage(err);
+            await emitSandboxEvent('error', { phase: 'run-command', message: msg });
+            await emitToolEnd('runCode');
+            return { error: true, phase: 'run-command', message: msg };
+          }
+
+          await emitSandboxEvent('command-complete', {
+            sandboxId: sandbox.sandboxId,
+            exitCode,
+          });
+          await emitToolEnd('runCode');
+
+          return {
+            exitCode,
+            stdout: stdout || '(no output)',
+            stderr: stderr || '',
+          };
+        } catch (err) {
+          // Catch-all: never let an unstructured error propagate
+          const msg = extractErrorMessage(err);
+          try { await emitSandboxEvent('error', { phase: 'unknown', message: msg }); } catch {}
+          try { await emitToolEnd('runCode'); } catch {}
+          return { error: true, phase: 'unknown', message: msg };
+        }
+      },
+    },
+  };
+}
+
 // System prompt
 export const FLIGHT_ASSISTANT_PROMPT = `You are a helpful flight booking assistant. You can help users:
 - Search for flights between cities
@@ -461,6 +622,8 @@ export const FLIGHT_ASSISTANT_PROMPT = `You are a helpful flight booking assista
 - Get airport information
 - Book flights
 - Check baggage allowances
+- Run code in an isolated sandbox environment (use the runCode tool for any coding tasks)
 
 Be friendly and professional. When searching for flights, always ask for travel dates if not provided.
-When booking flights, confirm all details before proceeding.`;
+When booking flights, confirm all details before proceeding.
+When asked to write or run code, use the runCode tool. The sandbox persists between calls, so you can install packages first and then use them.`;

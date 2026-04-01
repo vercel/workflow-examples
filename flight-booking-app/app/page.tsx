@@ -227,20 +227,44 @@ export default function ChatPage() {
                     {/* Loading indicators for assistant messages */}
                     {message.role === "assistant" &&
                       isLastMessage &&
-                      !hasText && (
-                        <>
-                          {status === "submitted" && (
-                            <Shimmer className="text-sm">
-                              Sending message...
-                            </Shimmer>
-                          )}
-                          {status === "streaming" && (
-                            <Shimmer className="text-sm">
-                              Waiting for response...
-                            </Shimmer>
-                          )}
-                        </>
-                      )}
+                      !hasText && (() => {
+                        const hasSleepActive = message.parts.some(
+                          (part) =>
+                            part.type === "tool-sleep" &&
+                            "state" in part &&
+                            part.state !== "output-available"
+                        );
+                        const hasApprovalActive = message.parts.some(
+                          (part) =>
+                            part.type === "tool-bookingApproval" &&
+                            "state" in part &&
+                            part.state !== "output-available"
+                        );
+                        return (
+                          <>
+                            {status === "submitted" && (
+                              <Shimmer className="text-sm">
+                                Sending message...
+                              </Shimmer>
+                            )}
+                            {status === "streaming" && !hasSleepActive && !hasApprovalActive && (
+                              <Shimmer className="text-sm">
+                                Waiting for response...
+                              </Shimmer>
+                            )}
+                            {status === "streaming" && hasSleepActive && (
+                              <Shimmer className="text-sm">
+                                Sleeping...
+                              </Shimmer>
+                            )}
+                            {status === "streaming" && hasApprovalActive && (
+                              <Shimmer className="text-sm">
+                                Waiting for approval...
+                              </Shimmer>
+                            )}
+                          </>
+                        );
+                      })()}
                   </MessageContent>
                 </Message>
               </div>

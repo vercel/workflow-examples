@@ -20,22 +20,11 @@ export function BookingApproval({
 
   // If we have output, the approval has been processed
   if (output) {
-    try {
-      const json = JSON.parse(output) as { output: { value: string } };
-      return (
-        <div className="border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground">{json.output.value}</p>
-        </div>
-      );
-    } catch (error) {
-      return (
-        <div className="border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground">
-            Error parsing approval result: {(error as Error).message}
-          </p>
-        </div>
-      );
-    }
+    return (
+      <div className="border rounded-lg p-4">
+        <p className="text-sm text-muted-foreground">{output}</p>
+      </div>
+    );
   }
 
   const handleSubmit = async (approved: boolean) => {

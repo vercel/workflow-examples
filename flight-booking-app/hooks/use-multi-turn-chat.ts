@@ -17,6 +17,8 @@ export interface UseMultiTurnChatOptions<
   onError?: (error: Error) => void;
   /** Called when a chat turn finishes */
   onFinish?: (data: { messages: UIMessage<TMetadata, UIDataTypes>[] }) => void;
+  endpoint: string;
+  sessionIdHeader: string;
 }
 
 /**
@@ -96,7 +98,10 @@ function isUserMessageMarker(
 export function useMultiTurnChat<
   TMetadata extends Record<string, unknown> = Record<string, unknown>,
 >(
-  options: UseMultiTurnChatOptions<TMetadata> = {}
+  options: UseMultiTurnChatOptions<TMetadata> = {
+    endpoint: '/api/chat',
+    sessionIdHeader: 'x-workflow-run-id',
+  }
 ): UseMultiTurnChatReturn<TMetadata> {
   const { onError, onFinish } = options;
 
@@ -135,10 +140,10 @@ export function useMultiTurnChat<
   const transport = useMemo(
     () =>
       new WorkflowChatTransport({
-        api: '/api/chat',
+        api: options.endpoint,
         onChatSendMessage: (response) => {
           // Capture the workflow run ID from the response header
-          const workflowRunId = response.headers.get('x-workflow-run-id');
+          const workflowRunId = response.headers.get(options.sessionIdHeader);
           if (workflowRunId) {
             setRunId(workflowRunId);
             localStorage.setItem(STORAGE_KEY, workflowRunId);
@@ -168,7 +173,7 @@ export function useMultiTurnChat<
           }
           return {
             ...rest,
-            api: `/api/chat/${encodeURIComponent(storedRunId)}/stream`,
+            api: `${options.endpoint}/${encodeURIComponent(storedRunId)}/stream`,
           };
         },
         maxConsecutiveErrors: 5,
@@ -305,11 +310,14 @@ export function useMultiTurnChat<
       sentMessagesRef.current.add(sendKey);
 
       // Send the follow-up via the hook resumption endpoint
-      const response = await fetch(`/api/chat/${encodeURIComponent(runId)}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text }),
-      });
+      const response = await fetch(
+        `${options.endpoint}/${encodeURIComponent(runId)}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text }),
+        }
+      );
 
       if (!response.ok) {
         sentMessagesRef.current.delete(sendKey);
@@ -319,7 +327,7 @@ export function useMultiTurnChat<
         );
       }
     },
-    [runId]
+    [runId, options.endpoint]
   );
 
   // Main send message function
@@ -354,7 +362,7 @@ export function useMultiTurnChat<
     if (runId) {
       try {
         // Send the end signal to the workflow
-        await fetch(`/api/chat/${encodeURIComponent(runId)}`, {
+        await fetch(`${options.endpoint}/${encodeURIComponent(runId)}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: '/done' }),

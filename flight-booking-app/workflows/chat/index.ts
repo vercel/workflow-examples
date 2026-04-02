@@ -5,44 +5,23 @@ import {
   type ModelMessage,
 } from 'ai';
 import { DurableAgent } from '@workflow/ai/agent';
-import { FLIGHT_ASSISTANT_PROMPT, flightBookingTools, createSandboxTools } from './steps/tools';
+import { SYSTEM_PROMPT, agentTools, createSandboxTools } from './steps/tools';
 import { getWritable, getWorkflowMetadata } from 'workflow';
 import { chatMessageHook } from './hooks/chat-message';
-import {
-  writeRequestReceived,
-  writeUserMessageMarker,
-  writeStreamClose,
-  writeTurnEnd,
-} from './steps/writer';
+import { writeUserMessageMarker, writeTurnEnd } from './steps/writer';
 import { Sandbox } from '@vercel/sandbox';
 
-/**
- * Multi-turn chat workflow.
- *
- * A single workflow handles the entire conversation session across multiple turns.
- * The workflow owns the conversation state, and follow-up messages are injected via hooks.
- *
- * @param initialMessages - The initial messages to start the conversation
- * @param requestReceivedAt - Timestamp when the API received the request (t=0)
- */
-export async function chat(initialMessages: UIMessage[], requestReceivedAt: number) {
+export async function backgroundCodingAgent(initialMessages: UIMessage[]) {
   'use workflow';
 
   const { workflowRunId: runId, workflowStartedAt } = getWorkflowMetadata();
   const writable = getWritable<UIMessageChunk>();
   const workflowStartTime = workflowStartedAt.getTime();
 
-  // FIRST: Emit request-received (t=0)
-  await writeRequestReceived(writable, requestReceivedAt);
-
-  console.log(
-    `Starting chat workflow ${runId} with ${initialMessages.length} messages`
-  );
-
   // Convert UI messages to model messages for the agent
-  const messages: ModelMessage[] = await convertToModelMessages(initialMessages);
+  const messages: ModelMessage[] =
+    await convertToModelMessages(initialMessages);
 
-  // Write markers for initial user messages (for replay purposes)
   let isFirstUserMessage = true;
   for (const msg of initialMessages) {
     if (msg.role === 'user') {
@@ -67,7 +46,10 @@ export async function chat(initialMessages: UIMessage[], requestReceivedAt: numb
   let sandbox: Sandbox | null = null;
   const getOrCreateSandbox = async () => {
     if (!sandbox) {
-      sandbox = await Sandbox.create({ runtime: 'node24', timeout: 5 * 60 * 1000 });
+      sandbox = await Sandbox.create({
+        runtime: 'node24',
+        timeout: 5 * 60 * 1000,
+      });
     }
     return sandbox;
   };
@@ -76,8 +58,8 @@ export async function chat(initialMessages: UIMessage[], requestReceivedAt: numb
 
   const agent = new DurableAgent({
     model: 'bedrock/claude-haiku-4-5-20251001-v1',
-    system: FLIGHT_ASSISTANT_PROMPT,
-    tools: { ...flightBookingTools, ...sandboxTools },
+    system: SYSTEM_PROMPT,
+    tools: { ...agentTools, ...sandboxTools },
   });
 
   // Create a hook that uses the run ID as the token for resumption
@@ -157,13 +139,6 @@ export async function chat(initialMessages: UIMessage[], requestReceivedAt: numb
     // Add the follow-up message to the conversation
     messages.push({ role: 'user', content: followUp });
   }
-
-  // Close the stream with workflow-end observability data
-  await writeStreamClose(writable, {
-    workflowRunId: runId,
-    totalDurationMs: Date.now() - workflowStartTime,
-    turnCount: turnNumber,
-  });
 
   return { messages };
 }

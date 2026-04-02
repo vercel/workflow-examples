@@ -1,4 +1,5 @@
 import type { UIMessageChunk } from 'ai';
+import { getWritable } from 'workflow';
 
 /**
  * Write request-received event (t=0)
@@ -180,4 +181,69 @@ export async function writeTurnEnd(
 
   // Return the new total step count
   return previousTotalStepCount + (steps?.length ?? 0);
+}
+
+/**
+ * Emit a tool-start event for realtime observability.
+ */
+export async function emitToolStart(toolName: string) {
+  const writable = getWritable<UIMessageChunk>();
+  const writer = writable.getWriter();
+  try {
+    await writer.write({
+      type: 'data-workflow',
+      data: {
+        type: 'tool-start',
+        toolName,
+        timestamp: Date.now(),
+      },
+    } as UIMessageChunk);
+  } finally {
+    writer.releaseLock();
+  }
+}
+
+/**
+ * Emit a tool-end event for realtime observability.
+ */
+export async function emitToolEnd(toolName: string) {
+  const writable = getWritable<UIMessageChunk>();
+  const writer = writable.getWriter();
+  try {
+    await writer.write({
+      type: 'data-workflow',
+      data: {
+        type: 'tool-end',
+        toolName,
+        timestamp: Date.now(),
+      },
+    } as UIMessageChunk);
+  } finally {
+    writer.releaseLock();
+  }
+}
+
+/**
+ * Emit a sandbox lifecycle event for realtime observability.
+ * Must be called from within a "use step" context.
+ */
+export async function emitSandboxEvent(
+  event: string,
+  details?: Record<string, any>
+) {
+  const writable = getWritable<UIMessageChunk>();
+  const writer = writable.getWriter();
+  try {
+    await writer.write({
+      type: 'data-workflow',
+      data: {
+        type: 'sandbox-event',
+        event,
+        ...details,
+        timestamp: Date.now(),
+      },
+    } as UIMessageChunk);
+  } finally {
+    writer.releaseLock();
+  }
 }

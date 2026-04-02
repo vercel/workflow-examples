@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Flight Booking App",
-  description: "A flight booking app using Workflow for durable agents.",
+  title: "Durable Coding Agent",
+  description: "A coding agent powered by durable workflows.",
 };
 
 export default function RootLayout({

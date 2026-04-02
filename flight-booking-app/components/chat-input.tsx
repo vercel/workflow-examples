@@ -44,7 +44,7 @@ export default function ChatInput({
             ref={textareaRef}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Ask me about flights, airports, or bookings..."
+            placeholder="Ask me anything..."
           />
         </PromptInputBody>
         <PromptInputFooter>

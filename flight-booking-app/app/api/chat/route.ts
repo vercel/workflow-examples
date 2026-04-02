@@ -1,17 +1,35 @@
-import { createAgentUIStreamResponse, type UIMessage } from 'ai';
-import { flightBookingAgent } from '@/workflows/chat';
+import { createUIMessageStreamResponse, type UIMessage } from 'ai';
+import { start } from 'workflow/api';
+import { chat } from '@/workflows/chat';
 
+/**
+ * Uncomment the following line to simulate a long running
+ * Vercel Function timing out due to a long running agent.
+ * The client-side will automatically reconnect to the stream.
+ */
+// export const maxDuration = 8;
+
+/**
+ * POST /api/chat
+ *
+ * Starts a new multi-turn chat session. The workflow will handle all subsequent
+ * turns via the message hook - the client should use the run ID returned in
+ * the `x-workflow-run-id` header to send follow-up messages.
+ */
 export async function POST(req: Request) {
+  const requestReceivedAt = Date.now(); // Capture t=0
   const { messages }: { messages: UIMessage[] } = await req.json();
 
-  const sessionId = crypto.randomUUID();
-  const agent = await flightBookingAgent(messages);
+  const run = await start(chat, [messages, requestReceivedAt]);
+  const workflowStream = run.readable;
 
-  return createAgentUIStreamResponse({
-    agent,
-    uiMessages: messages,
+  return createUIMessageStreamResponse({
+    stream: workflowStream,
     headers: {
-      'x-session-id': sessionId,
+      // The workflow run ID is used by the client to:
+      // 1. Send follow-up messages via POST /api/chat/[id]
+      // 2. Reconnect to the stream via GET /api/chat/[id]/stream
+      'x-workflow-run-id': run.runId,
     },
   });
 }

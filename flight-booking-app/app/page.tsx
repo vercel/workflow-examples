@@ -25,7 +25,9 @@ import ChatInput from '@/components/chat-input';
 
 const SUGGESTIONS = [
   "What's the weather in San Francisco?",
-  'Write and run fizzbuzz in Python',
+  'Write and run fizzbuzz in Python, waiting 1 second after each number',
+  'Create a webhook URL that I can send to slack',
+  'Sleep for 1 year',
 ];
 
 export default function ChatPage() {
@@ -78,7 +80,7 @@ export default function ChatPage() {
               Try one of these suggestions or ask anything
             </p>
           </div>
-          <div className="flex flex-nowrap items-center gap-2">
+          <div className="w-full flex flex-wrap items-center gap-2">
             {SUGGESTIONS.map((suggestion) => (
               <Suggestion
                 key={suggestion}
@@ -153,6 +155,16 @@ export default function ChatPage() {
                       // Skip data-workflow parts (observability events)
                       if (part.type === 'data-workflow') {
                         return null;
+                      }
+
+                      // Render sandbox inline
+                      if (part.type === 'tool-runCode') {
+                        return (
+                          <SandboxWidget
+                            key={part.toolCallId}
+                            messages={messages}
+                          />
+                        );
                       }
 
                       // Render webhook waiting (custom component)
@@ -306,7 +318,6 @@ export default function ChatPage() {
         stop={stop}
       />
 
-      <SandboxWidget messages={messages} />
     </div>
   );
 }
@@ -370,40 +381,6 @@ function renderToolOutput(part: any) {
         <pre className="whitespace-pre-wrap text-xs bg-red-500/10 rounded-md p-2 overflow-auto max-h-64 text-red-400">
           {typeof msg === 'string' ? msg : JSON.stringify(msg, null, 2)}
         </pre>
-      </div>
-    );
-  }
-
-  // runCode output
-  if (part.type === 'tool-runCode' && 'exitCode' in parsed) {
-    const { exitCode, stdout, stderr } = parsed;
-    return (
-      <div className="p-3 space-y-2 text-sm">
-        {exitCode === 0 ? (
-          <div className="font-medium text-green-600">Exited with code 0</div>
-        ) : (
-          <div className="font-medium text-red-400">Exit code: {exitCode}</div>
-        )}
-        {stdout && stdout !== '(no output)' && (
-          <div className="space-y-1">
-            <div className="text-xs text-muted-foreground uppercase tracking-wide">
-              stdout
-            </div>
-            <pre className="whitespace-pre-wrap text-xs bg-muted/50 rounded-md p-2 overflow-auto max-h-64">
-              {stdout}
-            </pre>
-          </div>
-        )}
-        {stderr && (
-          <div className="space-y-1">
-            <div className="text-xs text-muted-foreground uppercase tracking-wide">
-              stderr
-            </div>
-            <pre className="whitespace-pre-wrap text-xs bg-red-500/10 rounded-md p-2 overflow-auto max-h-64">
-              {stderr}
-            </pre>
-          </div>
-        )}
       </div>
     );
   }

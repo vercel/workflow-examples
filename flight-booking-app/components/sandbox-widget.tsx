@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { UIMessage } from "ai";
 import {
   TerminalIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  CircleIcon,
   CheckCircleIcon,
   XCircleIcon,
   LoaderIcon,
@@ -42,7 +39,6 @@ function extractSandboxEvents(messages: UIMessage[]): SandboxEvent[] {
 type SandboxStatus =
   | "creating"
   | "ready"
-  | "writing"
   | "running"
   | "done"
   | "error";
@@ -67,8 +63,6 @@ function deriveState(events: SandboxEvent[]) {
         error = null;
         break;
       case "ready":
-        status = "ready";
-        break;
       case "files-written":
         status = "ready";
         break;
@@ -101,17 +95,12 @@ const statusConfig: Record<
   creating: {
     icon: <LoaderIcon className="size-3 animate-spin" />,
     color: "text-yellow-500",
-    label: "Creating...",
+    label: "Creating sandbox...",
   },
   ready: {
     icon: <CheckCircleIcon className="size-3" />,
     color: "text-green-500",
     label: "Ready",
-  },
-  writing: {
-    icon: <LoaderIcon className="size-3 animate-spin" />,
-    color: "text-blue-400",
-    label: "Writing files...",
   },
   running: {
     icon: <LoaderIcon className="size-3 animate-spin" />,
@@ -131,7 +120,6 @@ const statusConfig: Record<
 };
 
 export function SandboxWidget({ messages }: { messages: UIMessage[] }) {
-  const [expanded, setExpanded] = useState(false);
   const outputRef = useRef<HTMLPreElement>(null);
 
   const events = useMemo(() => extractSandboxEvents(messages), [messages]);
@@ -142,11 +130,7 @@ export function SandboxWidget({ messages }: { messages: UIMessage[] }) {
 
   const hasOutput = stdout.length > 0 || stderr.length > 0;
 
-  // Auto-expand when output starts streaming, auto-scroll to bottom
-  useEffect(() => {
-    if (hasOutput && !expanded) setExpanded(true);
-  }, [hasOutput]);
-
+  // Auto-scroll to bottom as output streams in
   useEffect(() => {
     if (outputRef.current) {
       outputRef.current.scrollTop = outputRef.current.scrollHeight;
@@ -158,70 +142,53 @@ export function SandboxWidget({ messages }: { messages: UIMessage[] }) {
   const cfg = statusConfig[status];
 
   return (
-    <div className="fixed bottom-20 right-4 z-50 w-96">
-      <div className="rounded-lg border bg-background/95 backdrop-blur shadow-lg overflow-hidden">
-        {/* Header */}
-        <button
-          type="button"
-          onClick={() => setExpanded((e) => !e)}
-          className="flex items-center justify-between w-full px-3 py-2 hover:bg-muted/50 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <TerminalIcon className="size-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Sandbox</span>
-            <span className={`flex items-center gap-1 text-xs ${cfg.color}`}>
-              {cfg.icon}
-              {cfg.label}
+    <div className="rounded-lg border overflow-hidden mb-4">
+      {/* Header */}
+      <div className="flex items-center justify-between px-3 py-2">
+        <div className="flex items-center gap-2">
+          <TerminalIcon className="size-4 text-muted-foreground" />
+          <span className="text-sm font-medium">Sandbox</span>
+          <span className={`flex items-center gap-1 text-xs ${cfg.color}`}>
+            {cfg.icon}
+            {cfg.label}
+          </span>
+          {exitCode !== null && (
+            <span
+              className={`text-[10px] font-mono ${
+                exitCode === 0 ? "text-green-500" : "text-red-400"
+              }`}
+            >
+              exit={exitCode}
             </span>
-            {exitCode !== null && (
-              <span
-                className={`text-[10px] font-mono ${
-                  exitCode === 0 ? "text-green-500" : "text-red-400"
-                }`}
-              >
-                exit={exitCode}
-              </span>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            {sandboxId && (
-              <span className="text-[10px] font-mono text-muted-foreground">
-                {sandboxId.slice(0, 8)}
-              </span>
-            )}
-            {expanded ? (
-              <ChevronDownIcon className="size-3.5 text-muted-foreground" />
-            ) : (
-              <ChevronUpIcon className="size-3.5 text-muted-foreground" />
-            )}
-          </div>
-        </button>
+          )}
+        </div>
+        {sandboxId && (
+          <span className="text-[10px] font-mono text-muted-foreground">
+            {sandboxId.slice(0, 8)}
+          </span>
+        )}
+      </div>
 
-        {/* Terminal output */}
-        {expanded && (
-          <div className="border-t">
-            {error && (
-              <div className="px-3 py-1.5 text-[11px] font-mono text-red-400 bg-red-500/10 border-b border-red-500/20">
-                {error.split("\n")[0].slice(0, 120)}
-              </div>
-            )}
-            {hasOutput ? (
-              <pre
-                ref={outputRef}
-                className="px-3 py-2 text-[11px] font-mono leading-relaxed overflow-auto max-h-64 bg-black/30"
-              >
-                {stdout}
-                {stderr && (
-                  <span className="text-red-400">{stderr}</span>
-                )}
-              </pre>
-            ) : (
-              <div className="px-3 py-2 text-[11px] text-muted-foreground">
-                {status === "creating" && "Creating sandbox..."}
-                {status === "ready" && "Sandbox ready. Waiting for command..."}
-                {status === "done" && "(no output)"}
-              </div>
-            )}
+      {/* Terminal output */}
+      <div className="border-t">
+        {error && (
+          <div className="px-3 py-1.5 text-[11px] font-mono text-red-400 bg-red-500/10 border-b border-red-500/20">
+            {error.split("\n")[0].slice(0, 120)}
+          </div>
+        )}
+        {hasOutput ? (
+          <pre
+            ref={outputRef}
+            className="px-3 py-2 text-[11px] font-mono leading-relaxed overflow-auto max-h-64 bg-black/30"
+          >
+            {stdout}
+            {stderr && <span className="text-red-400">{stderr}</span>}
+          </pre>
+        ) : (
+          <div className="px-3 py-2 text-[11px] text-muted-foreground">
+            {status === "creating" && "Creating sandbox..."}
+            {status === "ready" && "Sandbox ready. Waiting for command..."}
+            {status === "done" && "(no output)"}
           </div>
         )}
       </div>

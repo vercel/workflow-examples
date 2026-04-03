@@ -25,7 +25,7 @@ import ChatInput from '@/components/chat-input';
 
 const SUGGESTIONS = [
   "What's the weather in San Francisco?",
-  'Write and run fizzbuzz in Python, waiting 1 second after each number',
+  'Write and run fizzbuzz in Python',
   'Create a webhook URL that I can send to slack',
   'Sleep for 1 year',
 ];
@@ -157,8 +157,11 @@ export default function ChatPage() {
                         return null;
                       }
 
-                      // Render sandbox inline
-                      if (part.type === 'tool-runCode') {
+                      // Render sandbox tools inline
+                      if (
+                        part.type === 'tool-writeFile' ||
+                        part.type === 'tool-execute'
+                      ) {
                         return (
                           <SandboxWidget
                             key={part.toolCallId}
@@ -229,7 +232,8 @@ export default function ChatPage() {
                         );
                         const hasSandboxActive = message.parts.some(
                           (part) =>
-                            part.type === 'tool-runCode' &&
+                            (part.type === 'tool-writeFile' ||
+                              part.type === 'tool-execute') &&
                             'state' in part &&
                             part.state !== 'output-available'
                         );
@@ -317,7 +321,6 @@ export default function ChatPage() {
         onSendMessage={sendMessage}
         stop={stop}
       />
-
     </div>
   );
 }

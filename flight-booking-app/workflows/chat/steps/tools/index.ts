@@ -2,13 +2,14 @@ import { getWeather } from './get-weather';
 import { sleepTool } from './sleep';
 import { waitForWebhook } from './wait-for-webhook';
 import { runCodeTool } from './run-code';
+import type { Sandbox } from '@vercel/sandbox';
 
-export const agentTools = {
+export const agentTools = (getOrCreateSandbox: () => Promise<Sandbox>) => ({
   getWeather,
   sleep: sleepTool,
   waitForWebhook,
-  runCode: runCodeTool,
-};
+  runCode: runCodeTool(getOrCreateSandbox),
+});
 
 export const SYSTEM_PROMPT = `You are a helpful coding assistant with access to a cloud sandbox, weather data, and workflow tools.
 

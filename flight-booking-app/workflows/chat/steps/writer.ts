@@ -231,6 +231,7 @@ export async function emitSandboxEvent(
   event: string,
   details?: Record<string, any>
 ) {
+  'use step';
   const writable = getWritable<UIMessageChunk>();
   const writer = writable.getWriter();
   try {

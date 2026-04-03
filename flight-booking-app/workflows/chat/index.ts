@@ -9,6 +9,7 @@ import { SYSTEM_PROMPT, agentTools } from './steps/tools';
 import { getWritable, getWorkflowMetadata } from 'workflow';
 import { chatMessageHook } from './hooks/chat-message';
 import { writeUserMessageMarker, writeTurnEnd } from './steps/writer';
+import { Sandbox } from '@vercel/sandbox';
 
 export async function backgroundCodingAgent(initialMessages: UIMessage[]) {
   'use workflow';
@@ -41,10 +42,18 @@ export async function backgroundCodingAgent(initialMessages: UIMessage[]) {
     }
   }
 
+  let sandbox: Sandbox | null = null;
+  const getOrCreateSandbox = async () => {
+    if (!sandbox) {
+      sandbox = await Sandbox.create();
+    }
+    return sandbox;
+  };
+
   const agent = new DurableAgent({
     model: 'bedrock/claude-haiku-4-5-20251001-v1',
     system: SYSTEM_PROMPT,
-    tools: agentTools,
+    tools: agentTools(getOrCreateSandbox),
   });
 
   // Create a hook that uses the run ID as the token for resumption

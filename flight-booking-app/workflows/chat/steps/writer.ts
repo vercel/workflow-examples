@@ -247,3 +247,32 @@ export async function emitSandboxEvent(
     writer.releaseLock();
   }
 }
+
+/**
+ * Extract a meaningful error message from any thrown value.
+ * Handles cross-realm errors where instanceof Error fails.
+ */
+export function formatErrorMessage(error: unknown): string {
+  if (error == null) return 'Unknown error (null)';
+  if (typeof error === 'string') return error;
+
+  if (error instanceof Error) {
+    return error.stack || error.message || error.constructor?.name || 'Error';
+  }
+
+  const asAny = error as any;
+  if (asAny.message) return String(asAny.message);
+  if (asAny.stack) return String(asAny.stack);
+
+  try {
+    const keys = Object.getOwnPropertyNames(asAny);
+    if (keys.length > 0) {
+      const obj: Record<string, any> = {};
+      for (const key of keys) obj[key] = asAny[key];
+      return JSON.stringify(obj);
+    }
+  } catch {}
+
+  const str = String(error);
+  return str !== '[object Object]' ? str : 'Unknown error (unserializable)';
+}

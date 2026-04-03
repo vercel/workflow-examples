@@ -1,13 +1,13 @@
 import { getWeather } from './get-weather';
 import { sleepTool } from './sleep';
 import { waitForWebhook } from './wait-for-webhook';
-
-export { createSandboxTools } from './run-code';
+import { runCodeTool } from './run-code';
 
 export const agentTools = {
   getWeather,
   sleep: sleepTool,
   waitForWebhook,
+  runCode: runCodeTool,
 };
 
 export const SYSTEM_PROMPT = `You are a helpful coding assistant with access to a cloud sandbox, weather data, and workflow tools.

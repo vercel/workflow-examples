@@ -5,11 +5,10 @@ import {
   type ModelMessage,
 } from 'ai';
 import { DurableAgent } from '@workflow/ai/agent';
-import { SYSTEM_PROMPT, agentTools, createSandboxTools } from './steps/tools';
+import { SYSTEM_PROMPT, agentTools } from './steps/tools';
 import { getWritable, getWorkflowMetadata } from 'workflow';
 import { chatMessageHook } from './hooks/chat-message';
 import { writeUserMessageMarker, writeTurnEnd } from './steps/writer';
-import { Sandbox } from '@vercel/sandbox';
 
 export async function backgroundCodingAgent(initialMessages: UIMessage[]) {
   'use workflow';
@@ -42,24 +41,10 @@ export async function backgroundCodingAgent(initialMessages: UIMessage[]) {
     }
   }
 
-  // Lazy sandbox creation — only created when the agent first calls runCode
-  let sandbox: Sandbox | null = null;
-  const getOrCreateSandbox = async () => {
-    if (!sandbox) {
-      sandbox = await Sandbox.create({
-        runtime: 'node24',
-        timeout: 5 * 60 * 1000,
-      });
-    }
-    return sandbox;
-  };
-
-  const sandboxTools = createSandboxTools(getOrCreateSandbox);
-
   const agent = new DurableAgent({
     model: 'bedrock/claude-haiku-4-5-20251001-v1',
     system: SYSTEM_PROMPT,
-    tools: { ...agentTools, ...sandboxTools },
+    tools: agentTools,
   });
 
   // Create a hook that uses the run ID as the token for resumption

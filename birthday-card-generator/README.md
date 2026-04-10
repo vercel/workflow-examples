@@ -126,6 +126,8 @@ Open [http://localhost:3000](http://localhost:3000) to see your app.
 
 For local development, `vc env pull` provides `VERCEL_OIDC_TOKEN`, which AI Gateway uses automatically. You do not need to add `AI_GATEWAY_API_KEY`.
 
+Once the GitHub repo is connected to the Vercel project, pushes to `main` trigger production deployments automatically.
+
 ## 📜 Scripts
 
 - 🚀 `pnpm dev` - Start development server with Turbopack

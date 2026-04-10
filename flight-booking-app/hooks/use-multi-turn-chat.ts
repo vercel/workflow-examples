@@ -5,7 +5,7 @@ import { useChat } from '@ai-sdk/react';
 import { WorkflowChatTransport } from '@workflow/ai';
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 
-const STORAGE_KEY = 'workflow-run-id';
+const RUN_ID_QUERY_PARAM = 'runId';
 
 /**
  * Options for the useMultiTurnChat hook
@@ -71,6 +71,31 @@ function isUserMessageMarker(
   return data?.type === 'user-message';
 }
 
+function getRunIdFromUrl(): string | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const searchParams = new URLSearchParams(window.location.search);
+  return searchParams.get(RUN_ID_QUERY_PARAM);
+}
+
+function setRunIdInUrl(runId: string | null) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const url = new URL(window.location.href);
+
+  if (runId) {
+    url.searchParams.set(RUN_ID_QUERY_PARAM, runId);
+  } else {
+    url.searchParams.delete(RUN_ID_QUERY_PARAM);
+  }
+
+  window.history.replaceState(window.history.state, '', url);
+}
+
 /**
  * A hook that wraps useChat to provide multi-turn chat session management.
  *
@@ -78,7 +103,7 @@ function isUserMessageMarker(
  * - All messages come from the stream (single source of truth)
  * - Shows pending message for immediate feedback while waiting for stream
  * - No deduplication needed - simpler message reconstruction
- * - Automatically detects and resumes existing sessions from localStorage
+ * - Automatically detects and resumes existing sessions from the URL
  * - Routes first messages to POST /api/chat (starts new workflow)
  * - Routes follow-up messages to POST /api/chat/[runId] (resumes hook)
  *
@@ -110,16 +135,34 @@ export function useMultiTurnChat<
   const sentMessagesRef = useRef<Set<string>>(new Set());
   // Track which message content we've seen from stream (to clear pending)
   const seenFromStreamRef = useRef<Set<string>>(new Set());
+  // Keep the latest run ID available to transport callbacks without recreating them
+  const runIdRef = useRef<string | null>(null);
 
-  // Initialize from localStorage on mount
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedRunId = localStorage.getItem(STORAGE_KEY);
-      if (storedRunId) {
-        setRunId(storedRunId);
+    runIdRef.current = runId;
+  }, [runId]);
+
+  // Initialize from URL on mount and keep in sync with browser navigation
+  useEffect(() => {
+    const syncRunIdFromUrl = () => {
+      const urlRunId = getRunIdFromUrl();
+
+      if (urlRunId) {
+        setRunId(urlRunId);
         setShouldResume(true);
+        return;
       }
-    }
+
+      setRunId(null);
+      setShouldResume(false);
+    };
+
+    syncRunIdFromUrl();
+    window.addEventListener('popstate', syncRunIdFromUrl);
+
+    return () => {
+      window.removeEventListener('popstate', syncRunIdFromUrl);
+    };
   }, []);
 
   // Create the transport with handlers
@@ -132,26 +175,30 @@ export function useMultiTurnChat<
           const workflowRunId = response.headers.get('x-workflow-run-id');
           if (workflowRunId) {
             setRunId(workflowRunId);
-            localStorage.setItem(STORAGE_KEY, workflowRunId);
+            setShouldResume(true);
+            setRunIdInUrl(workflowRunId);
           }
         },
         onChatEnd: () => {
-          // Session ended - clear the stored run ID
+          // Session ended - clear the run ID from state and URL
           setRunId(null);
-          localStorage.removeItem(STORAGE_KEY);
+          setShouldResume(false);
+          setRunIdInUrl(null);
           sentMessagesRef.current.clear();
           seenFromStreamRef.current.clear();
           setPendingMessage(null);
         },
-        // Configure reconnection to use the stored workflow run ID
+        // Configure reconnection to use the current workflow run ID while
+        // preserving request data like startIndex from the SDK.
         prepareReconnectToStreamRequest: ({ api, ...rest }) => {
-          const storedRunId = localStorage.getItem(STORAGE_KEY);
-          if (!storedRunId) {
+          const activeRunId = runIdRef.current ?? getRunIdFromUrl();
+
+          if (!activeRunId) {
             throw new Error('No active workflow run ID found');
           }
           return {
             ...rest,
-            api: `/api/chat/${encodeURIComponent(storedRunId)}/stream`,
+            api: `/api/chat/${encodeURIComponent(activeRunId)}/stream`,
           };
         },
         maxConsecutiveErrors: 5,
@@ -349,7 +396,7 @@ export function useMultiTurnChat<
     // Clear local state
     setRunId(null);
     setShouldResume(false);
-    localStorage.removeItem(STORAGE_KEY);
+    setRunIdInUrl(null);
     sentMessagesRef.current.clear();
     seenFromStreamRef.current.clear();
     setPendingMessage(null);

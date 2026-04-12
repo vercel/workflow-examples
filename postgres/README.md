@@ -14,31 +14,44 @@ This starter is a template for a Next.js project that uses Workflow DevKit with 
    bun install
    ```
 
-2. Spin up a Postgres database locally or online and obtain the pogstgresql URL.
+2. Spin up a PostgreSQL database locally or online and obtain the connection URL.
 
-    It should look something like `postgresql://<username>:<password>@<host>:<port>/<database>`
+   It should look something like `postgresql://<username>:<password>@<host>:<port>/<database>`.
 
-    This is an exercise left to the user.
-
-3. Run the database migration to setup postgres
-
-    ```bash
-     WORKFLOW_POSTGRES_URL="postgresql://<username>:<password>@<host>:<port>/<database>" bunx workflow-postgres-setup
-    ```
-
-    > This needs to be run whenever you update the @workflow/world-postgres package to update your schemas to the latest version.
-
-4. Start the development server pointing to your postgres database:
+3. Set the environment variables for the Postgres world:
 
    ```bash
-   WORKFLOW_TARGET_WORLD="@workflow/world-postgres" WORKFLOW_POSTGRES_URL="postgresql://<username>:<password>@<host>:<port>/<database>" bun dev
+   export WORKFLOW_TARGET_WORLD="@workflow/world-postgres"
+   export WORKFLOW_POSTGRES_URL="postgresql://<username>:<password>@<host>:<port>/<database>"
    ```
 
-5. Invoke the workflow by `curl`:
+4. Run the database setup command to create or update the Workflow tables:
 
    ```bash
-    curl -X POST --json '{"email":"hello@example.com"}' http://localhost:3000/api/signup
-    ```
+   bun run migrate
+   ```
+
+   > Run this again after upgrading `@workflow/world-postgres` so your database schema stays in sync.
+
+5. Start the development server:
+
+   ```bash
+   bun dev
+   ```
+
+   The example uses `instrumentation.ts` to start the Postgres world worker when the Next.js server boots.
+
+6. Invoke the workflow by `curl`:
+
+   ```bash
+   curl -X POST --json '{"email":"hello@example.com"}' http://localhost:3000/api/signup
+   ```
+
+7. Inspect the stored runs if you want to confirm the workflow completed:
+
+   ```bash
+   bunx workflow inspect runs --backend @workflow/world-postgres
+   ```
 
 ### Production Deployment
 

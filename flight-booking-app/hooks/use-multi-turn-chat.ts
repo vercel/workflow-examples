@@ -5,7 +5,22 @@ import { useChat } from '@ai-sdk/react';
 import { WorkflowChatTransport } from '@workflow/ai';
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 
-const STORAGE_KEY = 'workflow-run-id';
+const RUN_ID_PARAM = 'runId';
+
+function getRunIdFromUrl(): string | null {
+  if (typeof window === 'undefined') return null;
+  return new URLSearchParams(window.location.search).get(RUN_ID_PARAM);
+}
+
+function setRunIdInUrl(runId: string | null) {
+  const url = new URL(window.location.href);
+  if (runId) {
+    url.searchParams.set(RUN_ID_PARAM, runId);
+  } else {
+    url.searchParams.delete(RUN_ID_PARAM);
+  }
+  window.history.replaceState(window.history.state, '', url.toString());
+}
 
 /**
  * Options for the useMultiTurnChat hook
@@ -17,6 +32,8 @@ export interface UseMultiTurnChatOptions<
   onError?: (error: Error) => void;
   /** Called when a chat turn finishes */
   onFinish?: (data: { messages: UIMessage<TMetadata, UIDataTypes>[] }) => void;
+  /** Called when a new workflow run ID is received */
+  onNewRunId?: (runId: string) => void;
 }
 
 /**
@@ -78,7 +95,7 @@ function isUserMessageMarker(
  * - All messages come from the stream (single source of truth)
  * - Shows pending message for immediate feedback while waiting for stream
  * - No deduplication needed - simpler message reconstruction
- * - Automatically detects and resumes existing sessions from localStorage
+ * - Automatically detects and resumes existing sessions from URL query param
  * - Routes first messages to POST /api/chat (starts new workflow)
  * - Routes follow-up messages to POST /api/chat/[runId] (resumes hook)
  *
@@ -98,7 +115,11 @@ export function useMultiTurnChat<
 >(
   options: UseMultiTurnChatOptions<TMetadata> = {}
 ): UseMultiTurnChatReturn<TMetadata> {
-  const { onError, onFinish } = options;
+  const { onError, onFinish, onNewRunId } = options;
+
+  // Stable ref for onNewRunId to avoid recreating transport on every render
+  const onNewRunIdRef = useRef(onNewRunId);
+  onNewRunIdRef.current = onNewRunId;
 
   // Track the current workflow run ID
   const [runId, setRunId] = useState<string | null>(null);
@@ -111,12 +132,12 @@ export function useMultiTurnChat<
   // Track which message content we've seen from stream (to clear pending)
   const seenFromStreamRef = useRef<Set<string>>(new Set());
 
-  // Initialize from localStorage on mount
+  // Initialize from URL query param on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const storedRunId = localStorage.getItem(STORAGE_KEY);
-      if (storedRunId) {
-        setRunId(storedRunId);
+      const urlRunId = getRunIdFromUrl();
+      if (urlRunId) {
+        setRunId(urlRunId);
         setShouldResume(true);
       }
     }
@@ -132,26 +153,27 @@ export function useMultiTurnChat<
           const workflowRunId = response.headers.get('x-workflow-run-id');
           if (workflowRunId) {
             setRunId(workflowRunId);
-            localStorage.setItem(STORAGE_KEY, workflowRunId);
+            setRunIdInUrl(workflowRunId);
+            onNewRunIdRef.current?.(workflowRunId);
           }
         },
         onChatEnd: () => {
-          // Session ended - clear the stored run ID
+          // Session ended - clear the run ID from URL
           setRunId(null);
-          localStorage.removeItem(STORAGE_KEY);
+          setRunIdInUrl(null);
           sentMessagesRef.current.clear();
           seenFromStreamRef.current.clear();
           setPendingMessage(null);
         },
-        // Configure reconnection to use the stored workflow run ID
+        // Configure reconnection to use the URL query param
         prepareReconnectToStreamRequest: ({ api, ...rest }) => {
-          const storedRunId = localStorage.getItem(STORAGE_KEY);
-          if (!storedRunId) {
+          const activeRunId = getRunIdFromUrl();
+          if (!activeRunId) {
             throw new Error('No active workflow run ID found');
           }
           return {
             ...rest,
-            api: `/api/chat/${encodeURIComponent(storedRunId)}/stream`,
+            api: `/api/chat/${encodeURIComponent(activeRunId)}/stream`,
           };
         },
         maxConsecutiveErrors: 5,
@@ -349,7 +371,7 @@ export function useMultiTurnChat<
     // Clear local state
     setRunId(null);
     setShouldResume(false);
-    localStorage.removeItem(STORAGE_KEY);
+    setRunIdInUrl(null);
     sentMessagesRef.current.clear();
     seenFromStreamRef.current.clear();
     setPendingMessage(null);

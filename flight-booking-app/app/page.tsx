@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import {
   Conversation,
   ConversationContent,
@@ -26,6 +26,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Sidebar,
+  type ConversationEntry,
+  loadConversations,
+  saveConversations,
+} from "@/components/sidebar";
 
 const SUGGESTIONS = [
   "Find me flights from San Francisco to Los Angeles",
@@ -38,13 +44,46 @@ const SUGGESTIONS = [
 const FULL_EXAMPLE_PROMPT =
   "Book me the cheapest flight from San Francisco to Los Angeles for July 27 2025. My name is Pranay Prakash. I like window seats. Don't ask me for approval.";
 
+function getRunIdFromUrl(): string | null {
+  if (typeof window === "undefined") return null;
+  return new URLSearchParams(window.location.search).get("runId");
+}
+
 export default function ChatPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const firstMessageRef = useRef<string | null>(null);
+
+  const [conversations, setConversations] = useState<ConversationEntry[]>(() =>
+    loadConversations()
+  );
+  const [activeRunId, setActiveRunId] = useState<string | null>(() =>
+    getRunIdFromUrl()
+  );
+
+  const handleNewRunId = useCallback(
+    (runId: string) => {
+      setActiveRunId(runId);
+      const text = firstMessageRef.current;
+      const title = text
+        ? text.slice(0, 40) + (text.length > 40 ? "..." : "")
+        : "New conversation";
+      firstMessageRef.current = null;
+
+      const entry: ConversationEntry = { runId, title, createdAt: Date.now() };
+      setConversations((prev) => {
+        const updated = [entry, ...prev.filter((c) => c.runId !== runId)];
+        saveConversations(updated);
+        return updated;
+      });
+    },
+    []
+  );
 
   const {
     messages,
     status,
     error,
+    runId,
     sendMessage,
     stop,
     endSession,
@@ -56,7 +95,27 @@ export default function ChatPage() {
         textareaRef.current?.focus();
       });
     },
+    onNewRunId: handleNewRunId,
   });
+
+  const handleSendMessage = useCallback(
+    (text: string) => {
+      if (!runId) {
+        firstMessageRef.current = text;
+      }
+      sendMessage(text);
+    },
+    [runId, sendMessage]
+  );
+
+  const handleNewChat = useCallback(async () => {
+    await endSession();
+    setActiveRunId(null);
+  }, [endSession]);
+
+  const handleSelectConversation = useCallback((targetRunId: string) => {
+    window.location.href = `/?runId=${encodeURIComponent(targetRunId)}`;
+  }, []);
 
   // Focus the input on mount
   useEffect(() => {
@@ -79,221 +138,255 @@ export default function ChatPage() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col w-full max-w-2xl pt-12 pb-24 mx-auto stretch">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold mb-2">Flight Booking Agent</h1>
-        <p className="text-muted-foreground">Book a flight using workflows</p>
-      </div>
-
-      {/* Error display */}
-      {error && (
-        <div className="text-sm mb-4 p-4 rounded-lg border border-red-500/50 bg-red-500/10 text-red-600 dark:text-red-400">
-          <div className="flex items-start gap-2">
-            <span className="font-medium">Error:</span>
-            <span className="flex-1">{error.message}</span>
-          </div>
-        </div>
-      )}
-
-      {messages.length === 0 && (
-        <div className="mb-8 space-y-4">
-          <div className="text-center">
-            <h2 className="text-lg font-semibold mb-2">
-              How can I help you today?
-            </h2>
-            <p className="text-muted-foreground text-sm">
-              Try one of these suggestions or ask anything about flights
-            </p>
-          </div>
-          <Suggestions>
-            {SUGGESTIONS.map((suggestion) => (
-              <Suggestion
-                key={suggestion}
-                suggestion={suggestion}
-                onClick={(s) => sendMessage(s)}
-              />
-            ))}
-          </Suggestions>
-          <div className="mt-10 p-3 bg-muted/25 rounded-lg border">
-            <p className="text-sm text-muted-foreground mb-3">
-              To see the full extent of agentic tool-calling and workflows, use
-              this prompt:
-            </p>
-            <button
-              type="button"
-              onClick={() => sendMessage(FULL_EXAMPLE_PROMPT)}
-              className="text-sm border px-3 py-2 rounded-md bg-muted/50 text-left hover:bg-muted/75 transition-colors cursor-pointer"
-            >
-              {FULL_EXAMPLE_PROMPT}
-            </button>
-          </div>
-        </div>
-      )}
-
-
-      <Conversation className="mb-10">
-        <ConversationContent>
-          {messages.map((message, index) => {
-            const hasText = message.parts.some((part) => part.type === "text");
-            const isLastMessage = index === messages.length - 1;
-
-            return (
-              <div key={message.id}>
-                <Message from={message.role}>
-                  <MessageContent className={message.role === "assistant" ? "w-full" : undefined}>
-                    {message.parts.map((part, partIndex) => {
-                      // Render text parts
-                      if (part.type === "text") {
-                        return (
-                          <Response key={`${message.id}-text-${partIndex}`}>
-                            {part.text}
-                          </Response>
-                        );
-                      }
-
-                      // Render workflow data messages (non-user-message data)
-                      if (part.type === "data-workflow" && "data" in part) {
-                        const data = part.data as any;
-                        // Skip user-message markers (handled by useMultiTurnChat)
-                        if (data?.type === "user-message") {
-                          return null;
-                        }
-                        // Render observability events inline
-                        return (
-                          <WorkflowEventBadge
-                            key={`${message.id}-data-${partIndex}`}
-                            data={data}
-                            t0={requestReceivedAt}
-                          />
-                        );
-                      }
-
-                      // Render tool parts
-                      if (
-                        part.type === "tool-searchFlights" ||
-                        part.type === "tool-checkFlightStatus" ||
-                        part.type === "tool-getAirportInfo" ||
-                        part.type === "tool-bookFlight" ||
-                        part.type === "tool-checkBaggageAllowance" ||
-                        part.type === "tool-sleep"
-                      ) {
-                        if (!("toolCallId" in part) || !("state" in part)) {
-                          return null;
-                        }
-                        return (
-                          <Tool
-                            key={part.toolCallId}
-                            className="hover:bg-secondary/25 transition-colors"
-                          >
-                            <ToolHeader type={part.type} state={part.state} />
-                            <ToolContent>
-                              {part.input ? (
-                                <ToolInput input={part.input as any} />
-                              ) : null}
-                              <ToolOutput
-                                output={
-                                  part.state === "output-available"
-                                    ? renderToolOutput(part)
-                                    : undefined
-                                }
-                                errorText={part.errorText}
-                              />
-                            </ToolContent>
-                          </Tool>
-                        );
-                      }
-
-                      // Render booking approval
-                      if (part.type === "tool-bookingApproval") {
-                        return (
-                          <BookingApproval
-                            key={partIndex}
-                            toolCallId={part.toolCallId}
-                            input={
-                              part.input as {
-                                flightNumber: string;
-                                passengerName: string;
-                                price: number;
-                              }
-                            }
-                            output={part.output as string}
-                          />
-                        );
-                      }
-
-                      return null;
-                    })}
-
-                    {/* Loading indicators for assistant messages */}
-                    {message.role === "assistant" &&
-                      isLastMessage &&
-                      !hasText && (
-                        <>
-                          {status === "submitted" && (
-                            <Shimmer className="text-sm">
-                              Sending message...
-                            </Shimmer>
-                          )}
-                          {status === "streaming" && (
-                            <Shimmer className="text-sm">
-                              Waiting for response...
-                            </Shimmer>
-                          )}
-                        </>
-                      )}
-                  </MessageContent>
-                </Message>
-              </div>
-            );
-          })}
-
-          {/* Pending message - shows immediately while waiting for stream confirmation */}
-          {pendingMessage && (
-            <>
-              <Message from="user">
-                <MessageContent>
-                  <Response>{pendingMessage}</Response>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Shimmer className="text-xs text-muted-foreground">
-                      Sending...
-                    </Shimmer>
-                  </div>
-                </MessageContent>
-              </Message>
-              <Message from="assistant">
-                <MessageContent>
-                  <Shimmer className="text-sm">
-                    Processing your request...
-                  </Shimmer>
-                </MessageContent>
-              </Message>
-            </>
-          )}
-
-          {/* Loading indicator when user message confirmed but no assistant response yet */}
-          {!pendingMessage &&
-            messages.length > 0 &&
-            messages[messages.length - 1].role === "user" &&
-            status === "streaming" && (
-              <Message from="assistant">
-                <MessageContent>
-                  <Shimmer className="text-sm">
-                    Processing your request...
-                  </Shimmer>
-                </MessageContent>
-              </Message>
-            )}
-        </ConversationContent>
-        <ConversationScrollButton />
-      </Conversation>
-
-      <ChatInput
-        status={status}
-        textareaRef={textareaRef}
-        onNewChat={endSession}
-        onSendMessage={sendMessage}
-        stop={stop}
+    <div className="flex h-screen">
+      <Sidebar
+        conversations={conversations}
+        activeRunId={activeRunId}
+        onNewChat={handleNewChat}
+        onSelect={handleSelectConversation}
       />
+      <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 overflow-y-auto">
+          <div className="flex flex-col w-full max-w-2xl pt-12 pb-24 mx-auto stretch">
+            <div className="mb-8 text-center">
+              <h1 className="text-3xl font-bold mb-2">Flight Booking Agent</h1>
+              <p className="text-muted-foreground">
+                Book a flight using workflows
+              </p>
+            </div>
+
+            {/* Error display */}
+            {error && (
+              <div className="text-sm mb-4 p-4 rounded-lg border border-red-500/50 bg-red-500/10 text-red-600 dark:text-red-400">
+                <div className="flex items-start gap-2">
+                  <span className="font-medium">Error:</span>
+                  <span className="flex-1">{error.message}</span>
+                </div>
+              </div>
+            )}
+
+            {messages.length === 0 && !pendingMessage && (
+              <div className="mb-8 space-y-4">
+                <div className="text-center">
+                  <h2 className="text-lg font-semibold mb-2">
+                    How can I help you today?
+                  </h2>
+                  <p className="text-muted-foreground text-sm">
+                    Try one of these suggestions or ask anything about flights
+                  </p>
+                </div>
+                <Suggestions>
+                  {SUGGESTIONS.map((suggestion) => (
+                    <Suggestion
+                      key={suggestion}
+                      suggestion={suggestion}
+                      onClick={(s) => handleSendMessage(s)}
+                    />
+                  ))}
+                </Suggestions>
+                <div className="mt-10 p-3 bg-muted/25 rounded-lg border">
+                  <p className="text-sm text-muted-foreground mb-3">
+                    To see the full extent of agentic tool-calling and
+                    workflows, use this prompt:
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => handleSendMessage(FULL_EXAMPLE_PROMPT)}
+                    className="text-sm border px-3 py-2 rounded-md bg-muted/50 text-left hover:bg-muted/75 transition-colors cursor-pointer"
+                  >
+                    {FULL_EXAMPLE_PROMPT}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <Conversation className="mb-10">
+              <ConversationContent>
+                {messages.map((message, index) => {
+                  const hasText = message.parts.some(
+                    (part) => part.type === "text"
+                  );
+                  const isLastMessage = index === messages.length - 1;
+
+                  return (
+                    <div key={message.id}>
+                      <Message from={message.role}>
+                        <MessageContent
+                          className={
+                            message.role === "assistant"
+                              ? "w-full"
+                              : undefined
+                          }
+                        >
+                          {message.parts.map((part, partIndex) => {
+                            // Render text parts
+                            if (part.type === "text") {
+                              return (
+                                <Response
+                                  key={`${message.id}-text-${partIndex}`}
+                                >
+                                  {part.text}
+                                </Response>
+                              );
+                            }
+
+                            // Render workflow data messages (non-user-message data)
+                            if (
+                              part.type === "data-workflow" &&
+                              "data" in part
+                            ) {
+                              const data = part.data as any;
+                              // Skip user-message markers (handled by useMultiTurnChat)
+                              if (data?.type === "user-message") {
+                                return null;
+                              }
+                              // Render observability events inline
+                              return (
+                                <WorkflowEventBadge
+                                  key={`${message.id}-data-${partIndex}`}
+                                  data={data}
+                                  t0={requestReceivedAt}
+                                />
+                              );
+                            }
+
+                            // Render tool parts
+                            if (
+                              part.type === "tool-searchFlights" ||
+                              part.type === "tool-checkFlightStatus" ||
+                              part.type === "tool-getAirportInfo" ||
+                              part.type === "tool-bookFlight" ||
+                              part.type === "tool-checkBaggageAllowance" ||
+                              part.type === "tool-sleep"
+                            ) {
+                              if (
+                                !("toolCallId" in part) ||
+                                !("state" in part)
+                              ) {
+                                return null;
+                              }
+                              return (
+                                <Tool
+                                  key={part.toolCallId}
+                                  className="hover:bg-secondary/25 transition-colors"
+                                >
+                                  <ToolHeader
+                                    type={part.type}
+                                    state={part.state}
+                                  />
+                                  <ToolContent>
+                                    {part.input ? (
+                                      <ToolInput input={part.input as any} />
+                                    ) : null}
+                                    <ToolOutput
+                                      output={
+                                        part.state === "output-available"
+                                          ? renderToolOutput(part)
+                                          : undefined
+                                      }
+                                      errorText={part.errorText}
+                                    />
+                                  </ToolContent>
+                                </Tool>
+                              );
+                            }
+
+                            // Render booking approval
+                            if (part.type === "tool-bookingApproval") {
+                              return (
+                                <BookingApproval
+                                  key={partIndex}
+                                  toolCallId={part.toolCallId}
+                                  input={
+                                    part.input as {
+                                      flightNumber: string;
+                                      passengerName: string;
+                                      price: number;
+                                    }
+                                  }
+                                  output={part.output as string}
+                                />
+                              );
+                            }
+
+                            return null;
+                          })}
+
+                          {/* Loading indicators for assistant messages */}
+                          {message.role === "assistant" &&
+                            isLastMessage &&
+                            !hasText && (
+                              <>
+                                {status === "submitted" && (
+                                  <Shimmer className="text-sm">
+                                    Sending message...
+                                  </Shimmer>
+                                )}
+                                {status === "streaming" && (
+                                  <Shimmer className="text-sm">
+                                    Waiting for response...
+                                  </Shimmer>
+                                )}
+                              </>
+                            )}
+                        </MessageContent>
+                      </Message>
+                    </div>
+                  );
+                })}
+
+                {/* Pending message - shows immediately while waiting for stream confirmation */}
+                {pendingMessage && (
+                  <>
+                    <Message from="user">
+                      <MessageContent>
+                        <Response>{pendingMessage}</Response>
+                        <div className="flex items-center gap-2 mt-1">
+                          <Shimmer className="text-xs text-muted-foreground">
+                            Sending...
+                          </Shimmer>
+                        </div>
+                      </MessageContent>
+                    </Message>
+                    <Message from="assistant">
+                      <MessageContent>
+                        <Shimmer className="text-sm">
+                          Processing your request...
+                        </Shimmer>
+                      </MessageContent>
+                    </Message>
+                  </>
+                )}
+
+                {/* Loading indicator when user message confirmed but no assistant response yet */}
+                {!pendingMessage &&
+                  messages.length > 0 &&
+                  messages[messages.length - 1].role === "user" &&
+                  status === "streaming" && (
+                    <Message from="assistant">
+                      <MessageContent>
+                        <Shimmer className="text-sm">
+                          Processing your request...
+                        </Shimmer>
+                      </MessageContent>
+                    </Message>
+                  )}
+              </ConversationContent>
+              <ConversationScrollButton />
+            </Conversation>
+          </div>
+        </div>
+
+        <div className="p-2 flex justify-center">
+          <ChatInput
+            status={status}
+            textareaRef={textareaRef}
+            onNewChat={handleNewChat}
+            onSendMessage={handleSendMessage}
+            stop={stop}
+          />
+        </div>
+      </div>
     </div>
   );
 }
@@ -329,7 +422,9 @@ function WorkflowEventBadge({ data, t0 }: { data: any; t0: number | null }) {
             <TooltipTrigger asChild>
               <span className="font-mono text-[10px] cursor-help">t=0</span>
             </TooltipTrigger>
-            <TooltipContent>Reference time for all other timestamps</TooltipContent>
+            <TooltipContent>
+              Reference time for all other timestamps
+            </TooltipContent>
           </Tooltip>
         </div>
       );
@@ -383,7 +478,9 @@ function WorkflowEventBadge({ data, t0 }: { data: any; t0: number | null }) {
           <span className="font-mono text-[10px] flex items-center gap-1.5">
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className="cursor-help">{(data.durationMs / 1000).toFixed(1)}s</span>
+                <span className="cursor-help">
+                  {(data.durationMs / 1000).toFixed(1)}s
+                </span>
               </TooltipTrigger>
               <TooltipContent>Duration of this turn</TooltipContent>
             </Tooltip>
@@ -451,7 +548,9 @@ function parseToolOutput(partOutput: any): any {
     // Check for nested output.value structure
     if (partOutput.output?.value) {
       const innerValue = partOutput.output.value;
-      return typeof innerValue === "string" ? JSON.parse(innerValue) : innerValue;
+      return typeof innerValue === "string"
+        ? JSON.parse(innerValue)
+        : innerValue;
     }
     return partOutput;
   }
@@ -462,7 +561,9 @@ function parseToolOutput(partOutput: any): any {
     // Check for nested output.value structure
     if (parsed.output?.value) {
       const innerValue = parsed.output.value;
-      return typeof innerValue === "string" ? JSON.parse(innerValue) : innerValue;
+      return typeof innerValue === "string"
+        ? JSON.parse(innerValue)
+        : innerValue;
     }
     return parsed;
   }
@@ -617,7 +718,7 @@ function renderToolOutput(part: any) {
         const booking = parsedOutput;
         return (
           <div className="p-3 space-y-2">
-            <div className="text-sm font-medium">✅ Booking Confirmed!</div>
+            <div className="text-sm font-medium">Booking Confirmed!</div>
             <div className="space-y-1 text-sm">
               <div>
                 Confirmation #:{" "}

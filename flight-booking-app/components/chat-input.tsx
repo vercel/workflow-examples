@@ -29,7 +29,7 @@ export default function ChatInput({
   const [text, setText] = useState("");
 
   return (
-    <div className="fixed bottom-2 w-full max-w-2xl bg-background">
+    <div className="w-full max-w-2xl bg-background">
       <PromptInput
         onSubmit={(message: PromptInputMessage) => {
           const hasText = Boolean(message.text);

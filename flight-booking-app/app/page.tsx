@@ -59,6 +59,8 @@ function setRunIdInUrl(runId: string | null) {
   window.history.pushState({}, "", url.toString());
 }
 
+const DEBUG_KEY = "show-debug";
+
 export default function ChatPage() {
   const [conversations, setConversations] = useState<ConversationEntry[]>(() =>
     loadConversations()
@@ -69,6 +71,18 @@ export default function ChatPage() {
   const [sessionKey, setSessionKey] = useState<string>(() =>
     getRunIdFromUrl() || String(Date.now())
   );
+  const [showDebug, setShowDebug] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem(DEBUG_KEY) === "true";
+  });
+
+  const handleToggleDebug = useCallback(() => {
+    setShowDebug((prev) => {
+      const next = !prev;
+      localStorage.setItem(DEBUG_KEY, String(next));
+      return next;
+    });
+  }, []);
 
   const handleNewConversation = useCallback(
     (runId: string, title: string) => {
@@ -116,12 +130,15 @@ export default function ChatPage() {
       <Sidebar
         conversations={conversations}
         activeRunId={activeRunId}
+        showDebug={showDebug}
         onNewChat={handleNewChat}
         onSelect={handleSelectConversation}
         onDelete={handleDeleteConversation}
+        onToggleDebug={handleToggleDebug}
       />
       <ChatView
         key={sessionKey}
+        showDebug={showDebug}
         onNewChat={handleNewChat}
         onNewConversation={handleNewConversation}
       />
@@ -130,9 +147,11 @@ export default function ChatPage() {
 }
 
 function ChatView({
+  showDebug,
   onNewChat,
   onNewConversation,
 }: {
+  showDebug: boolean;
   onNewChat: () => void;
   onNewConversation: (runId: string, title: string) => void;
 }) {
@@ -285,17 +304,16 @@ function ChatView({
                             );
                           }
 
-                          // Render workflow data messages (non-user-message data)
+                          // Render workflow data messages (observability events)
                           if (
                             part.type === "data-workflow" &&
                             "data" in part
                           ) {
                             const data = part.data as any;
-                            // Skip user-message markers (handled by useMultiTurnChat)
                             if (data?.type === "user-message") {
                               return null;
                             }
-                            // Render observability events inline
+                            if (!showDebug) return null;
                             return (
                               <WorkflowEventBadge
                                 key={`${message.id}-data-${partIndex}`}

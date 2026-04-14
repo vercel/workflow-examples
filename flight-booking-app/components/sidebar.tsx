@@ -29,38 +29,44 @@ export function saveConversations(conversations: ConversationEntry[]) {
 interface SidebarProps {
   conversations: ConversationEntry[];
   activeRunId: string | null;
+  showDebug: boolean;
   onNewChat: () => void;
   onSelect: (runId: string) => void;
   onDelete: (runId: string) => void;
+  onToggleDebug: () => void;
 }
 
 export function Sidebar({
   conversations,
   activeRunId,
+  showDebug,
   onNewChat,
   onSelect,
   onDelete,
+  onToggleDebug,
 }: SidebarProps) {
-  const [isDark, setIsDark] = useState(true);
+  const [theme, setTheme] = useState<"system" | "light" | "dark">("dark");
 
   useEffect(() => {
-    const stored = localStorage.getItem(THEME_KEY);
-    if (stored === "light") {
-      setIsDark(false);
-      document.body.classList.remove("dark");
-    }
+    const stored = localStorage.getItem(THEME_KEY) as "system" | "light" | "dark" | null;
+    const initial = stored || "dark";
+    setTheme(initial);
+    applyTheme(initial);
   }, []);
 
-  const toggleTheme = () => {
-    const next = !isDark;
-    setIsDark(next);
-    if (next) {
-      document.body.classList.add("dark");
-      localStorage.setItem(THEME_KEY, "dark");
+  const applyTheme = (t: "system" | "light" | "dark") => {
+    if (t === "system") {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.body.classList.toggle("dark", prefersDark);
     } else {
-      document.body.classList.remove("dark");
-      localStorage.setItem(THEME_KEY, "light");
+      document.body.classList.toggle("dark", t === "dark");
     }
+  };
+
+  const setThemeAndPersist = (t: "system" | "light" | "dark") => {
+    setTheme(t);
+    localStorage.setItem(THEME_KEY, t);
+    applyTheme(t);
   };
 
   return (
@@ -114,31 +120,59 @@ export function Sidebar({
           </div>
         ))}
       </nav>
-      <div className="p-3 border-t border-border">
+      <div className="p-3 border-t border-border space-y-1">
         <button
           type="button"
-          onClick={toggleTheme}
+          onClick={onToggleDebug}
           className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors cursor-pointer"
         >
-          {isDark ? (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="5" />
-              <line x1="12" y1="1" x2="12" y2="3" />
-              <line x1="12" y1="21" x2="12" y2="23" />
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-              <line x1="1" y1="12" x2="3" y2="12" />
-              <line x1="21" y1="12" x2="23" y2="12" />
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-            </svg>
-          ) : (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-          )}
-          {isDark ? "Light mode" : "Dark mode"}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 20v-6M6 20V10M18 20V4" />
+          </svg>
+          {showDebug ? "Hide" : "Show"} debug info
         </button>
+        <div className="flex items-center gap-1 px-2">
+          <span className="text-xs text-muted-foreground mr-auto">Theme</span>
+          {(["system", "light", "dark"] as const).map((t) => (
+            <button
+              key={t}
+              type="button"
+              onClick={() => setThemeAndPersist(t)}
+              className={`p-1.5 rounded transition-colors cursor-pointer ${
+                theme === t
+                  ? "bg-accent text-accent-foreground"
+                  : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+              }`}
+              title={t.charAt(0).toUpperCase() + t.slice(1)}
+            >
+              {t === "system" && (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+              )}
+              {t === "light" && (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              )}
+              {t === "dark" && (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
+            </button>
+          ))}
+        </div>
       </div>
     </aside>
   );

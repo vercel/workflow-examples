@@ -95,6 +95,22 @@ export default function ChatPage() {
     setSessionKey(targetRunId);
   }, []);
 
+  const handleDeleteConversation = useCallback(
+    (targetRunId: string) => {
+      setConversations((prev) => {
+        const updated = prev.filter((c) => c.runId !== targetRunId);
+        saveConversations(updated);
+        return updated;
+      });
+      if (activeRunId === targetRunId) {
+        setRunIdInUrl(null);
+        setActiveRunId(null);
+        setSessionKey(String(Date.now()));
+      }
+    },
+    [activeRunId]
+  );
+
   return (
     <div className="flex h-screen">
       <Sidebar
@@ -102,6 +118,7 @@ export default function ChatPage() {
         activeRunId={activeRunId}
         onNewChat={handleNewChat}
         onSelect={handleSelectConversation}
+        onDelete={handleDeleteConversation}
       />
       <ChatView
         key={sessionKey}

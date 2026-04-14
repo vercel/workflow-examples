@@ -52,6 +52,13 @@ function setRunIdInUrl(runId: string | null) {
 }
 
 export default function ChatPage() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+  return <ChatPageInner />;
+}
+
+function ChatPageInner() {
   const [conversations, setConversations] = useState<ConversationEntry[]>(() =>
     loadConversations()
   );

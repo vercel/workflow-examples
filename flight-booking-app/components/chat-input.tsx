@@ -51,6 +51,7 @@ export default function ChatInput({
           <PromptInputTools>
             <Button
               type="button"
+              variant="outline"
               size="sm"
               onClick={async () => {
                 await stop();

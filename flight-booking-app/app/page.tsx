@@ -28,16 +28,13 @@ import {
   saveConversations,
 } from "@/components/sidebar";
 
-const SUGGESTIONS = [
-  "Find me flights from San Francisco to Los Angeles",
-  "What's the status of flight UA123?",
-  "Tell me about SFO airport",
-  "What's the baggage allowance for United Airlines economy?",
-  "Book a flight from New York to Miami",
-];
-
 const FULL_EXAMPLE_PROMPT =
-  "Book me the cheapest flight from San Francisco to Los Angeles for July 27 2025. My name is Pranay Prakash. I like window seats. Don't ask me for approval.";
+  "Book me the cheapest flight from San Francisco to Los Angeles for July 27 2026. My name is Peter Wielander. I like window seats. Don't ask me for approval.";
+
+const SUGGESTIONS: Record<string, string> = {
+  "Find me flights from San Francisco to Los Angeles": FULL_EXAMPLE_PROMPT,
+  "What's the status of flight UA123?": "Check the status of flight UA123",
+}
 
 function getRunIdFromUrl(): string | null {
   if (typeof window === "undefined") return null;
@@ -90,6 +87,22 @@ export default function ChatPage() {
     setSessionKey(targetRunId);
   }, []);
 
+  const handleDeleteConversation = useCallback(
+    (targetRunId: string) => {
+      setConversations((prev) => {
+        const updated = prev.filter((c) => c.runId !== targetRunId);
+        saveConversations(updated);
+        return updated;
+      });
+      if (activeRunId === targetRunId) {
+        setRunIdInUrl(null);
+        setActiveRunId(null);
+        setSessionKey(String(Date.now()));
+      }
+    },
+    [activeRunId]
+  );
+
   return (
     <div className="flex h-screen">
       <Sidebar
@@ -97,6 +110,7 @@ export default function ChatPage() {
         activeRunId={activeRunId}
         onNewChat={handleNewChat}
         onSelect={handleSelectConversation}
+        onDelete={handleDeleteConversation}
       />
       <ChatView
         key={sessionKey}
@@ -186,27 +200,14 @@ function ChatView({
                 </p>
               </div>
               <Suggestions>
-                {SUGGESTIONS.map((suggestion) => (
+                {Object.entries(SUGGESTIONS).map(([suggestion, prompt]) => (
                   <Suggestion
                     key={suggestion}
                     suggestion={suggestion}
-                    onClick={(s) => handleSendMessage(s)}
+                    onClick={(s) => handleSendMessage(prompt)}
                   />
                 ))}
               </Suggestions>
-              <div className="mt-10 p-3 bg-muted/25 rounded-lg border">
-                <p className="text-sm text-muted-foreground mb-3">
-                  To see the full extent of agentic tool-calling and
-                  workflows, use this prompt:
-                </p>
-                <button
-                  type="button"
-                  onClick={() => handleSendMessage(FULL_EXAMPLE_PROMPT)}
-                  className="text-sm border px-3 py-2 rounded-md bg-muted/50 text-left hover:bg-muted/75 transition-colors cursor-pointer"
-                >
-                  {FULL_EXAMPLE_PROMPT}
-                </button>
-              </div>
             </div>
           )}
 

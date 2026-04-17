@@ -10,6 +10,15 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  console.log('[route] GET start, signal.aborted:', request.signal.aborted);
+  request.signal.addEventListener('abort', () => {
+    console.log(
+      '[route] request.signal aborted, reason:',
+      (request.signal.reason as Error)?.message ??
+        (request.signal.reason as unknown)
+    );
+  });
+
   const { id } = await params;
   const { searchParams } = new URL(request.url);
   const startIndexParam = searchParams.get('startIndex');

@@ -40,8 +40,8 @@ importers:
         specifier: ^1.13.0
         version: 1.14.0(@opentelemetry/api-logs@0.57.2)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/resources@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))
       '@workflow/ai':
-        specifier: 4.1.2
-        version: 4.1.2(@opentelemetry/api@1.9.0)(ai@6.0.69(zod@4.1.12))(workflow@4.2.4(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3))
+        specifier: https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow-ai.tgz
+        version: https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow-ai.tgz(@opentelemetry/api@1.9.0)(ai@6.0.69(zod@4.1.12))(workflow@https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3))
       '@workflow/world-postgres':
         specifier: 4.1.0
         version: 4.1.0(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(postgres@3.4.8)(typescript@5.9.3)
@@ -115,8 +115,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(react@19.2.3)
       workflow:
-        specifier: 4.2.4
-        version: 4.2.4(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)
+        specifier: https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow.tgz
+        version: https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)
       zod:
         specifier: ^4.1.12
         version: 4.1.12
@@ -2322,28 +2322,33 @@ packages:
     resolution: {integrity: sha512-wo+jCycmCX078vQSbkX+RcLvySONDCK0f9aQp5UMKQD1+B+xKt3YVbIYbZukvoHQpbm5nnk6If+ADSeK/PmCgQ==}
     engines: {node: '>=20.0.0'}
 
-  '@workflow/ai@4.1.2':
-    resolution: {integrity: sha512-6gxc/FEseaJukjZ/1J1wELg5an+Vu2d8MftbLmPAD9lXq1Z4mGImu3We+Anqkv0dBHRbu+qlvl7mtqb1YtbqkA==}
+  '@workflow/ai@https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow-ai.tgz':
+    resolution: {integrity: sha512-u7AbZAFKvG+9FQkOpc0Qgz2t+43CQHAhRjx37lE2sMI2K76JiLJJyOqzPxEfD0huI1I8xfxKILZbV5aRXB1Xkw==, tarball: https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow-ai.tgz}
+    version: 4.1.2-4a98ba5
     peerDependencies:
       '@opentelemetry/api': ^1.0.0
       ai: ^6
-      workflow: ^4.2.3
+      workflow: https://workflow-docs-owxrurgkl.vercel.sh/workflow.tgz
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
 
-  '@workflow/astro@4.0.4':
-    resolution: {integrity: sha512-TVx1SY4KoYSkHS/nkhXP7wz10rYBKJ0o9oQGahS+kCBkGkD5kyKdAc4QR2IpynG/u/vVg599XJj2Bsh9m2Jsrw==}
+  '@workflow/astro@https://workflow-docs-owxrurgkl.vercel.sh/workflow-astro.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-astro.tgz}
+    version: 4.0.4-4a98ba5
 
-  '@workflow/builders@4.0.5':
-    resolution: {integrity: sha512-UmlZOjkiDqb37NZjxpJ56zwg0MFAdv/XSfRJgU8a0JQOGdTiEhJ1pWdg0pAD96pcoDwNqGphSTBhf/QoRdXgnw==}
+  '@workflow/builders@https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz}
+    version: 4.0.5-4a98ba5
 
-  '@workflow/cli@4.2.4':
-    resolution: {integrity: sha512-NtVZNCt9CY2KtpT3FOSpQXIaj/zt8sCFfaNNzOIVCQLwfkGc6Dfi1nFtI6BELY0cWWAmCf3+ZlHOecluEx0Ynw==}
+  '@workflow/cli@https://workflow-docs-owxrurgkl.vercel.sh/workflow-cli.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-cli.tgz}
+    version: 4.2.4-4a98ba5
     hasBin: true
 
-  '@workflow/core@4.2.4':
-    resolution: {integrity: sha512-uORE+d8KPwf5vTvpq/gcynFl4gmls8m6ESHvsR+AOERlQAXRgEysCBpUAFczCFWU1P16CTEBJvH5S+qpnTWQIA==}
+  '@workflow/core@https://workflow-docs-owxrurgkl.vercel.sh/workflow-core.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-core.tgz}
+    version: 4.2.4-4a98ba5
     peerDependencies:
       '@opentelemetry/api': '1'
     peerDependenciesMeta:
@@ -2353,11 +2358,13 @@ packages:
   '@workflow/errors@4.1.0':
     resolution: {integrity: sha512-MLf82s2hFgRIGaJRI0BQvhrNoCK7mOPSNGIBom42phbnrWbj2O0YSpZTBr1dNNFF7Cd8TgLEmaQrCsHZqlWhJw==}
 
-  '@workflow/errors@4.1.1':
-    resolution: {integrity: sha512-T9x1MNKhoL9uMLP6KJNg2VyNz/Hf3cEB2WUaMU8fCEihDtHdHQ7q8J3sHIzFcHRg1FTnYFmVTk57Ycgfv8lZ5w==}
+  '@workflow/errors@https://workflow-docs-owxrurgkl.vercel.sh/workflow-errors.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-errors.tgz}
+    version: 4.1.1-4a98ba5
 
-  '@workflow/nest@0.0.4':
-    resolution: {integrity: sha512-dW2vg3178toaLqPHMtpXJEGQ/EufBPez1Ew0NhMpuo0+IVA7bqNDylK7g0ScMtsCX7CL5GOziW9I2mUVvpYUng==}
+  '@workflow/nest@https://workflow-docs-owxrurgkl.vercel.sh/workflow-nest.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-nest.tgz}
+    version: 0.0.4-4a98ba5
     hasBin: true
     peerDependencies:
       '@nestjs/common': '>=10.0.0'
@@ -2365,50 +2372,61 @@ packages:
       '@swc/cli': '>=0.4.0'
       '@swc/core': '>=1.5.0'
 
-  '@workflow/next@4.0.5':
-    resolution: {integrity: sha512-Nos/vWpVj9uHK0w05AFVEULaWQs8R3AQZoJtGCxvjHCUWAI3Od8iQIzC9IeugKaDuufkkzLcZOeWaGV9p+Ey0w==}
+  '@workflow/next@https://workflow-docs-owxrurgkl.vercel.sh/workflow-next.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-next.tgz}
+    version: 4.0.5-4a98ba5
     peerDependencies:
       next: '>13'
     peerDependenciesMeta:
       next:
         optional: true
 
-  '@workflow/nitro@4.0.5':
-    resolution: {integrity: sha512-M/jm+to+QiJI8/8r8tfz/4iayK0/vfsgu1703ec+ifPS8AYY0+LRWLIweb860vnEtydLuZgydIqts5CIgPsZcw==}
+  '@workflow/nitro@https://workflow-docs-owxrurgkl.vercel.sh/workflow-nitro.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-nitro.tgz}
+    version: 4.0.5-4a98ba5
 
-  '@workflow/nuxt@4.0.5':
-    resolution: {integrity: sha512-Q7fv0VqhZ8NXrgUOhd+YSc3j1ZVlDratVOcJ8Omxd0j2Mn0feC3CGeglFjaYfuvY/B2t7xG9SCcCXBV74CrEdQ==}
+  '@workflow/nuxt@https://workflow-docs-owxrurgkl.vercel.sh/workflow-nuxt.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-nuxt.tgz}
+    version: 4.0.5-4a98ba5
 
-  '@workflow/rollup@4.0.4':
-    resolution: {integrity: sha512-DqmSp89Y4WVoMkBWkiNll0b5mZ2WA9uwNsRuO4QOU0XHytuCnvTRGMf0ZV6fXAa3KyeXlgS1r0V8SHwt1ZQ7jg==}
+  '@workflow/rollup@https://workflow-docs-owxrurgkl.vercel.sh/workflow-rollup.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-rollup.tgz}
+    version: 4.0.4-4a98ba5
 
-  '@workflow/serde@4.1.1':
-    resolution: {integrity: sha512-191/N2w3WlrapuAvtAT1knONuqJ9auOqM8c7yMMM7c6rqXAZQKkNJrOuuj/j0vp7x43rg0+fy90bqT/xQ5ki4w==}
+  '@workflow/serde@https://workflow-docs-owxrurgkl.vercel.sh/workflow-serde.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-serde.tgz}
+    version: 4.1.1-4a98ba5
 
-  '@workflow/sveltekit@4.0.4':
-    resolution: {integrity: sha512-aqBJKSHhBUzZnJ08A0aSmimPXIk9o/ayS6zBpQESt6HgX3vrX7MbpklWKP9x0+3NzUDNN368O+Iahp+mJb5E9A==}
+  '@workflow/sveltekit@https://workflow-docs-owxrurgkl.vercel.sh/workflow-sveltekit.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-sveltekit.tgz}
+    version: 4.0.4-4a98ba5
 
-  '@workflow/swc-plugin@4.1.0':
-    resolution: {integrity: sha512-FcWKJwzkRqf0u08/WCyg2n1H3932JQpFk3g6edE7trXKFW06a8o4F22k/xgPFsbxAq8UpywcIN7f46H0/uH5Tw==}
+  '@workflow/swc-plugin@https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz}
+    version: 4.1.0-4a98ba5
     peerDependencies:
       '@swc/core': 1.15.3
 
-  '@workflow/typescript-plugin@4.0.2':
-    resolution: {integrity: sha512-7bw6aEl+QMZWWZmhJS5bydrSgmxQrG8Kyo5Zhdb7klu+/pBUyNMVTUZmnfe1xRjWborqvOevqYbSDh0a0gwnAw==}
+  '@workflow/typescript-plugin@https://workflow-docs-owxrurgkl.vercel.sh/workflow-typescript-plugin.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-typescript-plugin.tgz}
+    version: 4.0.2-4a98ba5
     peerDependencies:
       typescript: '>=5.0.0'
 
   '@workflow/utils@4.1.0':
     resolution: {integrity: sha512-wE7hTfSzR0sEougUluG6fFNR8O98F86v7nz3QGqPwtlNM1ZadW5s65Jhog9b0IA6PcAE4KHDy/iKktEyc23prw==}
 
-  '@workflow/utils@4.1.1':
-    resolution: {integrity: sha512-4+yJxzyeOBZsVRG8npvLsafCPt9E4bsFi/oUBBT2yLM5X4v+KUBLMwZOubShwcBix2/VOGau7mumvh12JSKjaA==}
+  '@workflow/utils@https://workflow-docs-owxrurgkl.vercel.sh/workflow-utils.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-utils.tgz}
+    version: 4.1.1-4a98ba5
 
-  '@workflow/vite@4.0.4':
-    resolution: {integrity: sha512-dEw5Dg6zdlsBwwEFYYqRIXApZ4kgqN/vMzZEyEbisJEofKNPDIYP1/nAh22DkYW55Nxa0YOKdqnhxQq+kdvX2A==}
+  '@workflow/vite@https://workflow-docs-owxrurgkl.vercel.sh/workflow-vite.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-vite.tgz}
+    version: 4.0.4-4a98ba5
 
-  '@workflow/web@4.1.5':
-    resolution: {integrity: sha512-VBdRdOBIs/TsS79TxhnjnYcmXKIOwR57gWL+n/0GSvd7aaMHcvKBybmRUTMYOe0q110KXs31eJ4aLjWLYLQxGA==}
+  '@workflow/web@https://workflow-docs-owxrurgkl.vercel.sh/workflow-web.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-web.tgz}
+    version: 4.1.5-4a98ba5
 
   '@workflow/world-local@4.1.0':
     resolution: {integrity: sha512-dOi/2M3q0kFMnY6dovgojj4s0ddrAVSxk1MNQOarf3q4XmW4Q9C9+bsA3d/EXthQmb+9eiI6PiDPxQJALcUekw==}
@@ -2418,8 +2436,9 @@ packages:
       '@opentelemetry/api':
         optional: true
 
-  '@workflow/world-local@4.1.1':
-    resolution: {integrity: sha512-qQznGPy15nPD+CO0THxMDwozIrvEOkZuAkpI2S3/+hrvUF07mSHGsGCVp6eVaECSTi3dGseep9rKUXZhU/HGYw==}
+  '@workflow/world-local@https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-local.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-local.tgz}
+    version: 4.1.1-4a98ba5
     peerDependencies:
       '@opentelemetry/api': '1'
     peerDependenciesMeta:
@@ -2430,8 +2449,9 @@ packages:
     resolution: {integrity: sha512-Y7KjMeEiANxEQKERHeGf6Oa3PwL1HKmRe6yqDesqnlVq3WztpuN3U+vew10LlQtaaYtQLILrQEaS9VRV6r0g9Q==}
     hasBin: true
 
-  '@workflow/world-vercel@4.1.2':
-    resolution: {integrity: sha512-GR0l0Hhm8JpILQgHn1gMGKNAlU6ioZEFDtyrM4haxz6JdcUE42JMNRGtw4IeHzsCXcXOZ7+SbVNFnEIVtG5faw==}
+  '@workflow/world-vercel@https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-vercel.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-vercel.tgz}
+    version: 4.1.2-4a98ba5
     peerDependencies:
       '@opentelemetry/api': '1'
     peerDependenciesMeta:
@@ -2443,8 +2463,9 @@ packages:
     peerDependencies:
       zod: 4.3.6
 
-  '@workflow/world@4.1.1':
-    resolution: {integrity: sha512-OVfswz2SCt1NKSihAIPlPx/ygGdkA8si69xTAZtAZQACphuhmcg5mm28aNPo0/7oxcUVD/tO/AF1uSUF4BGpRw==}
+  '@workflow/world@https://workflow-docs-owxrurgkl.vercel.sh/workflow-world.tgz':
+    resolution: {tarball: https://workflow-docs-owxrurgkl.vercel.sh/workflow-world.tgz}
+    version: 4.1.1-4a98ba5
     peerDependencies:
       zod: 4.3.6
 
@@ -5217,8 +5238,9 @@ packages:
   wordwrap@1.0.0:
     resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==}
 
-  workflow@4.2.4:
-    resolution: {integrity: sha512-F7HT6uXIF0YaERtfK9kdXgebeXOUtSuCvQElIJYh5cjYmUS7JcRLsAsQSUeQ4Dcjvnml4t1efHypTR7gk/2d3g==}
+  workflow@https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow.tgz:
+    resolution: {integrity: sha512-tkCTkAu92gdPFaYV8xKm2e/J6JwvM3zhxn2y0zaorOhpW+mO35uNO5J5AjZ5VqMDGsuuvg7LVMzjm3VUNu2ftg==, tarball: https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow.tgz}
+    version: 4.2.4-4a98ba5
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': '1'
@@ -7592,12 +7614,12 @@ snapshots:
       mixpart: 0.0.5
       picocolors: 1.1.1
 
-  '@workflow/ai@4.1.2(@opentelemetry/api@1.9.0)(ai@6.0.69(zod@4.1.12))(workflow@4.2.4(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3))':
+  '@workflow/ai@https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow-ai.tgz(@opentelemetry/api@1.9.0)(ai@6.0.69(zod@4.1.12))(workflow@https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3))':
     dependencies:
       '@ai-sdk/provider': 3.0.8
-      '@workflow/serde': 4.1.1
+      '@workflow/serde': https://workflow-docs-owxrurgkl.vercel.sh/workflow-serde.tgz
       ai: 6.0.69(zod@4.1.12)
-      workflow: 4.2.4(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)
+      workflow: https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)
       zod: 4.3.6
     optionalDependencies:
       '@ai-sdk/anthropic': 3.0.68(zod@4.3.6)
@@ -7607,13 +7629,13 @@ snapshots:
       '@ai-sdk/xai': 3.0.82(zod@4.3.6)
       '@opentelemetry/api': 1.9.0
 
-  '@workflow/astro@4.0.4(@opentelemetry/api@1.9.0)':
+  '@workflow/astro@https://workflow-docs-owxrurgkl.vercel.sh/workflow-astro.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': 4.0.5(@opentelemetry/api@1.9.0)
-      '@workflow/rollup': 4.0.4(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': 4.1.0(@swc/core@1.15.3)
-      '@workflow/vite': 4.0.4(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/rollup': https://workflow-docs-owxrurgkl.vercel.sh/workflow-rollup.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/vite': https://workflow-docs-owxrurgkl.vercel.sh/workflow-vite.tgz(@opentelemetry/api@1.9.0)
       exsolve: 1.0.8
       pathe: 2.0.3
     transitivePeerDependencies:
@@ -7622,13 +7644,13 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/builders@4.0.5(@opentelemetry/api@1.9.0)':
+  '@workflow/builders@https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/core': 4.2.4(@opentelemetry/api@1.9.0)
-      '@workflow/errors': 4.1.1
-      '@workflow/swc-plugin': 4.1.0(@swc/core@1.15.3)
-      '@workflow/utils': 4.1.1
+      '@workflow/core': https://workflow-docs-owxrurgkl.vercel.sh/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/errors': https://workflow-docs-owxrurgkl.vercel.sh/workflow-errors.tgz
+      '@workflow/swc-plugin': https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/utils': https://workflow-docs-owxrurgkl.vercel.sh/workflow-utils.tgz
       builtin-modules: 5.0.0
       chalk: 5.6.2
       enhanced-resolve: 5.19.0
@@ -7642,21 +7664,21 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/cli@4.2.4(@opentelemetry/api@1.9.0)':
+  '@workflow/cli@https://workflow-docs-owxrurgkl.vercel.sh/workflow-cli.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@oclif/core': 4.8.1
       '@oclif/plugin-help': 6.2.37
       '@swc/core': 1.15.3
       '@vercel/cli-auth': 0.0.1
-      '@workflow/builders': 4.0.5(@opentelemetry/api@1.9.0)
-      '@workflow/core': 4.2.4(@opentelemetry/api@1.9.0)
-      '@workflow/errors': 4.1.1
-      '@workflow/swc-plugin': 4.1.0(@swc/core@1.15.3)
-      '@workflow/utils': 4.1.1
-      '@workflow/web': 4.1.5
-      '@workflow/world': 4.1.1(zod@4.3.6)
-      '@workflow/world-local': 4.1.1(@opentelemetry/api@1.9.0)
-      '@workflow/world-vercel': 4.1.2(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/core': https://workflow-docs-owxrurgkl.vercel.sh/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/errors': https://workflow-docs-owxrurgkl.vercel.sh/workflow-errors.tgz
+      '@workflow/swc-plugin': https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/utils': https://workflow-docs-owxrurgkl.vercel.sh/workflow-utils.tgz
+      '@workflow/web': https://workflow-docs-owxrurgkl.vercel.sh/workflow-web.tgz
+      '@workflow/world': https://workflow-docs-owxrurgkl.vercel.sh/workflow-world.tgz(zod@4.3.6)
+      '@workflow/world-local': https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-local.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/world-vercel': https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-vercel.tgz(@opentelemetry/api@1.9.0)
       boxen: 8.0.1
       builtin-modules: 5.0.0
       chalk: 5.6.2
@@ -7680,19 +7702,19 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/core@4.2.4(@opentelemetry/api@1.9.0)':
+  '@workflow/core@https://workflow-docs-owxrurgkl.vercel.sh/workflow-core.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@aws-sdk/credential-provider-web-identity': 3.972.13
       '@jridgewell/trace-mapping': 0.3.31
       '@standard-schema/spec': 1.0.0
       '@types/ms': 2.1.0
       '@vercel/functions': 3.4.3(@aws-sdk/credential-provider-web-identity@3.972.13)
-      '@workflow/errors': 4.1.1
-      '@workflow/serde': 4.1.1
-      '@workflow/utils': 4.1.1
-      '@workflow/world': 4.1.1(zod@4.3.6)
-      '@workflow/world-local': 4.1.1(@opentelemetry/api@1.9.0)
-      '@workflow/world-vercel': 4.1.2(@opentelemetry/api@1.9.0)
+      '@workflow/errors': https://workflow-docs-owxrurgkl.vercel.sh/workflow-errors.tgz
+      '@workflow/serde': https://workflow-docs-owxrurgkl.vercel.sh/workflow-serde.tgz
+      '@workflow/utils': https://workflow-docs-owxrurgkl.vercel.sh/workflow-utils.tgz
+      '@workflow/world': https://workflow-docs-owxrurgkl.vercel.sh/workflow-world.tgz(zod@4.3.6)
+      '@workflow/world-local': https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-local.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/world-vercel': https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-vercel.tgz(@opentelemetry/api@1.9.0)
       debug: 4.4.3(supports-color@8.1.1)
       devalue: 5.6.3
       ms: 2.1.3
@@ -7712,19 +7734,19 @@ snapshots:
       '@workflow/utils': 4.1.0
       ms: 2.1.3
 
-  '@workflow/errors@4.1.1':
+  '@workflow/errors@https://workflow-docs-owxrurgkl.vercel.sh/workflow-errors.tgz':
     dependencies:
-      '@workflow/utils': 4.1.1
+      '@workflow/utils': https://workflow-docs-owxrurgkl.vercel.sh/workflow-utils.tgz
       ms: 2.1.3
 
-  '@workflow/nest@0.0.4(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)':
+  '@workflow/nest@https://workflow-docs-owxrurgkl.vercel.sh/workflow-nest.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)':
     dependencies:
       '@nestjs/common': 11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@swc/cli': 0.7.10(@swc/core@1.15.3)(chokidar@4.0.3)
       '@swc/core': 1.15.3
-      '@workflow/builders': 4.0.5(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': 4.1.0(@swc/core@1.15.3)
+      '@workflow/builders': https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz(@swc/core@1.15.3)
       pathe: 2.0.3
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -7732,12 +7754,12 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/next@4.0.5(@opentelemetry/api@1.9.0)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
+  '@workflow/next@https://workflow-docs-owxrurgkl.vercel.sh/workflow-next.tgz(@opentelemetry/api@1.9.0)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': 4.0.5(@opentelemetry/api@1.9.0)
-      '@workflow/core': 4.2.4(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': 4.1.0(@swc/core@1.15.3)
+      '@workflow/builders': https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/core': https://workflow-docs-owxrurgkl.vercel.sh/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz(@swc/core@1.15.3)
       semver: 7.7.4
       watchpack: 2.5.1
     optionalDependencies:
@@ -7748,14 +7770,14 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/nitro@4.0.5(@opentelemetry/api@1.9.0)':
+  '@workflow/nitro@https://workflow-docs-owxrurgkl.vercel.sh/workflow-nitro.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': 4.0.5(@opentelemetry/api@1.9.0)
-      '@workflow/core': 4.2.4(@opentelemetry/api@1.9.0)
-      '@workflow/rollup': 4.0.4(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': 4.1.0(@swc/core@1.15.3)
-      '@workflow/vite': 4.0.4(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/core': https://workflow-docs-owxrurgkl.vercel.sh/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/rollup': https://workflow-docs-owxrurgkl.vercel.sh/workflow-rollup.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/vite': https://workflow-docs-owxrurgkl.vercel.sh/workflow-vite.tgz(@opentelemetry/api@1.9.0)
       exsolve: 1.0.8
       pathe: 2.0.3
     transitivePeerDependencies:
@@ -7764,10 +7786,10 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/nuxt@4.0.5(@opentelemetry/api@1.9.0)':
+  '@workflow/nuxt@https://workflow-docs-owxrurgkl.vercel.sh/workflow-nuxt.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@nuxt/kit': 4.4.2
-      '@workflow/nitro': 4.0.5(@opentelemetry/api@1.9.0)
+      '@workflow/nitro': https://workflow-docs-owxrurgkl.vercel.sh/workflow-nitro.tgz(@opentelemetry/api@1.9.0)
     transitivePeerDependencies:
       - '@opentelemetry/api'
       - '@swc/helpers'
@@ -7775,11 +7797,11 @@ snapshots:
       - magicast
       - supports-color
 
-  '@workflow/rollup@4.0.4(@opentelemetry/api@1.9.0)':
+  '@workflow/rollup@https://workflow-docs-owxrurgkl.vercel.sh/workflow-rollup.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': 4.0.5(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': 4.1.0(@swc/core@1.15.3)
+      '@workflow/builders': https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz(@swc/core@1.15.3)
       exsolve: 1.0.7
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -7787,15 +7809,15 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/serde@4.1.1': {}
+  '@workflow/serde@https://workflow-docs-owxrurgkl.vercel.sh/workflow-serde.tgz': {}
 
-  '@workflow/sveltekit@4.0.4(@opentelemetry/api@1.9.0)':
+  '@workflow/sveltekit@https://workflow-docs-owxrurgkl.vercel.sh/workflow-sveltekit.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': 4.0.5(@opentelemetry/api@1.9.0)
-      '@workflow/rollup': 4.0.4(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': 4.1.0(@swc/core@1.15.3)
-      '@workflow/vite': 4.0.4(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/rollup': https://workflow-docs-owxrurgkl.vercel.sh/workflow-rollup.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/vite': https://workflow-docs-owxrurgkl.vercel.sh/workflow-vite.tgz(@opentelemetry/api@1.9.0)
       exsolve: 1.0.8
       fs-extra: 11.3.4
       pathe: 2.0.3
@@ -7805,11 +7827,11 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/swc-plugin@4.1.0(@swc/core@1.15.3)':
+  '@workflow/swc-plugin@https://workflow-docs-owxrurgkl.vercel.sh/workflow-swc-plugin.tgz(@swc/core@1.15.3)':
     dependencies:
       '@swc/core': 1.15.3
 
-  '@workflow/typescript-plugin@4.0.2(typescript@5.9.3)':
+  '@workflow/typescript-plugin@https://workflow-docs-owxrurgkl.vercel.sh/workflow-typescript-plugin.tgz(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
 
@@ -7817,20 +7839,20 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
-  '@workflow/utils@4.1.1':
+  '@workflow/utils@https://workflow-docs-owxrurgkl.vercel.sh/workflow-utils.tgz':
     dependencies:
       ms: 2.1.3
 
-  '@workflow/vite@4.0.4(@opentelemetry/api@1.9.0)':
+  '@workflow/vite@https://workflow-docs-owxrurgkl.vercel.sh/workflow-vite.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
-      '@workflow/builders': 4.0.5(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-docs-owxrurgkl.vercel.sh/workflow-builders.tgz(@opentelemetry/api@1.9.0)
     transitivePeerDependencies:
       - '@opentelemetry/api'
       - '@swc/helpers'
       - aws-crt
       - supports-color
 
-  '@workflow/web@4.1.5':
+  '@workflow/web@https://workflow-docs-owxrurgkl.vercel.sh/workflow-web.tgz':
     dependencies:
       express: 4.22.1
     transitivePeerDependencies:
@@ -7849,12 +7871,12 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
 
-  '@workflow/world-local@4.1.1(@opentelemetry/api@1.9.0)':
+  '@workflow/world-local@https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-local.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@vercel/queue': 0.1.4
-      '@workflow/errors': 4.1.1
-      '@workflow/utils': 4.1.1
-      '@workflow/world': 4.1.1(zod@4.3.6)
+      '@workflow/errors': https://workflow-docs-owxrurgkl.vercel.sh/workflow-errors.tgz
+      '@workflow/utils': https://workflow-docs-owxrurgkl.vercel.sh/workflow-utils.tgz
+      '@workflow/world': https://workflow-docs-owxrurgkl.vercel.sh/workflow-world.tgz(zod@4.3.6)
       async-sema: 3.1.1
       ulid: 3.0.2
       undici: 7.22.0
@@ -7909,12 +7931,12 @@ snapshots:
       - supports-color
       - typescript
 
-  '@workflow/world-vercel@4.1.2(@opentelemetry/api@1.9.0)':
+  '@workflow/world-vercel@https://workflow-docs-owxrurgkl.vercel.sh/workflow-world-vercel.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@vercel/oidc': 3.2.0
       '@vercel/queue': 0.1.4
-      '@workflow/errors': 4.1.1
-      '@workflow/world': 4.1.1(zod@4.3.6)
+      '@workflow/errors': https://workflow-docs-owxrurgkl.vercel.sh/workflow-errors.tgz
+      '@workflow/world': https://workflow-docs-owxrurgkl.vercel.sh/workflow-world.tgz(zod@4.3.6)
       cbor-x: 1.6.0
       undici: 7.22.0
       zod: 4.3.6
@@ -7926,7 +7948,7 @@ snapshots:
       ulid: 3.0.2
       zod: 4.3.6
 
-  '@workflow/world@4.1.1(zod@4.3.6)':
+  '@workflow/world@https://workflow-docs-owxrurgkl.vercel.sh/workflow-world.tgz(zod@4.3.6)':
     dependencies:
       ulid: 3.0.2
       zod: 4.3.6
@@ -11116,20 +11138,20 @@ snapshots:
 
   wordwrap@1.0.0: {}
 
-  workflow@4.2.4(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3):
+  workflow@https://workflow-docs-git-peter-fix-stream-cancel-reconnect.vercel.sh/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3):
     dependencies:
-      '@workflow/astro': 4.0.4(@opentelemetry/api@1.9.0)
-      '@workflow/cli': 4.2.4(@opentelemetry/api@1.9.0)
-      '@workflow/core': 4.2.4(@opentelemetry/api@1.9.0)
-      '@workflow/errors': 4.1.1
-      '@workflow/nest': 0.0.4(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)
-      '@workflow/next': 4.0.5(@opentelemetry/api@1.9.0)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
-      '@workflow/nitro': 4.0.5(@opentelemetry/api@1.9.0)
-      '@workflow/nuxt': 4.0.5(@opentelemetry/api@1.9.0)
-      '@workflow/rollup': 4.0.4(@opentelemetry/api@1.9.0)
-      '@workflow/sveltekit': 4.0.4(@opentelemetry/api@1.9.0)
-      '@workflow/typescript-plugin': 4.0.2(typescript@5.9.3)
-      '@workflow/utils': 4.1.1
+      '@workflow/astro': https://workflow-docs-owxrurgkl.vercel.sh/workflow-astro.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/cli': https://workflow-docs-owxrurgkl.vercel.sh/workflow-cli.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/core': https://workflow-docs-owxrurgkl.vercel.sh/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/errors': https://workflow-docs-owxrurgkl.vercel.sh/workflow-errors.tgz
+      '@workflow/nest': https://workflow-docs-owxrurgkl.vercel.sh/workflow-nest.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)
+      '@workflow/next': https://workflow-docs-owxrurgkl.vercel.sh/workflow-next.tgz(@opentelemetry/api@1.9.0)(next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
+      '@workflow/nitro': https://workflow-docs-owxrurgkl.vercel.sh/workflow-nitro.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/nuxt': https://workflow-docs-owxrurgkl.vercel.sh/workflow-nuxt.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/rollup': https://workflow-docs-owxrurgkl.vercel.sh/workflow-rollup.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/sveltekit': https://workflow-docs-owxrurgkl.vercel.sh/workflow-sveltekit.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/typescript-plugin': https://workflow-docs-owxrurgkl.vercel.sh/workflow-typescript-plugin.tgz(typescript@5.9.3)
+      '@workflow/utils': https://workflow-docs-owxrurgkl.vercel.sh/workflow-utils.tgz
       ms: 2.1.3
     optionalDependencies:
       '@opentelemetry/api': 1.9.0

@@ -20,7 +20,7 @@ export const requestRsvp = async (
     const base64Content = cardImage.split(',')[1];
 
     await resend.emails.send({
-      from: 'Workflow DevKit Birthday Demo <birthday-card-generator@resend.pranay.gp>',
+      from: 'Workflow SDK Birthday Demo <birthday-card-generator@resend.pranay.gp>',
       to: email,
       subject: "You're Invited to a Birthday Party!",
       html: generateRsvpEmailTemplate(email, url, cardText),

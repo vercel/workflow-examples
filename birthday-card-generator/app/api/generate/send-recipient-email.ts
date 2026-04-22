@@ -47,7 +47,7 @@ export const sendRecipientEmail = async ({
     const mimeType = cardImage.match(/data:([^;]+);/)?.[1] || 'image/png';
 
     await resend.emails.send({
-      from: 'Workflow DevKit Birthday Demo <birthday-card-generator@resend.pranay.gp>',
+      from: 'Workflow SDK Birthday Demo <birthday-card-generator@resend.pranay.gp>',
       to: recipientEmail,
       subject: 'Happy Birthday!',
       headers: {

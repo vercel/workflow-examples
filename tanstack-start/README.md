@@ -13,13 +13,13 @@ This starter is a template for a TanStack Start project that uses Workflow DevKi
    ```bash
    git clone https://github.com/vercel/workflow-examples
    cd workflow-examples/tanstack-start
-   npm install
+   pnpm install
    ```
 
 2. Start the development server:
 
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 3. Invoke the workflow by `curl`:
@@ -31,7 +31,7 @@ This starter is a template for a TanStack Start project that uses Workflow DevKi
 4. Inspect runs:
 
    ```bash
-   npx workflow inspect runs
+   pnpm exec workflow inspect runs
    ```
 
 ### Deploying

@@ -19,8 +19,8 @@
     "@streamdown/math": "^1.0.1",
     "@streamdown/mermaid": "^1.0.1",
     "@vercel/otel": "^1.13.0",
-    "@workflow/ai": "4.1.2",
-    "@workflow/world-postgres": "4.1.1",
+    "@workflow/ai": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-ai.tgz",
+    "@workflow/world-postgres": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-postgres.tgz",
     "@xyflow/react": "^12.9.0",
     "ai": "^6.0.69",
     "ansi-to-react": "^6.2.6",
@@ -44,7 +44,7 @@
     "tokenlens": "^1.3.1",
     "typescript": "^5.9.3",
     "use-stick-to-bottom": "^1.1.1",
-    "workflow": "4.2.4",
+    "workflow": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -59,7 +59,30 @@
   "pnpm": {
     "overrides": {
       "@types/react": "19.2.7",
-      "@types/react-dom": "19.2.3"
+      "@types/react-dom": "19.2.3",
+      "workflow": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz",
+      "@workflow/ai": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-ai.tgz",
+      "@workflow/astro": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-astro.tgz",
+      "@workflow/builders": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz",
+      "@workflow/cli": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-cli.tgz",
+      "@workflow/core": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz",
+      "@workflow/errors": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz",
+      "@workflow/nest": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nest.tgz",
+      "@workflow/next": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-next.tgz",
+      "@workflow/nitro": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nitro.tgz",
+      "@workflow/nuxt": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nuxt.tgz",
+      "@workflow/rollup": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-rollup.tgz",
+      "@workflow/serde": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-serde.tgz",
+      "@workflow/sveltekit": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-sveltekit.tgz",
+      "@workflow/swc-plugin": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz",
+      "@workflow/typescript-plugin": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-typescript-plugin.tgz",
+      "@workflow/utils": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz",
+      "@workflow/vite": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-vite.tgz",
+      "@workflow/web": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-web.tgz",
+      "@workflow/world": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz",
+      "@workflow/world-local": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-local.tgz",
+      "@workflow/world-postgres": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-postgres.tgz",
+      "@workflow/world-vercel": "https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-vercel.tgz"
     }
   }
 }

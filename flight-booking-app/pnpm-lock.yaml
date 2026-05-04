@@ -7,29 +7,29 @@ settings:
 overrides:
   '@types/react': 19.2.7
   '@types/react-dom': 19.2.3
-  workflow: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/ai': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-ai.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/astro': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-astro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/builders': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/cli': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-cli.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/core': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-core.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/errors': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/nest': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nest.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/next': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-next.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/nitro': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nitro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/nuxt': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nuxt.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/rollup': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-rollup.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/serde': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-serde.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/sveltekit': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-sveltekit.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/swc-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/typescript-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-typescript-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/utils': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/vite': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-vite.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/web': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-web.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/world': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/world-local': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-local.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/world-postgres': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-postgres.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-  '@workflow/world-vercel': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-vercel.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
+  workflow: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz
+  '@workflow/ai': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-ai.tgz
+  '@workflow/astro': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-astro.tgz
+  '@workflow/builders': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz
+  '@workflow/cli': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-cli.tgz
+  '@workflow/core': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz
+  '@workflow/errors': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz
+  '@workflow/nest': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nest.tgz
+  '@workflow/next': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-next.tgz
+  '@workflow/nitro': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nitro.tgz
+  '@workflow/nuxt': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nuxt.tgz
+  '@workflow/rollup': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-rollup.tgz
+  '@workflow/serde': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-serde.tgz
+  '@workflow/sveltekit': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-sveltekit.tgz
+  '@workflow/swc-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz
+  '@workflow/typescript-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-typescript-plugin.tgz
+  '@workflow/utils': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz
+  '@workflow/vite': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-vite.tgz
+  '@workflow/web': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-web.tgz
+  '@workflow/world': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz
+  '@workflow/world-local': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-local.tgz
+  '@workflow/world-postgres': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-postgres.tgz
+  '@workflow/world-vercel': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-vercel.tgz
 
 importers:
 
@@ -63,11 +63,11 @@ importers:
         specifier: ^1.13.0
         version: 1.14.0(@opentelemetry/api-logs@0.57.2)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/resources@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))
       '@workflow/ai':
-        specifier: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-ai.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-        version: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-ai.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)(ai@6.0.69(zod@4.1.12))(workflow@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3))
+        specifier: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-ai.tgz
+        version: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-ai.tgz(@opentelemetry/api@1.9.0)(ai@6.0.69(zod@4.1.12))(workflow@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3))
       '@workflow/world-postgres':
-        specifier: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-postgres.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-        version: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-postgres.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(postgres@3.4.8)(typescript@5.9.3)
+        specifier: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-postgres.tgz
+        version: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-postgres.tgz(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(postgres@3.4.8)(typescript@5.9.3)
       '@xyflow/react':
         specifier: ^12.9.0
         version: 12.9.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -138,8 +138,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(react@19.2.3)
       workflow:
-        specifier: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-        version: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)
+        specifier: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz
+        version: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)
       zod:
         specifier: ^4.1.12
         version: 4.1.12
@@ -2364,46 +2364,46 @@ packages:
     resolution: {integrity: sha512-wo+jCycmCX078vQSbkX+RcLvySONDCK0f9aQp5UMKQD1+B+xKt3YVbIYbZukvoHQpbm5nnk6If+ADSeK/PmCgQ==}
     engines: {node: '>=20.0.0'}
 
-  '@workflow/ai@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-ai.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-ai.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.3-6cf789d
+  '@workflow/ai@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-ai.tgz':
+    resolution: {integrity: sha512-7nF47P/6bMHMOEzUnamGfVD6+zTRAyetlFoUkm+U9mEa2j/tvbOq6ZknCCdJtuZaaSzB22BVbZbPI57+ckjCVA==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-ai.tgz}
+    version: 5.0.0-beta.3-76cb917
     peerDependencies:
       '@opentelemetry/api': ^1.0.0
       ai: ^6
-      workflow: https://workflow-docs-opknnfl5t.vercel.sh/workflow.tgz
+      workflow: https://workflow-tarballs-hm7d50czg.labs.vercel.dev/workflow.tgz
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
 
-  '@workflow/astro@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-astro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-astro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/astro@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-astro.tgz':
+    resolution: {integrity: sha512-ysf4K5a2X5G+qCkCHUVhSeG02pjPh25aVz+9FrQ410IYjKs0n/fAnsGL5bGE2bOLsgyyFbjxNmuwuht8kxUdjw==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-astro.tgz}
+    version: 5.0.0-beta.4-76cb917
 
-  '@workflow/builders@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/builders@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz':
+    resolution: {integrity: sha512-pN0AJEXO4xLJKLSvUwdZKQnW73DNDeWxTihgHMVk52NwduqSGCfKJjnkcLl22VZB2RlGOxqS3uubdasthaUnlA==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz}
+    version: 5.0.0-beta.4-76cb917
 
-  '@workflow/cli@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-cli.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-cli.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/cli@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-cli.tgz':
+    resolution: {integrity: sha512-TNwJd7L/KtciLRgeXg44t7csl+3f0aH6SPg8GmTK2vlREmRVH4wdN3wUv1ZUjJnBA5VNgiJ7a/R3/uHoxfzu1A==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-cli.tgz}
+    version: 5.0.0-beta.4-76cb917
     hasBin: true
 
-  '@workflow/core@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-core.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-core.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/core@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz':
+    resolution: {integrity: sha512-fZN0w+YxeyP8wDZ4u54Jf6ahzOp2Tr2EImxjBuNqeDBB8LMyTb5QJEqA2qphfAzclsjK61xF/i327523zsOm1w==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz}
+    version: 5.0.0-beta.4-76cb917
     peerDependencies:
       '@opentelemetry/api': '1'
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
 
-  '@workflow/errors@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.1-6cf789d
+  '@workflow/errors@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz':
+    resolution: {integrity: sha512-7Fo3qllHuP/8aZ8ptR9b9F4vC78ALD274/4PEBi+AoTilEQ8O/C1V0w5poDYwoAYSiuHtRQq0JkmxGHS4KzSKg==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz}
+    version: 5.0.0-beta.1-76cb917
 
-  '@workflow/nest@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nest.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nest.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/nest@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nest.tgz':
+    resolution: {integrity: sha512-GBWDg00LBoMOpLQ8CmA5O5BwUXSQZseA2p/l2HrI6lV6SIvXzxHKuFCtIzobmUetj1LYJtrwAgfCdCevVuuPZg==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nest.tgz}
+    version: 5.0.0-beta.4-76cb917
     hasBin: true
     peerDependencies:
       '@nestjs/common': '>=10.0.0'
@@ -2411,88 +2411,88 @@ packages:
       '@swc/cli': '>=0.4.0'
       '@swc/core': '>=1.5.0'
 
-  '@workflow/next@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-next.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-next.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/next@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-next.tgz':
+    resolution: {integrity: sha512-yUgzRiXpKUTTKBwEelbU8Qd2Pa9OPSJvoEzSi1VPkP6KwLhc/XwAIvldQmHR6qyShZOuAp1t+X3bAHva4fLAfA==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-next.tgz}
+    version: 5.0.0-beta.4-76cb917
     peerDependencies:
       next: '>13'
     peerDependenciesMeta:
       next:
         optional: true
 
-  '@workflow/nitro@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nitro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nitro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/nitro@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nitro.tgz':
+    resolution: {integrity: sha512-DjUmG4wLaIEKkBGIEoMf/9fRhnVBkd3rs8wOZhHwls3tjrcKHgeLqJwbClbx/sI30A7IR3wW5c6ymkD6Av3AuA==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nitro.tgz}
+    version: 5.0.0-beta.4-76cb917
 
-  '@workflow/nuxt@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nuxt.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nuxt.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/nuxt@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nuxt.tgz':
+    resolution: {integrity: sha512-EKueQFBXmV/59JS+bzye6P6kKjLE/JUITHhPPWqXGdKUqshHWOrsazlS1As53VoT+R9SbQhEcGg20da2Y0LFJg==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nuxt.tgz}
+    version: 5.0.0-beta.4-76cb917
 
-  '@workflow/rollup@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-rollup.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-rollup.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/rollup@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-rollup.tgz':
+    resolution: {integrity: sha512-kdK+uXcxA3+h4MzTi23LqX81aKON0B4pLyi3LTLrfKoONGJgF2f8z/5Q97mEm0q1Ss9g2Y8LyH3T5OI6yFaacg==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-rollup.tgz}
+    version: 5.0.0-beta.4-76cb917
 
-  '@workflow/serde@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-serde.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-serde.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.1-6cf789d
+  '@workflow/serde@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-serde.tgz':
+    resolution: {integrity: sha512-crJiESS8wJLwS+EnqduFZ9BHYuKW6nqQcT3KWWMwnKib72UecBNX9TARgqw80paLZKtzggyI0nCO1tQ3NEHwtA==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-serde.tgz}
+    version: 5.0.0-beta.1-76cb917
 
-  '@workflow/sveltekit@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-sveltekit.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-sveltekit.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/sveltekit@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-sveltekit.tgz':
+    resolution: {integrity: sha512-x8glLnBOKs2ahICejM6ntTiSVJVcN3ZliQo2V8tkzmIoWmNsF3qec+8vYF+sPgH4GdtauKuFnNRoC2Am75HfvQ==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-sveltekit.tgz}
+    version: 5.0.0-beta.4-76cb917
 
-  '@workflow/swc-plugin@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.3-6cf789d
+  '@workflow/swc-plugin@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz':
+    resolution: {integrity: sha512-4HGgi24JBr/5dOOY/8X9nQUEh5UlbphWXQo433ePBUCZ7Tj7PL/07RCo2ChS6V6ThZNjJ+MsCQZHCVXv53jT+g==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz}
+    version: 5.0.0-beta.3-76cb917
     peerDependencies:
       '@swc/core': 1.15.3
 
-  '@workflow/typescript-plugin@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-typescript-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-typescript-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.3-6cf789d
+  '@workflow/typescript-plugin@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-typescript-plugin.tgz':
+    resolution: {integrity: sha512-u/ulbSi27EjFOhc3GzShLdmNB/AoHcSbtOPPFLe4JHhau5vROM5f7DefumfC6TAYz3oQcu7LC46f5+1KWY3Trg==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-typescript-plugin.tgz}
+    version: 5.0.0-beta.3-76cb917
     peerDependencies:
       typescript: '>=5.0.0'
     peerDependenciesMeta:
       typescript:
         optional: true
 
-  '@workflow/utils@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.1-6cf789d
+  '@workflow/utils@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz':
+    resolution: {integrity: sha512-eVdR8ollgsbRGAPqQei4dKmBblNP7q5vIYdpD4xK1Hf0M1Eb/E790PJQKhVwbYiJnpJV3FD1YDX+9bgEfW7a9w==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz}
+    version: 5.0.0-beta.1-76cb917
 
-  '@workflow/vite@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-vite.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-vite.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/vite@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-vite.tgz':
+    resolution: {integrity: sha512-QEgL7g1w+NKRKKN/tWizD53zjH4RSPPKkJ0seVMeTNEpnerHTjF78OXCPWfSAaooS16S+Sy9sVg0ci8gydUfCw==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-vite.tgz}
+    version: 5.0.0-beta.4-76cb917
 
-  '@workflow/web@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-web.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-web.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  '@workflow/web@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-web.tgz':
+    resolution: {integrity: sha512-EoTveyegMWpZsVU+DY0dPuQVfKrEQ7Hjlccjz18MlKqoXErKQkHWAkmDWXCodbRUkVVyF0k2jVCE1c+ft+fSdw==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-web.tgz}
+    version: 5.0.0-beta.4-76cb917
 
-  '@workflow/world-local@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-local.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-local.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.3-6cf789d
+  '@workflow/world-local@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-local.tgz':
+    resolution: {integrity: sha512-LOfUGbYHyFI+bQXVmdtR8ZEG4HQDvoVYikDvgmaVBAPE/rFM/GJnYz7HxaOF3WVQ1wb7FkxlOiYF46zCfEI2yg==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-local.tgz}
+    version: 5.0.0-beta.3-76cb917
     peerDependencies:
       '@opentelemetry/api': '1'
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
 
-  '@workflow/world-postgres@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-postgres.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-postgres.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.3-6cf789d
+  '@workflow/world-postgres@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-postgres.tgz':
+    resolution: {integrity: sha512-whiBiKVaHvran+TxrgGuYd13hHrtSukW4MyIbpAZXPj2jpP2WBqAmeYKMnDDRYpqNiA3LTVM9QevYbdcKdpLYw==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-postgres.tgz}
+    version: 5.0.0-beta.3-76cb917
     hasBin: true
 
-  '@workflow/world-vercel@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-vercel.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-vercel.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.3-6cf789d
+  '@workflow/world-vercel@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-vercel.tgz':
+    resolution: {integrity: sha512-YgarerPwLPqDu37FCA2Qz8HdPVpvcMAun29XrKjnjyEMqPC02Tc6Jw+Th35IwJIBJX2EqjNThxZLsqwzeybeaw==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-vercel.tgz}
+    version: 5.0.0-beta.3-76cb917
     peerDependencies:
       '@opentelemetry/api': '1'
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
 
-  '@workflow/world@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.1-6cf789d
+  '@workflow/world@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz':
+    resolution: {integrity: sha512-m9Z3UVBgABNC8xy+bhi2veQqJ2zmO2bKptMJ72nyCTV7f/O2mhrluJZdlgDqIOh1FbUZmfpxHDIJ3Tc82anRUw==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz}
+    version: 5.0.0-beta.1-76cb917
     peerDependencies:
       zod: 4.3.6
 
@@ -5275,9 +5275,9 @@ packages:
   wordwrap@1.0.0:
     resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==}
 
-  workflow@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy:
-    resolution: {tarball: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy}
-    version: 5.0.0-beta.4-6cf789d
+  workflow@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz:
+    resolution: {integrity: sha512-Xz8ORIYGr+PM5HAHrNZsuKmPhNYZ4JtrJv1wDPFN8UNxIV8mxhtyhHIxtlLw/y3KRL4KY3DgcTIUHp9sRTP2Og==, tarball: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz}
+    version: 5.0.0-beta.4-76cb917
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': '1'
@@ -6119,7 +6119,7 @@ snapshots:
       semver: 7.7.4
       string-width: 4.2.3
       supports-color: 8.1.1
-      tinyglobby: 0.2.15
+      tinyglobby: 0.2.16
       widest-line: 3.1.0
       wordwrap: 1.0.0
       wrap-ansi: 7.0.0
@@ -7683,17 +7683,17 @@ snapshots:
 
   '@vercel/queue@0.1.4':
     dependencies:
-      '@vercel/oidc': 3.2.0
+      '@vercel/oidc': 3.4.0
       minimatch: 10.2.5
       mixpart: 0.0.5
       picocolors: 1.1.1
 
-  '@workflow/ai@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-ai.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)(ai@6.0.69(zod@4.1.12))(workflow@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3))':
+  '@workflow/ai@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-ai.tgz(@opentelemetry/api@1.9.0)(ai@6.0.69(zod@4.1.12))(workflow@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3))':
     dependencies:
       '@ai-sdk/provider': 3.0.8
-      '@workflow/serde': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-serde.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
+      '@workflow/serde': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-serde.tgz
       ai: 6.0.69(zod@4.1.12)
-      workflow: https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)
+      workflow: https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)
       zod: 4.3.6
     optionalDependencies:
       '@ai-sdk/anthropic': 3.0.68(zod@4.3.6)
@@ -7703,13 +7703,13 @@ snapshots:
       '@ai-sdk/xai': 3.0.82(zod@4.3.6)
       '@opentelemetry/api': 1.9.0
 
-  '@workflow/astro@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-astro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/astro@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-astro.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/rollup': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-rollup.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@swc/core@1.15.3)
-      '@workflow/vite': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-vite.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/rollup': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-rollup.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/vite': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-vite.tgz(@opentelemetry/api@1.9.0)
       exsolve: 1.0.8
       pathe: 2.0.3
     transitivePeerDependencies:
@@ -7718,13 +7718,13 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/builders@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/builders@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/core': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-core.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/errors': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/swc-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@swc/core@1.15.3)
-      '@workflow/utils': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
+      '@workflow/core': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/errors': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz
+      '@workflow/swc-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/utils': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz
       builtin-modules: 5.0.0
       chalk: 5.6.2
       enhanced-resolve: 5.19.0
@@ -7738,21 +7738,21 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/cli@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-cli.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/cli@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-cli.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@oclif/core': 4.8.1
       '@oclif/plugin-help': 6.2.37
       '@swc/core': 1.15.3
       '@vercel/cli-auth': 0.0.1
-      '@workflow/builders': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/core': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-core.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/errors': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/swc-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@swc/core@1.15.3)
-      '@workflow/utils': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/web': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-web.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/world': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(zod@4.3.6)
-      '@workflow/world-local': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-local.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/world-vercel': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-vercel.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/core': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/errors': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz
+      '@workflow/swc-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/utils': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz
+      '@workflow/web': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-web.tgz
+      '@workflow/world': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz(zod@4.3.6)
+      '@workflow/world-local': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-local.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/world-vercel': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-vercel.tgz(@opentelemetry/api@1.9.0)
       boxen: 8.0.1
       builtin-modules: 5.0.0
       chalk: 5.6.2
@@ -7776,19 +7776,19 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/core@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-core.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/core@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@aws-sdk/credential-provider-web-identity': 3.972.13
       '@jridgewell/trace-mapping': 0.3.31
       '@standard-schema/spec': 1.0.0
       '@types/ms': 2.1.0
       '@vercel/functions': 3.5.0(@aws-sdk/credential-provider-web-identity@3.972.13)
-      '@workflow/errors': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/serde': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-serde.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/utils': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/world': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(zod@4.3.6)
-      '@workflow/world-local': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-local.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/world-vercel': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-vercel.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
+      '@workflow/errors': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz
+      '@workflow/serde': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-serde.tgz
+      '@workflow/utils': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz
+      '@workflow/world': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz(zod@4.3.6)
+      '@workflow/world-local': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-local.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/world-vercel': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-vercel.tgz(@opentelemetry/api@1.9.0)
       debug: 4.4.3(supports-color@8.1.1)
       devalue: 5.6.3
       ms: 2.1.3
@@ -7803,19 +7803,19 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/errors@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
+  '@workflow/errors@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz':
     dependencies:
-      '@workflow/utils': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
+      '@workflow/utils': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz
       ms: 2.1.3
 
-  '@workflow/nest@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nest.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)':
+  '@workflow/nest@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nest.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)':
     dependencies:
       '@nestjs/common': 11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@swc/cli': 0.7.10(@swc/core@1.15.3)(chokidar@4.0.3)
       '@swc/core': 1.15.3
-      '@workflow/builders': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@swc/core@1.15.3)
+      '@workflow/builders': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz(@swc/core@1.15.3)
       pathe: 2.0.3
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -7823,12 +7823,12 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/next@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-next.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
+  '@workflow/next@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-next.tgz(@opentelemetry/api@1.9.0)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/core': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-core.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@swc/core@1.15.3)
+      '@workflow/builders': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/core': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz(@swc/core@1.15.3)
       semver: 7.7.4
       watchpack: 2.5.1
     optionalDependencies:
@@ -7839,14 +7839,14 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/nitro@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nitro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/nitro@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nitro.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/core': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-core.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/rollup': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-rollup.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@swc/core@1.15.3)
-      '@workflow/vite': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-vite.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/core': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/rollup': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-rollup.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/vite': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-vite.tgz(@opentelemetry/api@1.9.0)
       exsolve: 1.0.8
       pathe: 2.0.3
     transitivePeerDependencies:
@@ -7855,10 +7855,10 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/nuxt@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nuxt.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/nuxt@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nuxt.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@nuxt/kit': 4.4.2
-      '@workflow/nitro': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nitro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
+      '@workflow/nitro': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nitro.tgz(@opentelemetry/api@1.9.0)
     transitivePeerDependencies:
       - '@opentelemetry/api'
       - '@swc/helpers'
@@ -7866,11 +7866,11 @@ snapshots:
       - magicast
       - supports-color
 
-  '@workflow/rollup@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-rollup.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/rollup@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-rollup.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@swc/core@1.15.3)
+      '@workflow/builders': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz(@swc/core@1.15.3)
       exsolve: 1.0.7
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -7878,15 +7878,15 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/serde@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-serde.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy': {}
+  '@workflow/serde@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-serde.tgz': {}
 
-  '@workflow/sveltekit@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-sveltekit.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/sveltekit@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-sveltekit.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/rollup': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-rollup.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/swc-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@swc/core@1.15.3)
-      '@workflow/vite': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-vite.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/rollup': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-rollup.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/swc-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz(@swc/core@1.15.3)
+      '@workflow/vite': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-vite.tgz(@opentelemetry/api@1.9.0)
       exsolve: 1.0.8
       fs-extra: 11.3.4
       pathe: 2.0.3
@@ -7896,39 +7896,39 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@workflow/swc-plugin@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-swc-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@swc/core@1.15.3)':
+  '@workflow/swc-plugin@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-swc-plugin.tgz(@swc/core@1.15.3)':
     dependencies:
       '@swc/core': 1.15.3
 
-  '@workflow/typescript-plugin@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-typescript-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(typescript@5.9.3)':
+  '@workflow/typescript-plugin@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-typescript-plugin.tgz(typescript@5.9.3)':
     optionalDependencies:
       typescript: 5.9.3
 
-  '@workflow/utils@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
+  '@workflow/utils@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz':
     dependencies:
       ms: 2.1.3
 
-  '@workflow/vite@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-vite.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/vite@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-vite.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
-      '@workflow/builders': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-builders.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
+      '@workflow/builders': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-builders.tgz(@opentelemetry/api@1.9.0)
     transitivePeerDependencies:
       - '@opentelemetry/api'
       - '@swc/helpers'
       - aws-crt
       - supports-color
 
-  '@workflow/web@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-web.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy':
+  '@workflow/web@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-web.tgz':
     dependencies:
       express: 4.22.1
     transitivePeerDependencies:
       - supports-color
 
-  '@workflow/world-local@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-local.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/world-local@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-local.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@vercel/queue': 0.1.4
-      '@workflow/errors': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/utils': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/world': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(zod@4.3.6)
+      '@workflow/errors': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz
+      '@workflow/utils': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz
+      '@workflow/world': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz(zod@4.3.6)
       async-sema: 3.1.1
       ulid: 3.0.2
       undici: 7.22.0
@@ -7936,13 +7936,13 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
 
-  '@workflow/world-postgres@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-postgres.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(postgres@3.4.8)(typescript@5.9.3)':
+  '@workflow/world-postgres@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-postgres.tgz(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(postgres@3.4.8)(typescript@5.9.3)':
     dependencies:
       '@vercel/queue': 0.1.4
-      '@workflow/errors': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/utils': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/world': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(zod@4.3.6)
-      '@workflow/world-local': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-local.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
+      '@workflow/errors': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz
+      '@workflow/utils': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz
+      '@workflow/world': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz(zod@4.3.6)
+      '@workflow/world-local': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-local.tgz(@opentelemetry/api@1.9.0)
       cbor-x: 1.6.0
       dotenv: 17.3.1
       drizzle-orm: 0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(pg@8.20.0)(postgres@3.4.8)
@@ -7983,19 +7983,19 @@ snapshots:
       - supports-color
       - typescript
 
-  '@workflow/world-vercel@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world-vercel.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)':
+  '@workflow/world-vercel@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world-vercel.tgz(@opentelemetry/api@1.9.0)':
     dependencies:
       '@vercel/oidc': 3.2.0
       '@vercel/queue': 0.1.4
-      '@workflow/errors': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/world': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(zod@4.3.6)
+      '@workflow/errors': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz
+      '@workflow/world': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz(zod@4.3.6)
       cbor-x: 1.6.0
       undici: 7.22.0
       zod: 4.3.6
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
 
-  '@workflow/world@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-world.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(zod@4.3.6)':
+  '@workflow/world@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-world.tgz(zod@4.3.6)':
     dependencies:
       ulid: 3.0.2
       zod: 4.3.6
@@ -11199,20 +11199,20 @@ snapshots:
 
   wordwrap@1.0.0: {}
 
-  workflow@https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3):
+  workflow@https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3):
     dependencies:
-      '@workflow/astro': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-astro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/cli': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-cli.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/core': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-core.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/errors': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-errors.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
-      '@workflow/nest': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nest.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)
-      '@workflow/next': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-next.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
-      '@workflow/nitro': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nitro.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/nuxt': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-nuxt.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/rollup': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-rollup.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/sveltekit': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-sveltekit.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(@opentelemetry/api@1.9.0)
-      '@workflow/typescript-plugin': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-typescript-plugin.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy(typescript@5.9.3)
-      '@workflow/utils': https://workflow-docs-git-peter-v2-flow.vercel.sh/workflow-utils.tgz?x-vercel-protection-bypass=DwmrtDglOsZyAA2QaYCx7nS7UMmtLVoy
+      '@workflow/astro': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-astro.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/cli': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-cli.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/core': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-core.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/errors': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-errors.tgz
+      '@workflow/nest': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nest.tgz(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.12(@nestjs/common@11.1.12(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@opentelemetry/api@1.9.0)(@swc/cli@0.7.10(@swc/core@1.15.3)(chokidar@4.0.3))(@swc/core@1.15.3)
+      '@workflow/next': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-next.tgz(@opentelemetry/api@1.9.0)(next@16.2.4(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
+      '@workflow/nitro': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nitro.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/nuxt': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-nuxt.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/rollup': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-rollup.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/sveltekit': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-sveltekit.tgz(@opentelemetry/api@1.9.0)
+      '@workflow/typescript-plugin': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-typescript-plugin.tgz(typescript@5.9.3)
+      '@workflow/utils': https://workflow-tarballs-git-peter-v2-flow.labs.vercel.dev/workflow-utils.tgz
       ms: 2.1.3
     optionalDependencies:
       '@opentelemetry/api': 1.9.0

@@ -18,4 +18,5 @@ This directory contains different examples of how to use the Workflow DevKit.
 - [Nitro](https://github.com/vercel/workflow-examples/tree/main/nitro)
 - [Nuxt](https://github.com/vercel/workflow-examples/tree/main/nuxt)
 - [SvelteKit](https://github.com/vercel/workflow-examples/tree/main/sveltekit)
+- [TanStack Start](https://github.com/vercel/workflow-examples/tree/main/tanstack-start)
 - [Vite](https://github.com/vercel/workflow-examples/tree/main/vite)

@@ -19,8 +19,8 @@
     "@streamdown/math": "^1.0.1",
     "@streamdown/mermaid": "^1.0.1",
     "@vercel/otel": "^1.13.0",
-    "@workflow/ai": "4.1.2",
-    "@workflow/world-postgres": "4.1.1",
+    "@workflow/ai": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow-ai.tgz",
+    "@workflow/world-postgres": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow-world-postgres.tgz",
     "@xyflow/react": "^12.9.0",
     "ai": "^6.0.69",
     "ansi-to-react": "^6.2.6",
@@ -44,7 +44,7 @@
     "tokenlens": "^1.3.1",
     "typescript": "^5.9.3",
     "use-stick-to-bottom": "^1.1.1",
-    "workflow": "4.2.4",
+    "workflow": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow.tgz",
     "zod": "^4.1.12"
   },
   "devDependencies": {

@@ -13,7 +13,7 @@
     "nitro": "3.0.1-alpha.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "workflow": "4.2.4"
+    "workflow": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow.tgz"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

@@ -14,7 +14,7 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@workflow/world-local": "4.1.1",
-    "workflow": "4.2.4"
+    "@workflow/world-local": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow-world-local.tgz",
+    "workflow": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow.tgz"
   }
 }

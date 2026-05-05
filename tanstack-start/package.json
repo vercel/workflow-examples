@@ -24,7 +24,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.18",
-    "workflow": "^4.2.4"
+    "workflow": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow.tgz"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",

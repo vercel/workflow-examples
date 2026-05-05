@@ -12,7 +12,7 @@
     "next": "16.2.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "workflow": "4.2.4"
+    "workflow": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow.tgz"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

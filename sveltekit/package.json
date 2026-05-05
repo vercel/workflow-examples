@@ -21,6 +21,6 @@
     "vite": "^7.1.10"
   },
   "dependencies": {
-    "workflow": "4.2.4"
+    "workflow": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow.tgz"
   }
 }

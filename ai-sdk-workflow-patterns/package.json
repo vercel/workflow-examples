@@ -21,7 +21,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "tailwind-merge": "^3.3.1",
-    "workflow": "4.2.4",
+    "workflow": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow.tgz",
     "zod": "^4.1.9"
   },
   "devDependencies": {

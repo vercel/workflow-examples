@@ -20,7 +20,7 @@
     "@next/env": "^15.5.4",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
-    "@workflow/ai": "4.1.2",
+    "@workflow/ai": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow-ai.tgz",
     "ai": "^6.0.168",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -33,7 +33,7 @@
     "react-dom": "19.2.3",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "workflow": "4.2.4",
+    "workflow": "https://workflow-tarballs-h3imyuw9g.labs.vercel.dev/workflow.tgz",
     "zod": "^3.25.76"
   },
   "devDependencies": {

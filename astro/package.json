@@ -12,5 +12,15 @@
     "@astrojs/vercel": "9.0.5",
     "astro": "^5.16.4",
     "workflow": "4.3.1"
+  },
+  "overrides": {
+    "@vercel/routing-utils": {
+      "path-to-regexp": "6.3.0"
+    }
+  },
+  "pnpm": {
+    "overrides": {
+      "@vercel/routing-utils>path-to-regexp": "6.3.0"
+    }
   }
 }

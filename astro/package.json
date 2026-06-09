@@ -9,7 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "9.0.5",
     "astro": "^5.16.4",
-    "workflow": "4.2.4"
+    "workflow": "4.3.1"
   }
 }

@@ -1,7 +1,9 @@
 import { start } from 'workflow/api';
-import flow from './.well-known/workflow/v1/flow.js';
-import step from './.well-known/workflow/v1/step.js';
-import * as webhook from './.well-known/workflow/v1/webhook.js';
+// As of v5 the generated bundles are ESM (`.mjs`, named exports only), and the
+// step bundle is no longer a route: it is a registration module that `flow.mjs`
+// imports, so the workflow handler serves step deliveries too.
+import * as flow from './.well-known/workflow/v1/flow.mjs';
+import * as webhook from './.well-known/workflow/v1/webhook.mjs';
 import { handleUserSignup } from './workflows/user-signup.js';
 
 const server = Bun.serve({
@@ -9,10 +11,6 @@ const server = Bun.serve({
   routes: {
     '/.well-known/workflow/v1/flow': {
       POST: req => flow.POST(req),
-    },
-
-    '/.well-known/workflow/v1/step': {
-      POST: req => step.POST(req),
     },
 
     "/.well-known/workflow/v1/webhook/:token": webhook, // webhook exports handlers for GET, POST, DELETE, etc.
@@ -35,4 +33,3 @@ const server = Bun.serve({
 
 
 console.log(`Server listening on http://localhost:${server.port}`);
-

@@ -13,7 +13,8 @@ plugin({
         filename: args.path,
         jsc: {
           experimental: {
-            plugins: [[require.resolve('@workflow/swc-plugin'), { mode: 'client' }]],
+            // v5 removed the `client` transform mode; it merged into `step` mode.
+            plugins: [[require.resolve('@workflow/swc-plugin'), { mode: 'step' }]],
           },
         },
       });

@@ -8,13 +8,15 @@
     "clean": "rm -rf .workflow-output node_modules .well-known .swc"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@swc/core": "1.15.3",
+    "@types/bun": "latest",
+    "@workflow/swc-plugin": "https://workflow-tarballs-qlvm9j1ne.labs.vercel.dev/workflow-swc-plugin.tgz"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@workflow/world-local": "4.1.4",
-    "workflow": "4.3.1"
+    "@workflow/world-local": "https://workflow-tarballs-qlvm9j1ne.labs.vercel.dev/workflow-world-local.tgz",
+    "workflow": "https://workflow-tarballs-qlvm9j1ne.labs.vercel.dev/workflow.tgz"
   }
 }

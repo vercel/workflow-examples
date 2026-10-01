@@ -11,7 +11,7 @@
   "dependencies": {
     "@astrojs/vercel": "9.0.5",
     "astro": "^5.16.4",
-    "workflow": "5.0.0"
+    "workflow": "5.0.1"
   },
   "overrides": {
     "@vercel/routing-utils": {

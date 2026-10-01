@@ -5,8 +5,8 @@
     "": {
       "name": "bun-workflow-test",
       "dependencies": {
-        "@workflow/world-local": "5.0.0",
-        "workflow": "5.0.0",
+        "@workflow/world-local": "5.0.1",
+        "workflow": "5.0.1",
       },
       "devDependencies": {
         "@swc/core": "1.15.3",
@@ -235,29 +235,29 @@
 
     "@vercel/queue": ["@vercel/queue@0.5.1", "https://registry.k8s.vercel.security/npm/@vercel/queue/-/queue-0.5.1.tgz", { "dependencies": { "@vercel/oidc": "^3.0.5", "minimatch": "^10.2.4", "mixpart": "0.0.6", "picocolors": "^1.1.1" }, "peerDependencies": { "@opentelemetry/api": "^1.0.0" }, "optionalPeers": ["@opentelemetry/api"] }, "sha512-7gO8hOtIh15UDzbjCg7oJDOwY1Hs3XC4xSK6HjMVo93Ge3oEhPZJ18ogamwZTXwcFRYwvgN1vp2w3+zgqfIpoA=="],
 
-    "@workflow/astro": ["@workflow/astro@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/astro/-/astro-5.0.0.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.0", "@workflow/rollup": "5.0.0", "@workflow/swc-plugin": "5.0.0", "@workflow/vite": "5.0.0", "exsolve": "^1.0.8", "pathe": "^2.0.3" } }, "sha512-iveppms7DdwJfhnMNHKNsdce0cFA2+nyNFxsVlJ+LoDL/u2W+fL0gOgLlEqK0Ha4KGbQPp5gaEw6gY92qHbNfg=="],
+    "@workflow/astro": ["@workflow/astro@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/astro/-/astro-5.0.1.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.1", "@workflow/rollup": "5.0.1", "@workflow/swc-plugin": "5.0.0", "@workflow/vite": "5.0.1", "exsolve": "^1.0.8", "pathe": "^2.0.3" } }, "sha512-rCxvmTgu+syCwNbETr1eFcTVgvt3LswQ+1pd5OQTvJxOXO6Pz7h1gLC0oFJeXnTncl0yQP/aBgAEA/HFv4bgUA=="],
 
-    "@workflow/builders": ["@workflow/builders@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/builders/-/builders-5.0.0.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/core": "5.0.0", "@workflow/errors": "5.0.0", "@workflow/swc-plugin": "5.0.0", "@workflow/utils": "5.0.0", "builtin-modules": "5.0.0", "chalk": "5.6.2", "enhanced-resolve": "5.19.0", "esbuild": "^0.28.1", "find-up": "7.0.0", "json5": "2.2.3", "tinyglobby": "0.2.17" } }, "sha512-1DYKiNlHdAPNuIdVYoJEYrXdLEl/Jw/xmlNIKkYvVwg+XpyfNB8xul7s8ilKiLNQDyMLlL7nVJVXkAW04F0bLQ=="],
+    "@workflow/builders": ["@workflow/builders@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/builders/-/builders-5.0.1.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/core": "5.0.1", "@workflow/errors": "5.0.1", "@workflow/swc-plugin": "5.0.0", "@workflow/utils": "5.0.0", "builtin-modules": "5.0.0", "chalk": "5.6.2", "enhanced-resolve": "5.19.0", "esbuild": "^0.28.1", "find-up": "7.0.0", "json5": "2.2.3", "tinyglobby": "0.2.17" } }, "sha512-fz15qqMi4ZGaPFTDAbONkmrZ6D4RrLtmE7UTdcF8LUp+UpynC8ue+aN+srr9YU0sgVVS7gNlx2wIe2m5iO0xyA=="],
 
-    "@workflow/cli": ["@workflow/cli@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/cli/-/cli-5.0.0.tgz", { "dependencies": { "@oclif/core": "4.11.4", "@oclif/plugin-help": "6.2.37", "@swc/core": "1.15.3", "@vercel/cli-auth": "0.0.1", "@workflow/builders": "5.0.0", "@workflow/core": "5.0.0", "@workflow/errors": "5.0.0", "@workflow/swc-plugin": "5.0.0", "@workflow/utils": "5.0.0", "@workflow/web": "5.0.0", "@workflow/world": "5.0.0", "@workflow/world-local": "5.0.0", "@workflow/world-vercel": "5.0.0", "boxen": "8.0.1", "builtin-modules": "5.0.0", "chalk": "5.6.2", "chokidar": "4.0.3", "date-fns": "4.1.0", "dotenv": "^17.3.1", "easy-table": "1.2.0", "enhanced-resolve": "5.19.0", "esbuild": "^0.28.1", "find-up": "7.0.0", "mixpart": "0.0.4", "open": "10.2.0", "ora": "8.2.0", "terminal-link": "5.0.0", "tinyglobby": "0.2.17", "xdg-app-paths": "5.1.0", "zod": "~4.5.4" }, "bin": { "wf": "./bin/run.js", "workflow": "./bin/run.js" } }, "sha512-oqMLCdgnz/+7v2JcKyUr6ekVmZlk8QBqpo/JJPqwEBrJN6lJTPtpkzJsg1f6kkTLnFlUGhJD9pLC7IHrJb1c0Q=="],
+    "@workflow/cli": ["@workflow/cli@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/cli/-/cli-5.0.1.tgz", { "dependencies": { "@oclif/core": "4.11.4", "@oclif/plugin-help": "6.2.37", "@swc/core": "1.15.3", "@vercel/cli-auth": "0.0.1", "@workflow/builders": "5.0.1", "@workflow/core": "5.0.1", "@workflow/errors": "5.0.1", "@workflow/swc-plugin": "5.0.0", "@workflow/utils": "5.0.0", "@workflow/web": "5.0.1", "@workflow/world": "5.0.1", "@workflow/world-local": "5.0.1", "@workflow/world-vercel": "5.0.1", "boxen": "8.0.1", "builtin-modules": "5.0.0", "chalk": "5.6.2", "chokidar": "4.0.3", "date-fns": "4.1.0", "dotenv": "^17.3.1", "easy-table": "1.2.0", "enhanced-resolve": "5.19.0", "esbuild": "^0.28.1", "find-up": "7.0.0", "mixpart": "0.0.4", "open": "10.2.0", "ora": "8.2.0", "terminal-link": "5.0.0", "tinyglobby": "0.2.17", "xdg-app-paths": "5.1.0", "zod": "~4.5.4" }, "bin": { "wf": "./bin/run.js", "workflow": "./bin/run.js" } }, "sha512-Xu6+7Pm1ruScZTjWQMIE0LuLFdlqArjBZahDd49biNb1EXNP6o/oLaAziiAG8Zf0fmtXgWcn6m9NS5wYYhmFCA=="],
 
-    "@workflow/core": ["@workflow/core@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/core/-/core-5.0.0.tgz", { "dependencies": { "@aws-sdk/credential-provider-web-identity": "3.972.49", "@jridgewell/trace-mapping": "0.3.31", "@standard-schema/spec": "1.0.0", "@types/ms": "2.1.0", "@vercel/functions": "^3.8.0", "@workflow/errors": "5.0.0", "@workflow/serde": "5.0.0", "@workflow/utils": "5.0.0", "@workflow/world": "5.0.0", "@workflow/world-local": "5.0.0", "@workflow/world-vercel": "5.0.0", "acorn": "8.15.0", "debug": "4.4.3", "devalue": "5.9.2", "ms": "2.1.3", "nanoid": "5.1.6", "quickjs-wasi": "3.4.0", "seedrandom": "3.0.5", "semver": "7.7.4", "ulid": "~3.0.1", "zod": "~4.5.4" }, "peerDependencies": { "@opentelemetry/api": "1" }, "optionalPeers": ["@opentelemetry/api"] }, "sha512-zk0eFfNoF5PFoceftT9kqPeXjXUw+FgvNSv1LwxMySxPbT0yHtOsmupEHLJkOG9Lrep+EuNLn8QWWuYjoMTonw=="],
+    "@workflow/core": ["@workflow/core@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/core/-/core-5.0.1.tgz", { "dependencies": { "@aws-sdk/credential-provider-web-identity": "3.972.49", "@jridgewell/trace-mapping": "0.3.31", "@standard-schema/spec": "1.0.0", "@types/ms": "2.1.0", "@vercel/functions": "^3.8.0", "@workflow/errors": "5.0.1", "@workflow/serde": "5.0.0", "@workflow/utils": "5.0.0", "@workflow/world": "5.0.1", "@workflow/world-local": "5.0.1", "@workflow/world-vercel": "5.0.1", "acorn": "8.15.0", "debug": "4.4.3", "devalue": "5.9.2", "ms": "2.1.3", "nanoid": "5.1.6", "quickjs-wasi": "3.4.0", "seedrandom": "3.0.5", "semver": "7.7.4", "ulid": "~3.0.1", "zod": "~4.5.4" }, "peerDependencies": { "@opentelemetry/api": "1" }, "optionalPeers": ["@opentelemetry/api"] }, "sha512-V93s8irq4h0pDdgiAjy4ZfjSiPRBlhuMeUOL1ylN/luQiqq9iWXkq+wyzrHq5zH2vn9p2T6s4VopOadljBJeYA=="],
 
-    "@workflow/errors": ["@workflow/errors@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/errors/-/errors-5.0.0.tgz", { "dependencies": { "@workflow/utils": "5.0.0", "@workflow/world": "5.0.0", "ms": "2.1.3" } }, "sha512-YLxz56EGGAAmmo3FQTLQ/W1mZz7u2INJLbQjjLVC+mHWGZXGXX3kdulaEJX8vJh5cdmgsCCHR1NX3Kt0qSPwsg=="],
+    "@workflow/errors": ["@workflow/errors@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/errors/-/errors-5.0.1.tgz", { "dependencies": { "@workflow/utils": "5.0.0", "@workflow/world": "5.0.1", "ms": "2.1.3" } }, "sha512-6cLOImavSHEHqXKPYgL99ZKn0e3Cw1tjxXwgb+CP+DAWi2ikkzUBcK3xinkwzzaxUoylkZcsNv8hEu61xpJvhQ=="],
 
-    "@workflow/nest": ["@workflow/nest@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/nest/-/nest-5.0.0.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.0", "@workflow/swc-plugin": "5.0.0", "@workflow/utils": "5.0.0", "esbuild": "^0.28.1", "pathe": "2.0.3" }, "peerDependencies": { "@nestjs/common": ">=10.0.0", "@nestjs/core": ">=10.0.0", "@swc/cli": ">=0.4.0" }, "bin": { "workflow-nest": "./dist/cli.js" } }, "sha512-Tk4+uDdIA+08vz+kf3w2Rd3Oo7AA3bcDOiLVaQiB6T81pl4skBdK7nIEWgi4YqGlEC+vBPBhMGNF0d7qdfRJMQ=="],
+    "@workflow/nest": ["@workflow/nest@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/nest/-/nest-5.0.1.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.1", "@workflow/swc-plugin": "5.0.0", "@workflow/utils": "5.0.0", "esbuild": "^0.28.1", "pathe": "2.0.3" }, "peerDependencies": { "@nestjs/common": ">=10.0.0", "@nestjs/core": ">=10.0.0", "@swc/cli": ">=0.4.0" }, "bin": { "workflow-nest": "./dist/cli.js" } }, "sha512-PlVOp6N6SFKt7dTnbEM4jZT1+q4mqGrJZX5Pgy35DwyYi31p6/qZPtZwRHCW2hfLB2HbMBC7NaHVNqxIuswu5g=="],
 
-    "@workflow/next": ["@workflow/next@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/next/-/next-5.0.0.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.0", "@workflow/core": "5.0.0", "@workflow/swc-plugin": "5.0.0", "chokidar": "4.0.3", "ignore": "7.0.5", "semver": "7.7.4" }, "peerDependencies": { "next": ">13" }, "optionalPeers": ["next"] }, "sha512-r54gKfFxC5s+zV6oInpFmxeKFlluWAvz4ImfeDANipyCsE/Fej2Zq/vLZ93bSnw2qaqun/kZaigsUXhQzebcLw=="],
+    "@workflow/next": ["@workflow/next@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/next/-/next-5.0.1.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.1", "@workflow/core": "5.0.1", "@workflow/swc-plugin": "5.0.0", "ignore": "7.0.5", "semver": "7.7.4", "watchpack": "2.5.1" }, "peerDependencies": { "next": ">13" }, "optionalPeers": ["next"] }, "sha512-dQOQvhDcdgQnbWVCyuFEstAeduCkq4JlxouyGHfHnkS9gIqWbL6g6kcpjOVFBQCjPWNMNQ6Hfr7MuQGICBobyQ=="],
 
-    "@workflow/nitro": ["@workflow/nitro@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/nitro/-/nitro-5.0.0.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.0", "@workflow/core": "5.0.0", "@workflow/rollup": "5.0.0", "@workflow/swc-plugin": "5.0.0", "@workflow/vite": "5.0.0", "@workflow/web": "5.0.0", "exsolve": "1.0.8", "pathe": "2.0.3" } }, "sha512-HFwk2VM/6EAiR6l6JAADcWGZrLGuys+5ign+0LkEHjSShU95cRBjI7O6zV74olbhTIgDrVJ36KY/jQQU2QOVmA=="],
+    "@workflow/nitro": ["@workflow/nitro@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/nitro/-/nitro-5.0.1.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.1", "@workflow/core": "5.0.1", "@workflow/rollup": "5.0.1", "@workflow/swc-plugin": "5.0.0", "@workflow/vite": "5.0.1", "@workflow/web": "5.0.1", "exsolve": "1.0.8", "pathe": "2.0.3" } }, "sha512-34z8a/21mLEBDO+1oMKiLGuhat72xkfe5nqri6QlVlvPsTaWGqQZ28ihl349hzrKtq8e6oSuYhVzs2ju2QTfSg=="],
 
-    "@workflow/nuxt": ["@workflow/nuxt@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/nuxt/-/nuxt-5.0.0.tgz", { "dependencies": { "@nuxt/kit": "4.4.8", "@workflow/nitro": "5.0.0" } }, "sha512-7gHe6sKpm+AupXzgWIcn9Qml3NKSGCqE4LqXzP9Ay8L6MkXr00SsEuo8bwTDaOqacbjbcU3rg5Vfl9DWHV0LMQ=="],
+    "@workflow/nuxt": ["@workflow/nuxt@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/nuxt/-/nuxt-5.0.1.tgz", { "dependencies": { "@nuxt/kit": "4.4.8", "@workflow/nitro": "5.0.1" } }, "sha512-bMC8gUV7gZnT4uqo9VZIjvbDvLmjU8I7lgTQQzz///ZLreCIahtFrX12tUXM1WaN4I17/pKwXTk/wk1Zv8+ZdA=="],
 
-    "@workflow/rollup": ["@workflow/rollup@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/rollup/-/rollup-5.0.0.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.0", "@workflow/swc-plugin": "5.0.0", "exsolve": "1.0.7" } }, "sha512-2cAfb465S1jpcYEndPGoMt7lXmxocKmPs5CqJYlBt5FeNUcifJE4IjSMGwks77BRSEdJ5uTvDyno+eY2OS8/6w=="],
+    "@workflow/rollup": ["@workflow/rollup@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/rollup/-/rollup-5.0.1.tgz", { "dependencies": { "@swc/core": "1.15.3", "@workflow/builders": "5.0.1", "@workflow/swc-plugin": "5.0.0", "exsolve": "1.0.7" } }, "sha512-mIFOVuJPJiuTg7h3417Oc3JqUMZ/dd3bhenXcBoNBF0FN47pvxVrXclgqrky7+5OKN+fHoNOQUKy3oKHuuVL1A=="],
 
     "@workflow/serde": ["@workflow/serde@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/serde/-/serde-5.0.0.tgz", {}, "sha512-78smVK/ejx/MIrjOwqAH14jGZkGBIO3u3B6u6WhWOyfjBJWl21xyHdsh0gFsncD96HlavCTbsWg/pN7MLSnrbw=="],
 
-    "@workflow/sveltekit": ["@workflow/sveltekit@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/sveltekit/-/sveltekit-5.0.0.tgz", { "dependencies": { "@sveltejs/load-config": "^0.2.3", "@swc/core": "1.15.3", "@workflow/builders": "5.0.0", "@workflow/rollup": "5.0.0", "@workflow/swc-plugin": "5.0.0", "@workflow/vite": "5.0.0", "exsolve": "^1.0.8", "fs-extra": "^11.3.2", "pathe": "^2.0.3" } }, "sha512-rvvXz6qxdL2ImG+s22ijrui7EXyZx14kI0h9xPuXOjtiahBmQkcVyW1EPH5VpQmd+f5MFuHChIEiEZ6hO2My0A=="],
+    "@workflow/sveltekit": ["@workflow/sveltekit@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/sveltekit/-/sveltekit-5.0.1.tgz", { "dependencies": { "@sveltejs/load-config": "^0.2.3", "@swc/core": "1.15.3", "@workflow/builders": "5.0.1", "@workflow/rollup": "5.0.1", "@workflow/swc-plugin": "5.0.0", "@workflow/vite": "5.0.1", "exsolve": "^1.0.8", "fs-extra": "^11.3.2", "pathe": "^2.0.3" } }, "sha512-VBJWoYJydGIm9ZoOulVwNaXowFmT6B1ZBYx3xcgPyVVao74deqcAdeAOpbBE2Dkl3t15s56CpZcX3cnpd5pwqA=="],
 
     "@workflow/swc-plugin": ["@workflow/swc-plugin@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/swc-plugin/-/swc-plugin-5.0.0.tgz", { "peerDependencies": { "@swc/core": "1.15.3" } }, "sha512-t4NkxtxSnYcZhXfOnxNCq5vW4HmBp30NpT/QqSJMrxnMqFpzoZc/zrkX3qN681D2gJueyQZynpusihtRWineQQ=="],
 
@@ -265,15 +265,15 @@
 
     "@workflow/utils": ["@workflow/utils@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/utils/-/utils-5.0.0.tgz", { "dependencies": { "ms": "2.1.3" } }, "sha512-WEVTOy9mC43ZvWutFSGrtHxnIe1Nyhxqkbm3jY3ugUlp950lnQ6L6Ekp0S2y3jFd8d5ZOqRhOdpceJ69z3y3ag=="],
 
-    "@workflow/vite": ["@workflow/vite@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/vite/-/vite-5.0.0.tgz", { "dependencies": { "@workflow/builders": "5.0.0" } }, "sha512-E2SY2wqNvq2Jx+EVzw7wl0sYX/oAzdOtkXgWoXlZG98VC8Az+VjzR4Uw6NxbLwYgnpxqwmMaNRtnYPRBpQuCdw=="],
+    "@workflow/vite": ["@workflow/vite@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/vite/-/vite-5.0.1.tgz", { "dependencies": { "@workflow/builders": "5.0.1" } }, "sha512-c/Z+qbtsnLfsEqrNjLKBriXjQzuvMQL2NjjbI5zdWJ8KsNHkj4yYLVLQrso1Gga+1e1/5uvIe7Omljj7ipUB3Q=="],
 
-    "@workflow/web": ["@workflow/web@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/web/-/web-5.0.0.tgz", { "dependencies": { "@workflow/world-local": "5.0.0", "srvx": "^0.12.4", "swr": "^2.3.6" } }, "sha512-CLigrehXGKaK630xe7hvNclKIOg7fwIFa25EhnldumzYJJlFkHUimD8KRmK1IcxiXW9aqclBA0OsD6ly9UlbZA=="],
+    "@workflow/web": ["@workflow/web@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/web/-/web-5.0.1.tgz", { "dependencies": { "@workflow/world-local": "5.0.1", "srvx": "^0.12.4", "swr": "^2.3.6" } }, "sha512-aoVteluJtMP3st9mH4Y84Efi6Bu/lZaCQ7KaySkpd9mzq+6H5Orgmp0M8GbgPl2+h/mYVkke6iPcMTx8TJDUSQ=="],
 
-    "@workflow/world": ["@workflow/world@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/world/-/world-5.0.0.tgz", { "dependencies": { "ulid": "~3.0.1", "zod": "~4.5.4" } }, "sha512-RPDCe8e6liHB1KLTYqNCS6Y2/cBL7WDaVNnDHh5USa8h4LuxZ/f6Tl4/w39beZPCoM9I/rFu/pvoGP6qq1CRuw=="],
+    "@workflow/world": ["@workflow/world@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/world/-/world-5.0.1.tgz", { "dependencies": { "ulid": "~3.0.1", "zod": "~4.5.4" } }, "sha512-rO95deJNAId4DBS6/RylBthTYeKUR0SGUOJ7fg5ZCz4jMngI6xAbLTueXXFOS3dp8bDh+aYWgwSIKwuEKfjagQ=="],
 
-    "@workflow/world-local": ["@workflow/world-local@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/world-local/-/world-local-5.0.0.tgz", { "dependencies": { "@vercel/queue": "0.5.1", "@workflow/errors": "5.0.0", "@workflow/utils": "5.0.0", "@workflow/world": "5.0.0", "async-sema": "3.1.1", "proper-lockfile": "4.1.2", "ulid": "~3.0.1", "undici": "7.30.0", "zod": "~4.5.4" }, "peerDependencies": { "@opentelemetry/api": "1" }, "optionalPeers": ["@opentelemetry/api"] }, "sha512-d656XtujkTWUigukvjKFLbX7sqnbbuvao6oQM15QZeySBdrVoYnsC0lIE7xPwUJP0lU4y5F5nb/Lhteb7+04pg=="],
+    "@workflow/world-local": ["@workflow/world-local@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/world-local/-/world-local-5.0.1.tgz", { "dependencies": { "@vercel/queue": "0.5.1", "@workflow/errors": "5.0.1", "@workflow/utils": "5.0.0", "@workflow/world": "5.0.1", "async-sema": "3.1.1", "proper-lockfile": "4.1.2", "ulid": "~3.0.1", "undici": "7.30.0", "zod": "~4.5.4" }, "peerDependencies": { "@opentelemetry/api": "1" }, "optionalPeers": ["@opentelemetry/api"] }, "sha512-P/NGhwlRlJqGa8TBncD1fzw/bEPv6aWXMpTWcLUZ1A6MmvemnOQ2dGDopxdx8TYfKtS0hrQn1MMIA7jaaHdbNg=="],
 
-    "@workflow/world-vercel": ["@workflow/world-vercel@5.0.0", "https://registry.k8s.vercel.security/npm/@workflow/world-vercel/-/world-vercel-5.0.0.tgz", { "dependencies": { "@vercel/functions": "^3.8.0", "@vercel/oidc": "3.2.0", "@vercel/queue": "0.5.1", "@workflow/errors": "5.0.0", "@workflow/utils": "5.0.0", "@workflow/world": "5.0.0", "cbor-x": "1.6.0", "ulid": "~3.0.1", "undici": "7.30.0", "ws": "^8.20.0", "zod": "~4.5.4" }, "peerDependencies": { "@opentelemetry/api": "1" }, "optionalPeers": ["@opentelemetry/api"] }, "sha512-2FwHZ7e+l4WoFO8/1MaghJjdu/Yw+JW2AZLGgylEtE2Ybw9L1gAOsphgQcQslE6VkeU5YmRRZhZsiZK2LEdZtw=="],
+    "@workflow/world-vercel": ["@workflow/world-vercel@5.0.1", "https://registry.k8s.vercel.security/npm/@workflow/world-vercel/-/world-vercel-5.0.1.tgz", { "dependencies": { "@vercel/functions": "^3.8.0", "@vercel/oidc": "3.2.0", "@vercel/queue": "0.5.1", "@workflow/errors": "5.0.1", "@workflow/utils": "5.0.0", "@workflow/world": "5.0.1", "cbor-x": "1.6.0", "ulid": "~3.0.1", "undici": "7.30.0", "ws": "^8.20.0", "zod": "~4.5.4" }, "peerDependencies": { "@opentelemetry/api": "1" }, "optionalPeers": ["@opentelemetry/api"] }, "sha512-5IKcN/XEN4Kx0QpJR1fTuMV8zm2VrYiDQXcWDpTjv0HczILPse0uKP0vEfl4GI3GILPem5UWf4PlTV2b0vngYA=="],
 
     "@xhmikosr/archive-type": ["@xhmikosr/archive-type@7.1.0", "", { "dependencies": { "file-type": "^20.5.0" } }, "sha512-xZEpnGplg1sNPyEgFh0zbHxqlw5dtYg6viplmWSxUj12+QjU9SKu3U/2G73a15pEjLaOqTefNSZ1fOPUOT4Xgg=="],
 
@@ -437,7 +437,7 @@
 
     "execa": ["execa@5.1.1", "", { "dependencies": { "cross-spawn": "^7.0.3", "get-stream": "^6.0.0", "human-signals": "^2.1.0", "is-stream": "^2.0.0", "merge-stream": "^2.0.0", "npm-run-path": "^4.0.1", "onetime": "^5.1.2", "signal-exit": "^3.0.3", "strip-final-newline": "^2.0.0" } }, "sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg=="],
 
-    "exsolve": ["exsolve@1.0.8", "", {}, "sha512-LmDxfWXwcTArk8fUEnOfSZpHOJ6zOMUJKOtFLFqJLoKJetuQG874Uc7/Kki7zFLzYybmZhp1M7+98pfMqeX8yA=="],
+    "exsolve": ["exsolve@1.1.1", "https://registry.k8s.vercel.security/npm/exsolve/-/exsolve-1.1.1.tgz", {}, "sha512-9U/jZUgjnSGyntRr6y5Muu1MJcwFl6kPu7k8qLF0IMNfLqvw0NZ4nnVDq0RVoZ0RvCyumib4Ez3KYrVfilrw+g=="],
 
     "ext-list": ["ext-list@2.2.2", "", { "dependencies": { "mime-db": "^1.28.0" } }, "sha512-u+SQgsubraE6zItfVA0tBuCBhfU9ogSRnsvygI7wht9TS510oLkBRXBsqopeUG/GBOIQyKZO9wjTqIu/sf5zFA=="],
 
@@ -474,6 +474,8 @@
     "get-stream": ["get-stream@6.0.1", "", {}, "sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg=="],
 
     "giget": ["giget@3.3.1", "https://registry.k8s.vercel.security/npm/giget/-/giget-3.3.1.tgz", { "bin": { "giget": "dist/cli.mjs" } }, "sha512-r+mvuDjrjMpsdw46Kmeydb8bdHm7wOKw8wNBtTndkjbPjgAp5oUJUxRE76wZFknxIPokfWvep2qSXK37aXE6zg=="],
+
+    "glob-to-regexp": ["glob-to-regexp@0.4.1", "https://registry.k8s.vercel.security/npm/glob-to-regexp/-/glob-to-regexp-0.4.1.tgz", {}, "sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw=="],
 
     "got": ["got@13.0.0", "", { "dependencies": { "@sindresorhus/is": "^5.2.0", "@szmarczak/http-timer": "^5.0.1", "cacheable-lookup": "^7.0.0", "cacheable-request": "^10.2.8", "decompress-response": "^6.0.0", "form-data-encoder": "^2.1.2", "get-stream": "^6.0.1", "http2-wrapper": "^2.1.10", "lowercase-keys": "^3.0.0", "p-cancelable": "^3.0.0", "responselike": "^3.0.0" } }, "sha512-XfBk1CxOOScDcMr9O1yKkNaQyy865NbYs+F7dr4H0LZMVgCj2Le59k6PqbNHoL5ToeaEQUYh6c6yMfVcc6SJxA=="],
 
@@ -731,6 +733,8 @@
 
     "use-sync-external-store": ["use-sync-external-store@1.7.0", "https://registry.k8s.vercel.security/npm/use-sync-external-store/-/use-sync-external-store-1.7.0.tgz", { "peerDependencies": { "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" } }, "sha512-6L+EeigHMQhdaIPNIFUKwfWJSwWFQ8gJbJ2DLOs5sDIegTwR9fRxvnM3uciHKjIZhFz+KAv2emhWMRvDmMcY8A=="],
 
+    "watchpack": ["watchpack@2.5.1", "https://registry.k8s.vercel.security/npm/watchpack/-/watchpack-2.5.1.tgz", { "dependencies": { "glob-to-regexp": "^0.4.1", "graceful-fs": "^4.1.2" } }, "sha512-Zn5uXdcFNIA1+1Ei5McRd+iRzfhENPCe7LeABkJtNulSxjma+l7ltNx55BWZkRlwRnpOgHqxnjyaDgJnNXnqzg=="],
+
     "wcwidth": ["wcwidth@1.0.1", "", { "dependencies": { "defaults": "^1.0.3" } }, "sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg=="],
 
     "webpack-virtual-modules": ["webpack-virtual-modules@0.6.2", "", {}, "sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ=="],
@@ -741,7 +745,7 @@
 
     "wordwrap": ["wordwrap@1.0.0", "", {}, "sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q=="],
 
-    "workflow": ["workflow@5.0.0", "https://registry.k8s.vercel.security/npm/workflow/-/workflow-5.0.0.tgz", { "dependencies": { "@workflow/astro": "5.0.0", "@workflow/cli": "5.0.0", "@workflow/core": "5.0.0", "@workflow/errors": "5.0.0", "@workflow/nest": "5.0.0", "@workflow/next": "5.0.0", "@workflow/nitro": "5.0.0", "@workflow/nuxt": "5.0.0", "@workflow/rollup": "5.0.0", "@workflow/sveltekit": "5.0.0", "@workflow/typescript-plugin": "5.0.0", "@workflow/utils": "5.0.0", "ms": "2.1.3" }, "peerDependencies": { "@opentelemetry/api": "1" }, "optionalPeers": ["@opentelemetry/api"], "bin": { "wf": "./bin/run.js", "workflow": "./bin/run.js" } }, "sha512-0vF66z1vHeYtmAz9jTVOttKVYuLSGK8atzA++9sknfxCOtQD+dPga0wwb+24Q2Un+NUEYsfB8OMPs3dKIkQBVw=="],
+    "workflow": ["workflow@5.0.1", "https://registry.k8s.vercel.security/npm/workflow/-/workflow-5.0.1.tgz", { "dependencies": { "@workflow/astro": "5.0.1", "@workflow/cli": "5.0.1", "@workflow/core": "5.0.1", "@workflow/errors": "5.0.1", "@workflow/nest": "5.0.1", "@workflow/next": "5.0.1", "@workflow/nitro": "5.0.1", "@workflow/nuxt": "5.0.1", "@workflow/rollup": "5.0.1", "@workflow/sveltekit": "5.0.1", "@workflow/typescript-plugin": "5.0.0", "@workflow/utils": "5.0.0", "ms": "2.1.3" }, "peerDependencies": { "@opentelemetry/api": "1" }, "optionalPeers": ["@opentelemetry/api"], "bin": { "wf": "./bin/run.js", "workflow": "./bin/run.js" } }, "sha512-VNlvfGICkkzZNlvasPTzxsDxQaGRSSM59f8QWdUNsRu5Lic/Z4KCxAmjQnGGUqIV/GFsaZ7CCU3RMfDiSYut1Q=="],
 
     "wrap-ansi": ["wrap-ansi@7.0.0", "", { "dependencies": { "ansi-styles": "^4.0.0", "string-width": "^4.1.0", "strip-ansi": "^6.0.0" } }, "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q=="],
 
@@ -758,6 +762,8 @@
     "yocto-queue": ["yocto-queue@1.2.1", "", {}, "sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg=="],
 
     "zod": ["zod@4.5.4", "https://registry.k8s.vercel.security/npm/zod/-/zod-4.5.4.tgz", {}, "sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA=="],
+
+    "@nuxt/kit/exsolve": ["exsolve@1.0.8", "", {}, "sha512-LmDxfWXwcTArk8fUEnOfSZpHOJ6zOMUJKOtFLFqJLoKJetuQG874Uc7/Kki7zFLzYybmZhp1M7+98pfMqeX8yA=="],
 
     "@nuxt/kit/semver": ["semver@7.8.5", "https://registry.k8s.vercel.security/npm/semver/-/semver-7.8.5.tgz", { "bin": { "semver": "bin/semver.js" } }, "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA=="],
 
@@ -782,6 +788,8 @@
     "@vercel/functions/@vercel/oidc": ["@vercel/oidc@3.8.9", "https://registry.k8s.vercel.security/npm/@vercel/oidc/-/oidc-3.8.9.tgz", { "dependencies": { "@vercel/cli-config": "0.3.0", "@vercel/cli-exec": "1.0.1", "jose": "^5.9.6" } }, "sha512-TcbdH3YtGS2KU98T99dN4sbf+E4vbJZsJTRN97wKQ7QWQ0BR7U02QX3KN4+5GHxBtKTj1c5CnvTTitc2ZRad0A=="],
 
     "@workflow/cli/mixpart": ["mixpart@0.0.4", "", {}, "sha512-RAoaOSXnMLrfUfmFbNynRYjeMru/bhgAYRy/GQVI8gmRq7vm9V9c2gGVYnYoQ008X6YTmRIu5b0397U7vb0bIA=="],
+
+    "@workflow/nitro/exsolve": ["exsolve@1.0.8", "", {}, "sha512-LmDxfWXwcTArk8fUEnOfSZpHOJ6zOMUJKOtFLFqJLoKJetuQG874Uc7/Kki7zFLzYybmZhp1M7+98pfMqeX8yA=="],
 
     "@workflow/rollup/exsolve": ["exsolve@1.0.7", "", {}, "sha512-VO5fQUzZtI6C+vx4w/4BWJpg3s/5l+6pRQEHzFRM8WFi4XffSP1Z+4qi7GbjWbvRQEbdIco5mIMq+zX4rPuLrw=="],
 
@@ -811,6 +819,8 @@
 
     "c12/chokidar": ["chokidar@5.0.0", "", { "dependencies": { "readdirp": "^5.0.0" } }, "sha512-TQMmc3w+5AxjpL8iIiwebF73dRDF4fBIieAqGn9RGCWaEVwQ6Fb2cGe31Yns0RRIzii5goJ1Y7xbMwo1TxMplw=="],
 
+    "c12/exsolve": ["exsolve@1.0.8", "", {}, "sha512-LmDxfWXwcTArk8fUEnOfSZpHOJ6zOMUJKOtFLFqJLoKJetuQG874Uc7/Kki7zFLzYybmZhp1M7+98pfMqeX8yA=="],
+
     "decompress-response/mimic-response": ["mimic-response@3.1.0", "", {}, "sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ=="],
 
     "execa/onetime": ["onetime@5.1.2", "", { "dependencies": { "mimic-fn": "^2.1.0" } }, "sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg=="],
@@ -830,8 +840,6 @@
     "ora/string-width": ["string-width@7.2.0", "", { "dependencies": { "emoji-regex": "^10.3.0", "get-east-asian-width": "^1.0.0", "strip-ansi": "^7.1.0" } }, "sha512-tsaTIkKW9b4N+AEj+SVA+WhJzV7/zMhcSu78mLKWSk7cXMOSHsBKFWUs0fWwq8QyK3MgJBQRX6Gbi4kYbdvGkQ=="],
 
     "pkg-types/confbox": ["confbox@0.3.1", "https://registry.k8s.vercel.security/npm/confbox/-/confbox-0.3.1.tgz", {}, "sha512-cKUSoKa8YxFZZSmraVi7onONx3amu77ngK3kGpsYHDH7drPwCRkQE1RYMPlLRrMtnciRj274XNRxcHxnKmDSnA=="],
-
-    "pkg-types/exsolve": ["exsolve@1.1.1", "https://registry.k8s.vercel.security/npm/exsolve/-/exsolve-1.1.1.tgz", {}, "sha512-9U/jZUgjnSGyntRr6y5Muu1MJcwFl6kPu7k8qLF0IMNfLqvw0NZ4nnVDq0RVoZ0RvCyumib4Ez3KYrVfilrw+g=="],
 
     "restore-cursor/signal-exit": ["signal-exit@4.1.0", "", {}, "sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw=="],
 

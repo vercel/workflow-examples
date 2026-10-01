@@ -82,7 +82,8 @@ For non-Vercel deployments, you can configure a PostgreSQL World to handle workf
       console.log("Starting workflow workers...");
       import("workflow/runtime").then(async ({ getWorld }) => {
         console.log("Starting Postgres World...");
-        await getWorld().start?.();
+        const world = await getWorld();
+        await world.start?.();
       });
       console.log("Workflow workers started!");
     }
@@ -95,15 +96,15 @@ Learn more about the Workflow PostgreSQL World [here](https://useworkflow.dev/do
 
 ## Key Features
 
-- **DurableAgent** - `@workflow/ai`'s `DurableAgent` provides automatic retries, fault tolerance, and stream reconnection for AI SDK applications
+- **WorkflowAgent** - The AI SDK's `WorkflowAgent` (from `@ai-sdk/workflow`) provides automatic retries, fault tolerance, and stream reconnection for AI SDK applications
 - **Multi-turn conversations** - Agent maintains conversation state across tool-calling loops and multiple LLM interactions
-- **Stream reconnection** - Client can reconnect to in-progress workflows using `WorkflowChatTransport` after network failures
+- **Stream reconnection** - Client can reconnect to in-progress workflows using `WorkflowChatTransport` (from `@ai-sdk/workflow`) after network failures
 - **Tool execution** - Five flight booking tools (search, status check, airport info, booking, baggage) showing real-world agent patterns
 - **PostgreSQL World** - Optional PostgreSQL backend for custom deployment needs beyond Vercel (Railway, Render, etc.)
 
 This project uses the following stack:
 
-- [Next.js](https://nextjs.org) 15 (App Router)
-- [Vercel AI SDK](https://ai-sdk.dev/docs) with `streamText` and tools
-- [Workflow DevKit](https://useworkflow.dev) for durability
+- [Next.js](https://nextjs.org) 16 (App Router)
+- [Vercel AI SDK](https://ai-sdk.dev/docs) v7 with `WorkflowAgent` and tools
+- [Workflow SDK](https://useworkflow.dev) 5 for durability
 - [Tailwind CSS](https://tailwindcss.com) for styling

@@ -14,8 +14,8 @@ A demonstration of the [Workflow DevKit](https://useworkflow.dev/) using Bun run
 
 ```
 ├── server.ts              # HTTP server with workflow endpoints
-├── workflow-plugin.ts     # SWC plugin for transforming workflow code
-├── workflow.config.json   # Workflow DevKit configuration
+├── workflow-plugin.ts     # SWC plugin (step mode) for transforming app code
+├── bunfig.toml            # Preloads the workflow plugin
 └── workflows/
     └── user-signup.ts     # Example: User signup workflow
 ```
@@ -85,12 +85,22 @@ async function createUser(email: string) {
 }
 ```
 
+### Generated Bundles
+
+`bun x workflow build` scans `workflows/` and writes these files to `.well-known/workflow/v1/`:
+
+- `flow.mjs` - the combined workflow and step queue consumer (named `POST` export)
+- `__step_registrations.mjs` - internal step registrations imported by `flow.mjs`; do not route to it
+- `webhook.mjs` - webhook delivery handlers (named method exports)
+
 ### Workflow Endpoints
 
-The server exposes two required endpoints:
+The server exposes these endpoints:
 
-- `POST /.well-known/workflow/v1/flow` - Execute workflow functions
-- `POST /.well-known/workflow/v1/step` - Execute individual steps
+- `POST /.well-known/workflow/v1/flow` - Execute workflow functions and queued steps
+- `/.well-known/workflow/v1/webhook/:token` - Deliver data to `createWebhook()` webhooks
+
+Steps do not have their own HTTP route: queued steps are delivered to the flow handler.
 
 ## API Reference
 

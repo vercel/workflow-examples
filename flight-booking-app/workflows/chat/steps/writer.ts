@@ -120,7 +120,8 @@ export async function writeStreamClose(
     } as UIMessageChunk);
   }
   await writer.write({ type: 'finish' });
-  writer.releaseLock();
+  // Close the stream so readers (including reconnecting clients) end cleanly
+  await writer.close();
 }
 
 /**

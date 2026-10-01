@@ -26,3 +26,9 @@ lerna-debug.log*
 
 # misc
 .DS_Store
+/.swc
+
+# nitro / workflow
+.output
+.nitro
+.workflow-data

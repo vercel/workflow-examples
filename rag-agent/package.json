@@ -16,12 +16,12 @@
     "db:check": "drizzle-kit check"
   },
   "dependencies": {
-    "@ai-sdk/react": "^3.0.170",
+    "@ai-sdk/react": "^4.0.129",
+    "@ai-sdk/workflow": "^2.0.57",
     "@next/env": "^15.5.4",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
-    "@workflow/ai": "4.1.2",
-    "ai": "^6.0.168",
+    "ai": "^7.0.126",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.31.2",
@@ -33,7 +33,7 @@
     "react-dom": "19.2.3",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "workflow": "4.3.1",
+    "workflow": "5.0.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {

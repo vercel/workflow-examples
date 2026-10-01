@@ -13,7 +13,7 @@ plugin({
         filename: args.path,
         jsc: {
           experimental: {
-            plugins: [[require.resolve('@workflow/swc-plugin'), { mode: 'client' }]],
+            plugins: [[require.resolve('@workflow/swc-plugin'), { mode: 'step' }]],
           },
         },
       });

@@ -1,7 +1,6 @@
 import { start } from 'workflow/api';
-import flow from './.well-known/workflow/v1/flow.js';
-import step from './.well-known/workflow/v1/step.js';
-import * as webhook from './.well-known/workflow/v1/webhook.js';
+import * as flow from './.well-known/workflow/v1/flow.mjs';
+import * as webhook from './.well-known/workflow/v1/webhook.mjs';
 import { handleUserSignup } from './workflows/user-signup.js';
 
 const server = Bun.serve({
@@ -9,10 +8,6 @@ const server = Bun.serve({
   routes: {
     '/.well-known/workflow/v1/flow': {
       POST: req => flow.POST(req),
-    },
-
-    '/.well-known/workflow/v1/step': {
-      POST: req => step.POST(req),
     },
 
     "/.well-known/workflow/v1/webhook/:token": webhook, // webhook exports handlers for GET, POST, DELETE, etc.

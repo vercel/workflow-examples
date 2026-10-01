@@ -11,10 +11,10 @@ import { nitro } from 'nitro/vite'
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
+    workflow(),
     devtools(),
     nitro({ rollupConfig: { external: [/^@sentry\//] } }),
     tailwindcss(),
-    workflow(),
     tanstackStart(),
     viteReact(),
   ],

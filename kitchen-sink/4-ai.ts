@@ -1,28 +1,26 @@
-import {
-	convertToModelMessages,
-	type UIMessage,
-	type UIMessageChunk,
-} from "ai";
-import { FatalError } from "workflow";
+import { type ModelCallStreamPart, WorkflowAgent } from "@ai-sdk/workflow";
+import { convertToModelMessages, tool, type UIMessage } from "ai";
+import { FatalError, getWritable } from "workflow";
 import z from "zod/v4";
-import { DurableAgent } from "@workflow/ai/agent";
-import { getWritable } from "workflow";
 
 export async function agentWorkflow(messages: UIMessage[]) {
 	"use workflow";
 
 	console.log("Starting workflow");
 
-	const writable = getWritable<UIMessageChunk>();
+	// WorkflowAgent writes raw model-call chunks. To serve them to a chat UI,
+	// pipe `run.readable` through `createModelCallToUIChunkTransform()` from
+	// `@ai-sdk/workflow` in your API route.
+	const writable = getWritable<ModelCallStreamPart>();
 
-	const agent = new DurableAgent({
+	const agent = new WorkflowAgent({
 		model: "anthropic/claude-4-opus-20250514",
 		tools: {
-			getWeatherInformation: {
+			getWeatherInformation: tool({
 				description: "show the weather in a given city to the user",
 				inputSchema: z.object({ city: z.string() }),
 				execute: getWeatherInformation,
-			},
+			}),
 		},
 	});
 

@@ -74,7 +74,7 @@ The main workflow (`generate-birthday-card.ts`) orchestrates both steps sequenti
 
 - ⚡ **Framework**: Next.js 15 with App Router and React 19
 - 🔄 **Workflow**: Vercel Workflow (alpha)
-- 🤖 **AI**: Google Gemini 2.5 Flash Image & GPT-5-nano via AI Gateway
+- 🤖 **AI**: Google Gemini 2.5 Flash Image & Gemini 3.1 Flash Lite via AI Gateway
 - 🎨 **UI**: shadcn/ui + Tailwind CSS 4
 - 🔒 **Type Safety**: TypeScript + Zod
 - 📝 **Forms**: React Hook Form

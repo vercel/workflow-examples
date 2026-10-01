@@ -25,3 +25,4 @@ vite.config.ts.timestamp-*
 # Workflow
 
 .workflow-data
+/.swc

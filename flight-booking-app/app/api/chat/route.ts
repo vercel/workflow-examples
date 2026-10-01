@@ -1,6 +1,7 @@
 import { createUIMessageStreamResponse, type UIMessage } from 'ai';
 import { start } from 'workflow/api';
 import { chat } from '@/workflows/chat';
+import { type ChatStreamPart, createChatUIChunkTransform } from '@/lib/chat-stream';
 
 /**
  * Uncomment the following line to simulate a long running
@@ -21,7 +22,9 @@ export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
 
   const run = await start(chat, [messages, requestReceivedAt]);
-  const workflowStream = run.readable;
+  const workflowStream = run
+    .getReadable<ChatStreamPart>()
+    .pipeThrough(createChatUIChunkTransform());
 
   return createUIMessageStreamResponse({
     stream: workflowStream,

@@ -1,3 +1,7 @@
+import {
+	createModelCallToUIChunkTransform,
+	type ModelCallStreamPart,
+} from "@ai-sdk/workflow";
 import { createUIMessageStreamResponse, type UIMessage } from "ai";
 import { start } from "workflow/api";
 import { chat } from "@/workflows/chat";
@@ -10,7 +14,9 @@ export async function POST(req: Request) {
 
 	const workflowHandle = await start(chat, [messages]);
 	const runId = workflowHandle.runId;
-	const stream = workflowHandle.readable;
+	const stream = workflowHandle
+		.getReadable<ModelCallStreamPart>()
+		.pipeThrough(createModelCallToUIChunkTransform());
 
 	return createUIMessageStreamResponse({
 		stream,

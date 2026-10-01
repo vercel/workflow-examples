@@ -69,7 +69,7 @@ For non-Vercel deployments, you can configure a PostgreSQL World to handle workf
 3. **Create the database schema:**
 
    ```bash
-   pnpm exec workflow-postgres-setup
+   pnpm dlx --package @workflow/world-postgres bootstrap
    ```
 
 4. **Start the PostgreSQL World:**
@@ -79,12 +79,10 @@ For non-Vercel deployments, you can configure a PostgreSQL World to handle workf
   ```ts
   export async function register() {
     if (process.env.NEXT_RUNTIME !== "edge") {
-      console.log("Starting workflow workers...");
-      import("workflow/runtime").then(async ({ getWorld }) => {
-        console.log("Starting Postgres World...");
-        const world = await getWorld();
-        await world.start?.();
-      });
+      console.log("Starting Postgres World...");
+      const { getWorld } = await import("workflow/runtime");
+      const world = await getWorld();
+      await world.start?.();
       console.log("Workflow workers started!");
     }
   }

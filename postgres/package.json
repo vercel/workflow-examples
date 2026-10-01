@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "migrate": "workflow-postgres-setup"
+    "migrate": "bootstrap"
   },
   "dependencies": {
     "@workflow/world-postgres": "5.0.0",

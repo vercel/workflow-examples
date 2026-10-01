@@ -12,7 +12,7 @@ export const generateImage = async (prompt: string) => {
   });
 
   const { files } = await generateText({
-    model: 'google/gemini-2.5-flash-image-preview',
+    model: 'google/gemini-2.5-flash-image',
     prompt: `Generate a birthday card image based on this description: ${prompt}`,
   });
 

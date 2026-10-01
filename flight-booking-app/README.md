@@ -69,7 +69,7 @@ For non-Vercel deployments, you can configure a PostgreSQL World to handle workf
 3. **Create the database schema:**
 
    ```bash
-   pnpm exec workflow-postgres-setup
+   pnpm exec bootstrap
    ```
 
 4. **Start the PostgreSQL World:**

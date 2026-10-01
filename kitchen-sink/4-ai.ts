@@ -16,7 +16,7 @@ export async function agentWorkflow(messages: UIMessage[]) {
 	const writable = getWritable<UIMessageChunk>();
 
 	const agent = new DurableAgent({
-		model: "anthropic/claude-4-opus-20250514",
+		model: "anthropic/claude-opus-4.5",
 		tools: {
 			getWeatherInformation: {
 				description: "show the weather in a given city to the user",

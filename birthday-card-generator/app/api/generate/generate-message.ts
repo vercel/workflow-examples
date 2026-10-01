@@ -12,7 +12,7 @@ export const generateMessage = async (prompt: string) => {
   });
 
   const { text } = await generateText({
-    model: 'google/gemini-3.1-flash-lite-preview',
+    model: 'google/gemini-3.1-flash-lite',
     prompt: `Create a heartfelt birthday message for a birthday card with this theme: ${prompt}
 
 Return ONLY the final birthday message text that will appear on the card. Do not include labels like "Short variant" or "Longer variant". Do not include multiple options or sign-off variations. Just return one complete, ready-to-use birthday message.`,

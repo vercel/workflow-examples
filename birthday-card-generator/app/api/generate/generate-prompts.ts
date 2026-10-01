@@ -13,7 +13,7 @@ export const generatePrompts = async (userPrompt: string) => {
   });
 
   const result = await generateObject({
-    model: 'google/gemini-3.1-flash-lite-preview',
+    model: 'google/gemini-3.1-flash-lite',
     schema: z.object({
       textPrompt: z
         .string()

@@ -1,0 +1,3401 @@
+/* vbg-bundle:start */
+/*
+ * Composable Vercel report primitives derived from Geist color, type, and
+ * spacing semantics. All selectors and custom properties are namespaced.
+ * GeistCN source snapshot: 4f5d9c0da9ad400918e15083c83626572f19fd9b
+ * GeistCN src/styles/tailwind.css SHA-256:
+ * 118f810739af4ba8508a3a5a155f684b09dae795d08a9c12d78958a91d2ad749
+ * GeistCN src/styles/components/design-system.css SHA-256:
+ * a78c1328cc1ad27bc3832f2568f7cef35cfa61271ae636d0e6889ee2c0eeecb8
+ *
+ * Public reports load Geist from the HTML head. The Vercel identity primitives
+ * below use the stable public wordmark and logo URLs as masks so currentColor
+ * follows the report theme. The font stacks retain system fallbacks.
+ */
+
+:where(.vbg-report) {
+  color-scheme: light;
+  --vbg-font-sans: var(--font-geist-sans, var(--font-sans, "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif));
+  --vbg-font-mono: var(--font-geist-mono, var(--font-mono, "Geist Mono", "SFMono-Regular", Consolas, monospace));
+  --vbg-background-100: light-dark(oklch(1 0 0), oklch(0 0 0));
+  --vbg-background-200: light-dark(oklch(0.984 0 0), oklch(0.027 0 0));
+  --vbg-gray-100: light-dark(oklch(0.961 0 0), oklch(0.218 0 0));
+  --vbg-gray-200: light-dark(oklch(0.94 0 0), oklch(0.239 0 0));
+  --vbg-gray-300: light-dark(oklch(0.925 0 0), oklch(0.281 0 0));
+  --vbg-gray-400: light-dark(oklch(0.937 0 0), oklch(0.301 0 0));
+  --vbg-gray-500: light-dark(oklch(0.836 0 0), oklch(0.39 0 0));
+  --vbg-gray-600: light-dark(oklch(0.732 0 0), oklch(0.623 0 0));
+  --vbg-gray-700: light-dark(oklch(0.65 0 0), oklch(0.65 0 0));
+  --vbg-gray-800: light-dark(oklch(0.59 0 0), oklch(0.59 0 0));
+  --vbg-gray-900: light-dark(oklch(0.42 0 0), oklch(0.706 0 0));
+  --vbg-gray-1000: light-dark(oklch(0.205 0 0), oklch(0.946 0 0));
+  --vbg-gray-alpha-100: light-dark(oklch(0 0 0 / 0.05), oklch(1 0 0 / 0.07));
+  --vbg-gray-alpha-200: light-dark(oklch(0 0 0 / 0.081), oklch(1 0 0 / 0.09));
+  --vbg-gray-alpha-300: light-dark(oklch(0 0 0 / 0.1), oklch(1 0 0 / 0.13));
+  --vbg-gray-alpha-400: light-dark(oklch(0 0 0 / 0.08), oklch(1 0 0 / 0.14));
+  --vbg-gray-alpha-500: light-dark(oklch(0 0 0 / 0.21), oklch(1 0 0 / 0.24));
+  --vbg-gray-alpha-600: light-dark(oklch(0 0 0 / 0.24), oklch(1 0 0 / 0.51));
+  --vbg-gray-alpha-700: light-dark(oklch(0 0 0 / 0.44), oklch(1 0 0 / 0.54));
+  --vbg-gray-alpha-800: light-dark(oklch(0 0 0 / 0.51), oklch(1 0 0 / 0.47));
+  --vbg-gray-alpha-900: light-dark(oklch(0 0 0 / 0.7), oklch(1 0 0 / 0.61));
+  --vbg-gray-alpha-1000: light-dark(oklch(0 0 0 / 0.91), oklch(1 0 0 / 0.92));
+  --vbg-blue-100: light-dark(oklch(97.32% 0.0141 251.56), oklch(22.17% 0.069 259.89));
+  --vbg-blue-400: light-dark(oklch(91.58% 0.0473 245.116), oklch(34.1% 0.121 254.74));
+  --vbg-blue-700: light-dark(oklch(57.61% 0.2508 258.23), oklch(57.61% 0.2321 258.23));
+  --vbg-blue-900: light-dark(oklch(53.18% 0.2399 256.99), oklch(71.7% 0.1648 250.794));
+  --vbg-blue-1000: light-dark(oklch(26.67% 0.1099 254.34), oklch(96.75% 0.0179 242.423));
+  --vbg-green-100: light-dark(oklch(97.59% 0.0289 145.42), oklch(23.09% 0.0716 149.68));
+  --vbg-green-400: light-dark(oklch(91.49% 0.0976 146.24), oklch(34.39% 0.1039 147.78));
+  --vbg-green-700: light-dark(oklch(64.58% 0.1746 147.27), oklch(64.58% 0.199 147.27));
+  --vbg-green-900: light-dark(oklch(51.75% 0.1453 147.65), oklch(73.1% 0.2158 148.29));
+  --vbg-green-1000: light-dark(oklch(29.15% 0.1197 147.38), oklch(96.76% 0.056 154.18));
+  --vbg-amber-100: light-dark(oklch(97.48% 0.0331 85.79), oklch(22.46% 0.0538 76.04));
+  --vbg-amber-400: light-dark(oklch(91.02% 0.1322 88.25), oklch(35.53% 0.0903 66.297));
+  --vbg-amber-700: light-dark(oklch(81.87% 0.1969 76.46), oklch(81.87% 0.1969 76.46));
+  --vbg-amber-900: light-dark(oklch(52.79% 0.1496 54.65), oklch(77.21% 0.1991 64.28));
+  --vbg-amber-1000: light-dark(oklch(30.83% 0.099 45.48), oklch(96.7% 0.0418 84.59));
+  --vbg-red-100: light-dark(oklch(96.5% 0.0223 13.09), oklch(22.1% 0.0657 15.11));
+  --vbg-red-400: light-dark(oklch(91.51% 0.0471 19.8), oklch(35.27% 0.1273 21.23));
+  --vbg-red-700: light-dark(oklch(62.56% 0.2524 23.03), oklch(62.56% 0.2234 23.03));
+  --vbg-red-900: light-dark(oklch(54.99% 0.232 25.29), oklch(69.96% 0.2136 22.03));
+  --vbg-red-1000: light-dark(oklch(24.8% 0.1041 18.86), oklch(95.6% 0.0293 6.61));
+  /* Category series are monochrome by default. Reserve chromatic tokens for meaning. */
+  --vbg-chart-1: var(--vbg-gray-1000);
+  --vbg-chart-2: var(--vbg-gray-900);
+  --vbg-chart-3: var(--vbg-gray-800);
+  --vbg-chart-4: var(--vbg-gray-1000);
+  --vbg-chart-5: var(--vbg-gray-900);
+  --vbg-chart-6: var(--vbg-gray-800);
+  --vbg-surface-primary: var(--vbg-background-100);
+  --vbg-surface-secondary: var(--vbg-background-200);
+  /* Contrast fields stay dark in both themes instead of inverting with text tokens. */
+  --vbg-surface-contrast: oklch(0.205 0 0);
+  --vbg-text-primary: var(--vbg-gray-1000);
+  --vbg-text-secondary: var(--vbg-gray-900);
+  --vbg-text-on-contrast: oklch(0.946 0 0);
+  --vbg-text-on-contrast-secondary: oklch(0.72 0 0);
+  --vbg-border-subtle: var(--vbg-gray-alpha-300);
+  --vbg-border-default: var(--vbg-gray-alpha-400);
+  --vbg-border-strong: var(--vbg-gray-alpha-700);
+  --vbg-border-on-contrast: oklch(1 0 0 / 0.24);
+  --vbg-color-info: var(--vbg-blue-700);
+  --vbg-color-success: var(--vbg-green-900);
+  --vbg-color-warning: var(--vbg-amber-900);
+  --vbg-color-error: var(--vbg-red-700);
+  --vbg-focus: light-dark(var(--vbg-blue-700), var(--vbg-blue-900));
+  --vbg-space-1: 4px;
+  --vbg-space-2: 8px;
+  --vbg-space-3: 12px;
+  --vbg-space-4: 16px;
+  --vbg-space-5: 20px;
+  --vbg-space-6: 24px;
+  --vbg-space-8: 32px;
+  --vbg-space-10: 40px;
+  --vbg-space-12: 48px;
+  --vbg-space-16: 64px;
+  --vbg-radius-small: 6px;
+  --vbg-radius: 8px;
+  --vbg-type-display: 3rem;
+  --vbg-type-page-title: 2.5rem;
+  --vbg-type-title: 2rem;
+  --vbg-type-section: 1.5rem;
+  --vbg-type-subsection: 1.25rem;
+  --vbg-type-lede: 1.125rem;
+  --vbg-type-body: 1rem;
+  --vbg-type-compact: 0.875rem;
+  --vbg-type-label: 0.8125rem;
+  --vbg-type-metadata: 0.8125rem;
+  --vbg-weight-regular: 400;
+  --vbg-weight-heading: 450;
+  --vbg-weight-medium: 500;
+  --vbg-weight-semibold: 600;
+  --vbg-leading-body: 24px;
+  --vbg-leading-compact: 20px;
+  --vbg-leading-caption: 18px;
+  --vbg-leading-display: 56px;
+  --vbg-leading-page-title: 48px;
+  --vbg-leading-title: 40px;
+  --vbg-leading-section: 32px;
+  --vbg-leading-subsection: 26px;
+  --vbg-leading-lede: 28px;
+  --vbg-flow-tight: var(--vbg-space-2);
+  --vbg-flow-copy: var(--vbg-space-4);
+  --vbg-flow-group: var(--vbg-space-8);
+  --vbg-flow-section: var(--vbg-space-16);
+  --vbg-reading-width: 68ch;
+  --vbg-display-measure: 20ch;
+  --vbg-title-measure: 24ch;
+  --vbg-compact-title-measure: 30ch;
+  --vbg-content-width: 1200px;
+  --vbg-chart-min-width: 640px;
+  --vbg-control-height: 36px;
+  --vbg-control-height-touch: 44px;
+  box-sizing: border-box;
+  margin: 0;
+  min-height: 100%;
+  min-height: 100dvh;
+  background: var(--vbg-background-100);
+  color: var(--vbg-gray-1000);
+  font-family: var(--vbg-font-sans);
+  font-size: 16px;
+  font-weight: var(--vbg-weight-regular);
+  line-height: var(--vbg-leading-body);
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-feature-settings: "rlig" 1, "calt" 0, "ss11" 1;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@supports selector(body:has(> .vbg-report)) {
+  body:has(> .vbg-report) {
+    margin: 0;
+  }
+}
+
+:where(.vbg-report *, .vbg-report *::before, .vbg-report *::after) {
+  box-sizing: inherit;
+}
+
+/* Published display primitives must never override the HTML hidden state. */
+.vbg-report[hidden],
+:where(.vbg-report) [hidden] {
+  display: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(
+    .vbg-report[data-theme="auto"]:not(.light-theme):not(.dark-theme),
+    .vbg-report:not([data-theme]):not(.light-theme):not(.dark-theme)
+  ) {
+    color-scheme: dark;
+  }
+}
+
+/* Host theme classes override OS preference without requiring a theme package. */
+:where(.light .vbg-report, .vbg-report.light) {
+  color-scheme: light;
+}
+
+:where(.dark .vbg-report, .vbg-report.dark) {
+  color-scheme: dark;
+}
+
+/* Explicit VBG themes override both host and OS themes. If both classes are present, dark wins. */
+:where(
+  .vbg-report.light-theme,
+  .vbg-report[data-theme="light"]:not(.light-theme):not(.dark-theme)
+) {
+  color-scheme: light;
+}
+
+:where(
+  .vbg-report.dark-theme,
+  .vbg-report[data-theme="dark"]:not(.light-theme):not(.dark-theme)
+) {
+  color-scheme: dark;
+}
+
+:where(.vbg-report) :where(h1, h2, h3, h4, p, ul, ol, dl, figure, blockquote, pre) {
+  margin-block-start: 0;
+}
+
+:where(.vbg-report) :where(h1, h2, h3, h4) {
+  color: var(--vbg-gray-1000);
+  font-weight: var(--vbg-weight-heading);
+  text-wrap: balance;
+}
+
+:where(.vbg-report) .vbg-display,
+:where(.vbg-report) .vbg-title,
+:where(.vbg-report) .vbg-heading-24,
+:where(.vbg-report) .vbg-heading-20,
+:where(.vbg-report) .vbg-heading-16 {
+  color: var(--vbg-gray-1000);
+  font-weight: var(--vbg-weight-heading);
+  text-wrap: balance;
+}
+
+:where(.vbg-report) :where(h1, h2, h3, h4, .vbg-display, .vbg-title, .vbg-heading-24, .vbg-heading-20, .vbg-heading-16) strong {
+  color: inherit;
+  font-weight: inherit;
+}
+
+:where(.vbg-report) :where(p, li, dd, blockquote, figcaption, .vbg-summary, .vbg-lede) strong {
+  color: var(--vbg-gray-1000);
+  font-weight: var(--vbg-weight-medium);
+}
+
+:where(.vbg-report) :where([id]) {
+  scroll-margin-top: var(--vbg-space-8);
+}
+
+:where(.vbg-report) h1 {
+  max-width: var(--vbg-title-measure);
+  margin-block-end: var(--vbg-space-4);
+  font-size: var(--vbg-type-page-title);
+  line-height: var(--vbg-leading-page-title);
+  letter-spacing: -0.06em;
+}
+
+:where(.vbg-report) .vbg-title {
+  max-width: var(--vbg-title-measure);
+  margin-block-end: var(--vbg-space-4);
+  font-size: var(--vbg-type-page-title);
+  line-height: var(--vbg-leading-page-title);
+  letter-spacing: -0.06em;
+}
+
+:where(.vbg-report) .vbg-display {
+  max-width: var(--vbg-display-measure);
+  font-size: var(--vbg-type-display);
+  line-height: var(--vbg-leading-display);
+  letter-spacing: -0.06em;
+}
+
+:where(.vbg-report) h2,
+:where(.vbg-report) .vbg-heading-24 {
+  margin-block-end: var(--vbg-space-4);
+  font-size: var(--vbg-type-section);
+  line-height: var(--vbg-leading-section);
+  letter-spacing: -0.04em;
+}
+
+:where(.vbg-report) h3,
+:where(.vbg-report) .vbg-heading-20 {
+  margin-block-end: var(--vbg-space-3);
+  font-size: var(--vbg-type-subsection);
+  line-height: var(--vbg-leading-subsection);
+  letter-spacing: -0.02em;
+}
+
+:where(.vbg-report) h4,
+:where(.vbg-report) .vbg-heading-16 {
+  margin-block-end: var(--vbg-space-2);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+:where(.vbg-report) p {
+  margin-block-end: var(--vbg-space-4);
+  line-height: var(--vbg-leading-body);
+  text-wrap: pretty;
+}
+
+:where(.vbg-report) :where(ul, ol) {
+  margin-block-end: var(--vbg-space-4);
+  padding-inline-start: 1.25rem;
+}
+
+:where(.vbg-report) li {
+  line-height: var(--vbg-leading-body);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow, .vbg-list) li + li {
+  margin-block-start: var(--vbg-flow-tight);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow, .vbg-list) li > :where(p, ul, ol) {
+  margin-block-end: 0;
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow, .vbg-list) li > p + p {
+  margin-block-start: var(--vbg-flow-tight);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow, .vbg-list) li > :where(ul, ol) {
+  margin-block-start: var(--vbg-flow-tight);
+}
+
+:where(.vbg-report) .vbg-list-compact li + li {
+  margin-block-start: var(--vbg-space-1);
+}
+
+:where(.vbg-report) dt {
+  font-weight: var(--vbg-weight-medium);
+  line-height: var(--vbg-leading-body);
+}
+
+:where(.vbg-report) dd {
+  margin-inline-start: 0;
+  color: var(--vbg-text-secondary);
+  line-height: var(--vbg-leading-body);
+}
+
+:where(.vbg-report) dt:not(:first-child) {
+  margin-block-start: var(--vbg-flow-copy);
+}
+
+:where(.vbg-report) dt + dd {
+  margin-block-start: var(--vbg-space-1);
+}
+
+:where(.vbg-report) blockquote {
+  margin-inline: 0;
+  margin-block-end: var(--vbg-flow-copy);
+  padding-block: var(--vbg-space-2);
+  color: var(--vbg-text-secondary);
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+:where(.vbg-report) :where(p, li, dd, figcaption, .vbg-label, .vbg-meta) {
+  overflow-wrap: anywhere;
+}
+
+:where(.vbg-report) :where(td, th) {
+  overflow-wrap: break-word;
+}
+
+:where(.vbg-report) :where(a) {
+  color: inherit;
+  text-decoration-color: var(--vbg-gray-600);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+:where(.vbg-report) a:hover {
+  text-decoration-color: currentColor;
+}
+
+:where(.vbg-report) .vbg-link {
+  color: var(--vbg-text-primary);
+  font-weight: var(--vbg-weight-medium);
+  text-decoration: underline;
+  text-decoration-color: var(--vbg-gray-600);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+:where(.vbg-report) .vbg-link:hover {
+  text-decoration-color: currentColor;
+}
+
+:where(.vbg-report) .vbg-link[data-variant="highlight"] {
+  color: var(--vbg-blue-900);
+}
+
+:where(.vbg-report) .vbg-link[data-variant="secondary"] {
+  color: var(--vbg-text-secondary);
+  font-weight: var(--vbg-weight-regular);
+}
+
+:where(.vbg-report) .vbg-link[data-variant="secondary"]:hover {
+  color: var(--vbg-text-primary);
+}
+
+:where(.vbg-report) :where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--vbg-focus);
+  outline-offset: 3px;
+}
+
+:where(.vbg-report) :where(code, kbd, samp, pre) {
+  font-family: var(--vbg-font-mono);
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+:where(.vbg-report) :where(code, kbd) {
+  border: 1px solid var(--vbg-border-subtle);
+  border-radius: 4px;
+  background: var(--vbg-gray-100);
+  padding: 0.1em 0.3em;
+  font-size: 0.875em;
+}
+
+:where(.vbg-report) .vbg-formula {
+  display: block;
+  max-width: 100%;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+/* Formula semantics always remain wrap-safe, including additive authored classes. */
+.vbg-report :is(
+  .vbg-formula,
+  [data-vbg-formula],
+  [data-formula],
+  [class*="vbg-" i][class*="formula" i],
+  [class*="vbg-" i][class*="equation" i]
+) {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  white-space: normal !important;
+}
+
+:where(.vbg-report) pre {
+  overflow: auto;
+  border: 1px solid var(--vbg-border-subtle);
+  border-radius: var(--vbg-radius);
+  background: var(--vbg-background-200);
+  padding: var(--vbg-space-4);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+:where(.vbg-report) pre code {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+}
+
+:where(.vbg-report) :where(img, svg, video, canvas) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+:where(.vbg-report) figure {
+  margin-inline: 0;
+  margin-block-end: var(--vbg-space-8);
+}
+
+:where(.vbg-report) figcaption,
+:where(.vbg-report) .vbg-caption {
+  margin-block-start: var(--vbg-space-3);
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-compact);
+  line-height: var(--vbg-leading-compact);
+}
+
+:where(.vbg-report) .vbg-shell {
+  width: min(calc(100% - 48px), var(--vbg-content-width));
+  margin-inline: auto;
+  padding-block: clamp(40px, 7vw, 80px);
+  container-name: vbg-shell;
+  container-type: inline-size;
+}
+
+:where(.vbg-report) .vbg-header {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--vbg-space-6);
+  row-gap: 0;
+  padding-block-end: clamp(32px, 5vw, 56px);
+}
+
+:where(.vbg-report) .vbg-header > * {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin-block: 0;
+}
+
+:where(.vbg-report) .vbg-header > :where(h1, .vbg-title, .vbg-display) {
+  grid-column: 1 / span 8;
+}
+
+:where(.vbg-report) .vbg-header > :where(.vbg-summary, .vbg-lede) {
+  grid-column: 1 / span 7;
+}
+
+:where(.vbg-report) .vbg-header > * + * {
+  margin-block-start: var(--vbg-flow-copy);
+}
+
+:where(.vbg-report) .vbg-header > .vbg-context + :where(h1, .vbg-title, .vbg-display) {
+  margin-block-start: var(--vbg-space-3);
+}
+
+:where(.vbg-report) .vbg-masthead {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--vbg-space-3) var(--vbg-space-6);
+  align-items: first baseline;
+}
+
+/* Unknown masthead content stays readable instead of entering a narrow track. */
+:where(.vbg-report) .vbg-masthead > * {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+@supports selector(.vbg-masthead:has(> .vbg-identity)) {
+  :where(.vbg-report) .vbg-masthead:has(> .vbg-identity):has(> .vbg-document-meta) > .vbg-identity {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  :where(.vbg-report) .vbg-masthead:has(> .vbg-identity):has(> .vbg-document-meta) > .vbg-document-meta {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+:where(.vbg-report) .vbg-header > .vbg-masthead + :where(h1, .vbg-title, .vbg-display) {
+  margin-block-start: clamp(32px, 4vw, 48px);
+}
+
+:where(.vbg-report) .vbg-identity {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  gap: var(--vbg-space-2);
+  color: var(--vbg-text-primary);
+  font-size: var(--vbg-type-compact);
+  font-weight: var(--vbg-weight-medium);
+  line-height: var(--vbg-leading-compact);
+  white-space: nowrap;
+}
+
+:where(.vbg-report) .vbg-identity > :where(img, svg) {
+  width: auto;
+  max-width: 128px;
+  height: 18px;
+}
+
+/* Remote SVG documents do not inherit currentColor through <img>. Masks do. */
+:where(.vbg-report) .vbg-wordmark,
+:where(.vbg-report) .vbg-logo {
+  display: inline-block;
+  flex: none;
+  background: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+:where(.vbg-report) .vbg-wordmark {
+  width: 92px;
+  height: 18px;
+  -webkit-mask-image: url("https://py8fhxnkzwtsqdo9.public.blob.vercel-storage.com/p/vercel-wordmark.svg");
+  mask-image: url("https://py8fhxnkzwtsqdo9.public.blob.vercel-storage.com/p/vercel-wordmark.svg");
+}
+
+:where(.vbg-report) .vbg-logo {
+  width: 16px;
+  height: 14px;
+  -webkit-mask-image: url("https://py8fhxnkzwtsqdo9.public.blob.vercel-storage.com/p/vercel-logo.svg");
+  mask-image: url("https://py8fhxnkzwtsqdo9.public.blob.vercel-storage.com/p/vercel-logo.svg");
+}
+
+:where(.vbg-report) .vbg-document-meta {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: first baseline;
+  justify-content: flex-end;
+  gap: var(--vbg-space-1) var(--vbg-space-4);
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-label);
+  line-height: var(--vbg-leading-compact);
+}
+
+/* Semantic child elements keep the metadata role instead of body paragraph leading. */
+:where(.vbg-report) .vbg-document-meta > * {
+  margin-block: 0;
+  font-size: var(--vbg-type-label);
+  line-height: var(--vbg-leading-compact);
+}
+
+:where(.vbg-report) :where(
+  .vbg-masthead,
+  .vbg-identity,
+  .vbg-document-meta,
+  .vbg-recipient,
+  .vbg-state,
+  .vbg-date,
+  .vbg-confidentiality
+) > * {
+  margin-block: 0;
+}
+
+:where(.vbg-report) :where(.vbg-recipient, .vbg-state, .vbg-date, .vbg-confidentiality) {
+  overflow-wrap: anywhere;
+}
+
+:where(.vbg-report) :where(.vbg-state, .vbg-confidentiality) {
+  color: var(--vbg-text-primary);
+  font-weight: var(--vbg-weight-medium);
+}
+
+:where(.vbg-report) .vbg-state[data-status="verified"] {
+  color: var(--vbg-color-success);
+}
+
+:where(.vbg-report) .vbg-summary,
+:where(.vbg-report) .vbg-lede {
+  max-width: var(--vbg-reading-width);
+  color: var(--vbg-gray-900);
+  font-size: var(--vbg-type-lede);
+  line-height: var(--vbg-leading-lede);
+}
+
+/* Semantic wrappers keep their editorial leading when prose uses child elements. */
+:where(.vbg-report) :is(.vbg-summary, .vbg-lede) > :where(p, ul, ol, blockquote),
+:where(.vbg-report) :is(.vbg-summary, .vbg-lede) > :where(ul, ol) > li {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+:where(.vbg-report) .vbg-reading {
+  max-width: var(--vbg-reading-width);
+}
+
+/* Intrinsic content may scroll locally, but published layout primitives must not widen the page. */
+:where(.vbg-report) :where(
+  .vbg-flow,
+  .vbg-grid,
+  .vbg-split,
+  .vbg-calculator,
+  .vbg-calculator-layout,
+  .vbg-table-wrap,
+  .vbg-chart,
+  .vbg-chart-viewport
+) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+:where(.vbg-report) :where(
+  .vbg-flow,
+  .vbg-grid,
+  .vbg-split,
+  .vbg-calculator,
+  .vbg-calculator-layout
+) > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+/* Keep unwrapped narrative readable without narrowing tables, charts, or data regions. */
+:where(.vbg-report) .vbg-header > :where(p, ul, ol, dl, blockquote),
+:where(.vbg-report) .vbg-section > :where(h2, h3, h4, p, ul, ol, dl, blockquote),
+:where(.vbg-report) .vbg-flow > :where(p, ul, ol, dl, blockquote) {
+  max-width: var(--vbg-reading-width);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > * {
+  margin-block: 0;
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > * + * {
+  margin-block-start: var(--vbg-flow-copy);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > :where(h2):not(:first-child) {
+  margin-block-start: var(--vbg-flow-section);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > :where(h3):not(:first-child) {
+  margin-block-start: var(--vbg-space-8);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > :where(h4):not(:first-child) {
+  margin-block-start: var(--vbg-flow-group);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > h1 + :where(p, ul, ol, dl, blockquote),
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > h2 + :where(p, ul, ol, dl, blockquote) {
+  margin-block-start: var(--vbg-flow-copy);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > h3 + :where(p, ul, ol, dl, blockquote) {
+  margin-block-start: var(--vbg-space-3);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > h4 + :where(p, ul, ol, dl, blockquote) {
+  margin-block-start: var(--vbg-flow-tight);
+}
+
+:where(.vbg-report) :where(.vbg-reading, .vbg-flow) > :where(figure, pre, .vbg-table-wrap, .vbg-figure, .vbg-chart) {
+  margin-block: var(--vbg-flow-group) var(--vbg-space-8);
+}
+
+:where(.vbg-report) .vbg-stack {
+  display: grid;
+  gap: var(--vbg-flow-copy);
+}
+
+:where(.vbg-report) .vbg-stack[data-gap="tight"] { gap: var(--vbg-flow-tight); }
+:where(.vbg-report) .vbg-stack[data-gap="group"] { gap: var(--vbg-flow-group); }
+:where(.vbg-report) .vbg-stack[data-gap="section"] { gap: var(--vbg-flow-section); }
+
+:where(.vbg-report) .vbg-stack > * {
+  min-width: 0;
+  margin-block: 0;
+}
+
+:where(.vbg-report) :where(
+  .vbg-header,
+  .vbg-grid,
+  .vbg-metrics,
+  .vbg-comparison,
+  .vbg-metric,
+  .vbg-calculator,
+  .vbg-field
+) > :where(h1, h2, h3, h4, p, ul, ol, dl, figure, blockquote, pre) {
+  margin-block: 0;
+}
+
+:where(.vbg-report) :where(.vbg-section, .vbg-surface, .vbg-callout, .vbg-note, .vbg-decision, .vbg-recommendation, .vbg-next-step, .vbg-band, .vbg-footer) > :last-child {
+  margin-block-end: 0;
+}
+
+:where(.vbg-report) .vbg-section {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--vbg-space-6);
+  padding-block: 0;
+}
+
+:where(.vbg-report) .vbg-section > * {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin-block: 0;
+}
+
+:where(.vbg-report) .vbg-section > :where(h2, h3, h4, p, ul, ol, dl, blockquote, .vbg-reading) {
+  grid-column: 1 / span 7;
+}
+
+:where(.vbg-report) .vbg-section > * + * {
+  margin-block-start: var(--vbg-flow-copy);
+}
+
+/* Explicit section grids own peer and row rhythm through their grid gap. */
+:where(.vbg-report) .vbg-section.vbg-grid > * + * {
+  margin-block-start: 0;
+}
+
+/* A split section introduction aligns the first text baselines rather than
+ * merely aligning unlike heading and paragraph boxes at their top edges. */
+@supports selector(.vbg-section:has(> h2.vbg-span-6 + p.vbg-span-6)) {
+  :where(.vbg-report) .vbg-section.vbg-grid:has(> h2.vbg-span-6 + p.vbg-span-6)
+    > :where(h2.vbg-span-6, p.vbg-span-6) {
+    align-self: baseline;
+  }
+}
+
+/* Plain narrative lists need readable item rhythm even without a flow wrapper. */
+:where(.vbg-report) .vbg-section > :where(ul, ol):not(
+  .vbg-legend,
+  .vbg-list-compact,
+  [role="listbox"],
+  [role="menu"],
+  [role="menubar"],
+  [role="navigation"],
+  [role="tablist"]
+) > li + li {
+  margin-block-start: var(--vbg-flow-tight);
+}
+
+/* Preserve editorial heading rhythm even when a section omits .vbg-flow. */
+:where(.vbg-report) .vbg-section > h2:not(:first-child) {
+  margin-block-start: var(--vbg-flow-section);
+}
+
+:where(.vbg-report) .vbg-section > h3:not(:first-child) {
+  margin-block-start: var(--vbg-space-8);
+}
+
+:where(.vbg-report) .vbg-section > h4:not(:first-child) {
+  margin-block-start: var(--vbg-flow-group);
+}
+
+:where(.vbg-report) .vbg-section > h3 + :where(p, ul, ol, dl, blockquote) {
+  margin-block-start: var(--vbg-space-3);
+}
+
+:where(.vbg-report) .vbg-section > h4 + :where(p, ul, ol, dl, blockquote) {
+  margin-block-start: var(--vbg-flow-tight);
+}
+
+:where(.vbg-report) .vbg-section > :where(
+  figure,
+  pre,
+  .vbg-action,
+  .vbg-decision,
+  .vbg-recommendation,
+  .vbg-next-step,
+  .vbg-band,
+  .vbg-evidence,
+  .vbg-table-wrap,
+  .vbg-figure,
+  .vbg-chart,
+  .vbg-calculator,
+  .vbg-metrics,
+  .vbg-stat-strip,
+  .vbg-comparison,
+  .vbg-result-group
+) {
+  margin-block-start: var(--vbg-flow-group);
+}
+
+:where(.vbg-report) .vbg-section + .vbg-section {
+  margin-block-start: clamp(48px, 5vw, 64px);
+}
+
+/* The optional opening context is still part of the opening; the first chapter
+ * needs the same boundary as later sibling sections after that context reflows. */
+:where(.vbg-report) .vbg-opening + .vbg-section {
+  margin-block-start: clamp(48px, 5vw, 64px);
+}
+
+:where(.vbg-report) .vbg-chapter:not(.vbg-reading):not(.vbg-flow) > * {
+  margin-block: 0;
+}
+
+:where(.vbg-report) :where(main, .vbg-flow) > .vbg-chapter + .vbg-chapter {
+  margin-block-start: clamp(64px, 8vw, 96px);
+}
+
+:where(.vbg-report) .vbg-chapter > .vbg-section + .vbg-section {
+  margin-block-start: clamp(32px, 4vw, 48px);
+}
+
+:where(.vbg-report) .vbg-chapter.vbg-stack > .vbg-section + .vbg-section {
+  margin-block-start: 0;
+}
+
+/* A complete evidence component followed by narrative is a semantic boundary
+ * only when its direct parent does not already own rhythm or placement. Keep
+ * this after chapter resets so responsive peer stacking cannot erase the gap. */
+.vbg-report :is(
+  .vbg-section:not(.vbg-grid):not(.vbg-stack):not(.vbg-flow),
+  .vbg-chapter:not(.vbg-reading):not(.vbg-flow):not(.vbg-stack)
+) > :where(
+  figure,
+  pre,
+  .vbg-action,
+  .vbg-decision,
+  .vbg-recommendation,
+  .vbg-next-step,
+  .vbg-band,
+  .vbg-evidence,
+  .vbg-table-wrap,
+  .vbg-figure,
+  .vbg-chart,
+  .vbg-calculator,
+  .vbg-metrics,
+  .vbg-stat-strip,
+  .vbg-comparison,
+  .vbg-result-group
+) + :is(.vbg-reading, .vbg-flow, h2, h3) {
+  margin-block-start: var(--vbg-space-8);
+}
+
+:where(.vbg-report) .vbg-band {
+  display: grid;
+  gap: var(--vbg-space-4);
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+:where(.vbg-report) .vbg-band > * {
+  min-width: 0;
+  margin-block: 0;
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] {
+  --vbg-text-primary: var(--vbg-text-on-contrast);
+  --vbg-text-secondary: var(--vbg-text-on-contrast-secondary);
+  --vbg-border-subtle: var(--vbg-border-on-contrast);
+  --vbg-border-default: var(--vbg-border-on-contrast);
+  --vbg-border-strong: var(--vbg-text-on-contrast);
+  border-color: var(--vbg-border-on-contrast);
+  background: var(--vbg-surface-contrast);
+  color: var(--vbg-text-on-contrast);
+  padding: clamp(32px, 5vw, 56px) clamp(24px, 4vw, 48px);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] :where(
+  h1,
+  h2,
+  h3,
+  h4,
+  .vbg-display,
+  .vbg-title,
+  .vbg-heading-24,
+  .vbg-heading-20,
+  .vbg-heading-16,
+  .vbg-lede,
+  .vbg-summary,
+  .vbg-stat-value,
+  .vbg-metric-value,
+  .vbg-identity,
+  strong
+) {
+  color: var(--vbg-text-on-contrast);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] :where(
+  .vbg-context,
+  .vbg-label,
+  .vbg-meta,
+  .vbg-helper,
+  .vbg-metric-detail,
+  .vbg-lede,
+  .vbg-summary,
+  figcaption
+) {
+  color: var(--vbg-text-on-contrast-secondary);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] :where(.vbg-action, .vbg-decision, .vbg-stat-strip) {
+  border-color: var(--vbg-border-on-contrast);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] .vbg-stat-strip {
+  border-color: var(--vbg-border-on-contrast);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] :where(a, .vbg-link) {
+  color: var(--vbg-text-on-contrast);
+  text-decoration-color: var(--vbg-text-on-contrast-secondary);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] .vbg-link[data-variant] {
+  color: var(--vbg-text-on-contrast);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] :where(button, .vbg-button) {
+  border-color: var(--vbg-border-on-contrast);
+  background: transparent;
+  color: var(--vbg-text-on-contrast);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] :where(button, .vbg-button)[data-variant="primary"] {
+  border-color: var(--vbg-text-on-contrast);
+  background: var(--vbg-text-on-contrast);
+  color: var(--vbg-surface-contrast);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] :where(button, .vbg-button):hover {
+  border-color: var(--vbg-text-on-contrast-secondary);
+  background: var(--vbg-border-on-contrast);
+}
+
+:where(.vbg-report) .vbg-band[data-tone="contrast"] :where(button, .vbg-button)[data-variant="primary"]:hover {
+  border-color: var(--vbg-text-on-contrast);
+  background: var(--vbg-gray-200);
+  color: var(--vbg-gray-1000);
+}
+
+:where(.vbg-report) .vbg-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--vbg-space-6);
+}
+
+:where(.vbg-report) .vbg-grid > * {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+:where(.vbg-report) .vbg-split {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--vbg-space-6);
+  align-items: start;
+}
+
+:where(.vbg-report) .vbg-split[data-ratio="equal"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+:where(.vbg-report) .vbg-split[data-ratio="wide"] {
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+}
+
+:where(.vbg-report) .vbg-split > * {
+  min-width: 0;
+}
+
+/*
+ * A source-ordered opening composition: claim, decisive proof, then optional
+ * context. The split variant shares one desktop band; the stacked variant
+ * gives the proof the full report measure. Decoration remains opt-in elsewhere.
+ */
+:where(.vbg-report) .vbg-opening {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--vbg-space-6);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+:where(.vbg-report) .vbg-opening > * {
+  grid-column: 1 / -1;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  margin-block: 0;
+}
+
+:where(.vbg-report) .vbg-opening > .vbg-opening-claim {
+  grid-row: 1;
+}
+
+:where(.vbg-report) .vbg-opening > .vbg-opening-proof {
+  grid-row: 2;
+}
+
+:where(.vbg-report) .vbg-opening > .vbg-opening-context {
+  grid-row: 3;
+  max-width: var(--vbg-reading-width);
+}
+
+:where(.vbg-report) .vbg-opening[data-layout="split"] {
+  row-gap: var(--vbg-space-4);
+}
+
+:where(.vbg-report) .vbg-opening[data-layout="split"] > .vbg-opening-claim {
+  grid-column: 1 / span 7;
+  grid-row: 1;
+}
+
+:where(.vbg-report) .vbg-opening[data-layout="split"] > .vbg-opening-proof {
+  grid-column: 8 / -1;
+  grid-row: 1;
+}
+
+:where(.vbg-report) .vbg-opening[data-layout="split"] > .vbg-opening-context {
+  grid-column: 1 / span 7;
+  grid-row: 2;
+}
+
+:where(.vbg-report) .vbg-opening :where(
+  .vbg-opening-claim,
+  .vbg-opening-proof,
+  .vbg-opening-context
+) > * {
+  max-inline-size: 100%;
+}
+
+/* The opening grid owns space between its regions; child margins own only
+ * rhythm within a region. This prevents the last heading or paragraph margin
+ * from being added to the grid gap. */
+:where(.vbg-report) .vbg-opening :where(
+  .vbg-opening-claim,
+  .vbg-opening-proof,
+  .vbg-opening-context
+) > :last-child {
+  margin-block-end: 0;
+}
+
+:where(.vbg-report) .vbg-metrics,
+:where(.vbg-report) .vbg-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--vbg-space-8);
+}
+
+/*
+ * Opt comparable two-child peers into shared desktop heading and body rows.
+ * Subgrid is progressive enhancement; older engines reserve two heading lines.
+ * Peers with additional content and narrow layouts keep ordinary vbg-stack flow.
+ */
+@media (min-width: 801px) {
+  @supports not (grid-template-rows: subgrid) {
+    :where(.vbg-report) .vbg-comparison[data-align="rows"] > .vbg-stack:has(> :nth-child(2):last-child) > :first-child {
+      min-block-size: calc(2 * var(--vbg-leading-subsection));
+    }
+  }
+
+  @supports (grid-template-rows: subgrid) {
+    :where(.vbg-report) .vbg-comparison[data-align="rows"] {
+      row-gap: var(--vbg-flow-copy);
+    }
+
+    :where(.vbg-report) .vbg-comparison[data-align="rows"] > .vbg-stack:has(> :nth-child(2):last-child) {
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      row-gap: var(--vbg-flow-copy);
+    }
+  }
+}
+
+/*
+ * A flat, responsive length comparison for two to six non-negative values
+ * that share one unit, zero baseline, and domain maximum. Exact labels and
+ * values remain normal HTML; only the mark width is supplied inline.
+ */
+:where(.vbg-report) .vbg-bar-comparison {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+:where(.vbg-report) .vbg-bar-list {
+  display: grid;
+  gap: var(--vbg-space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.vbg-report) .vbg-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: baseline;
+  gap: var(--vbg-space-2) var(--vbg-space-4);
+  min-inline-size: 0;
+}
+
+:where(.vbg-report) :is(.vbg-bar-label, .vbg-bar-value) {
+  min-inline-size: 0;
+  color: var(--vbg-text-primary);
+  font-family: var(--vbg-font-sans);
+  font-size: var(--vbg-type-compact);
+  font-weight: var(--vbg-weight-medium);
+  line-height: var(--vbg-leading-compact);
+}
+
+:where(.vbg-report) .vbg-bar-value {
+  justify-self: end;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  text-align: end;
+}
+
+:where(.vbg-report) .vbg-bar-track {
+  display: block;
+  grid-column: 1 / -1;
+  inline-size: 100%;
+  block-size: 8px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--vbg-surface-secondary);
+}
+
+:where(.vbg-report) .vbg-bar-fill {
+  display: block;
+  inline-size: 0;
+  max-inline-size: 100%;
+  block-size: 100%;
+  background: var(--vbg-text-primary);
+}
+
+:where(.vbg-report) .vbg-bar[data-role="reference"] .vbg-bar-fill {
+  background: var(--vbg-text-secondary);
+}
+
+:where(.vbg-report) .vbg-bar-list:has(> .vbg-bar[data-role="primary"]) > .vbg-bar:not([data-role="primary"]) .vbg-bar-fill {
+  background: var(--vbg-text-secondary);
+}
+
+:where(.vbg-report) .vbg-bar[data-role="primary"] .vbg-bar-fill {
+  background: var(--vbg-text-primary);
+}
+
+:where(.vbg-report) .vbg-span-4 { grid-column: span 4; }
+:where(.vbg-report) .vbg-span-5 { grid-column: span 5; }
+:where(.vbg-report) .vbg-span-6 { grid-column: span 6; }
+:where(.vbg-report) .vbg-span-7 { grid-column: span 7; }
+:where(.vbg-report) .vbg-span-8 { grid-column: span 8; }
+:where(.vbg-report) .vbg-span-12 { grid-column: 1 / -1; }
+
+/* Explicit full-span table ownership must survive page-owned grid placement. */
+:where(.vbg-report) .vbg-table-wrap.vbg-span-12 {
+  grid-column: 1 / -1 !important;
+}
+
+:where(.vbg-report) .vbg-context,
+:where(.vbg-report) .vbg-label {
+  color: var(--vbg-text-secondary);
+  font-size: 0.8125rem;
+  font-weight: var(--vbg-weight-regular);
+  line-height: 1.2308;
+}
+
+:where(.vbg-report) :where(.vbg-context, .vbg-label) strong {
+  color: var(--vbg-gray-1000);
+  font-weight: var(--vbg-weight-medium);
+}
+
+:where(.vbg-report) .vbg-context {
+  line-height: var(--vbg-leading-caption);
+}
+
+:where(.vbg-report) .vbg-meta {
+  color: var(--vbg-text-secondary);
+  font-family: var(--vbg-font-sans);
+  font-size: var(--vbg-type-metadata);
+  font-weight: var(--vbg-weight-regular);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--vbg-leading-caption);
+}
+
+:where(.vbg-report) .vbg-surface {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+/* Containment is opt-in. Use it only when a region has a real boundary. */
+:where(.vbg-report) :where(
+  .vbg-surface[data-variant="contained"],
+  .vbg-surface[data-contained="true"]
+) {
+  border: 1px solid var(--vbg-border-subtle);
+  border-radius: var(--vbg-radius);
+  background: var(--vbg-surface-primary);
+  padding: var(--vbg-space-6);
+}
+
+:where(.vbg-report) .vbg-action {
+  display: grid;
+  gap: var(--vbg-space-3);
+  border: 0;
+  padding-block: 0;
+}
+
+:where(.vbg-report) .vbg-decision {
+  display: grid;
+  gap: var(--vbg-space-3);
+  border: 0;
+  padding-block: 0;
+}
+
+/* These roles may be applied directly to prose; inline children must stay inline. */
+:where(.vbg-report) :is(p, li, blockquote).vbg-decision,
+:where(.vbg-report) :is(p, li, blockquote).vbg-recommendation,
+:where(.vbg-report) :is(p, li, blockquote).vbg-action {
+  display: block;
+}
+
+:where(.vbg-report) .vbg-decision[data-priority="primary"] {
+  padding-block: 0;
+}
+
+:where(.vbg-report) .vbg-recommendation {
+  display: grid;
+  gap: var(--vbg-space-3);
+  border: 0;
+  padding-block: 0;
+}
+
+:where(.vbg-report) :where(.vbg-action, .vbg-decision, .vbg-recommendation) > :where(p, ul, ol) {
+  max-inline-size: var(--vbg-reading-width);
+}
+
+:where(.vbg-report) .vbg-next-step {
+  display: grid;
+  grid-template-columns: minmax(160px, 4fr) minmax(0, 8fr);
+  gap: var(--vbg-space-4) var(--vbg-space-6);
+  align-items: first baseline;
+  border: 0;
+  padding-block: 0;
+}
+
+@supports selector(.vbg-decision:has(> .vbg-table-wrap:last-child)) {
+  :where(.vbg-report) :where(.vbg-decision, .vbg-recommendation):has(> :where(.vbg-stat-strip, .vbg-table-wrap):last-child) {
+    border-bottom: 0;
+  }
+}
+
+/* Only an exact primary/supporting pair receives the split placement. */
+:where(.vbg-report) .vbg-next-step > * {
+  grid-column: 1 / -1;
+}
+
+@supports selector(.vbg-next-step:has(> :nth-child(2):last-child)) {
+  :where(.vbg-report) .vbg-next-step:has(> :nth-child(2):last-child) > :first-child {
+    grid-column: 1;
+  }
+
+  :where(.vbg-report) .vbg-next-step:has(> :nth-child(2):last-child) > :nth-child(2) {
+    grid-column: 2;
+  }
+}
+
+:where(.vbg-report) .vbg-action > *,
+:where(.vbg-report) .vbg-decision > *,
+:where(.vbg-report) .vbg-evidence > *,
+:where(.vbg-report) .vbg-recommendation > *,
+:where(.vbg-report) .vbg-next-step > * {
+  min-width: 0;
+  margin-block: 0;
+}
+
+:where(.vbg-report) .vbg-evidence {
+  display: grid;
+  gap: var(--vbg-space-4);
+  border: 0;
+  background: transparent;
+  padding-block: 0;
+}
+
+:where(.vbg-report) .vbg-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--vbg-space-8);
+  border: 0;
+  background: transparent;
+}
+
+/* A sole peer group has no sibling topology to preserve, so it owns its grid. */
+:where(.vbg-report) .vbg-grid > :is(
+  .vbg-stat-strip,
+  .vbg-metrics,
+  .vbg-result-group
+):only-child {
+  grid-column: 1 / -1 !important;
+}
+
+:where(.vbg-report) .vbg-stat {
+  display: grid;
+  align-content: start;
+  gap: var(--vbg-space-2);
+  min-width: 0;
+  background: transparent;
+  padding: 0;
+}
+
+:where(.vbg-report) .vbg-stat > * {
+  margin-block: 0;
+}
+
+:where(.vbg-report) :is(
+  .vbg-stat-label,
+  .vbg-stat > .vbg-label:first-child
+) {
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-compact);
+  font-weight: var(--vbg-weight-regular);
+  line-height: var(--vbg-leading-compact);
+}
+
+:where(.vbg-report) :is(
+  .vbg-stat-value,
+  .vbg-stat > :is(strong, output):nth-child(2)
+) {
+  color: var(--vbg-text-primary);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: var(--vbg-weight-heading);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  max-inline-size: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+:where(.vbg-report) .vbg-stat[data-priority="primary"] :is(
+  .vbg-stat-value,
+  :is(strong, output):nth-child(2)
+) {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+}
+
+:where(.vbg-report) .vbg-stat[data-priority="supporting"] :is(
+  .vbg-stat-value,
+  :is(strong, output):nth-child(2)
+) {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+}
+
+:where(.vbg-report) :is(
+  .vbg-stat-detail,
+  .vbg-stat > .vbg-meta
+) {
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-metadata);
+  font-weight: var(--vbg-weight-regular);
+  line-height: var(--vbg-leading-caption);
+}
+
+:where(.vbg-report) .vbg-metric {
+  display: grid;
+  align-content: start;
+  gap: var(--vbg-space-2);
+}
+
+:where(.vbg-report) :is(
+  .vbg-metric-label,
+  .vbg-metric > .vbg-label:first-child
+) {
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-compact);
+  font-weight: var(--vbg-weight-regular);
+  line-height: var(--vbg-leading-compact);
+}
+
+:where(.vbg-report) :is(
+  .vbg-metric-value,
+  .vbg-metric > :is(strong, output):nth-child(2)
+) {
+  color: var(--vbg-text-primary);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: var(--vbg-weight-heading);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  max-inline-size: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+:where(.vbg-report) :is(
+  .vbg-metric-detail,
+  .vbg-metric > .vbg-meta
+) {
+  color: var(--vbg-text-secondary);
+  font-size: 0.875rem;
+  line-height: var(--vbg-leading-compact);
+}
+
+:where(.vbg-report) .vbg-note {
+  border: 0;
+  padding-block: var(--vbg-space-3);
+}
+
+:where(.vbg-report) .vbg-callout {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+:where(.vbg-report) :where(
+  .vbg-callout[data-variant="contained"],
+  .vbg-callout[data-contained="true"],
+  .vbg-callout[data-tone="info"],
+  .vbg-callout[data-tone="success"],
+  .vbg-callout[data-tone="warning"],
+  .vbg-callout[data-tone="error"]
+) {
+  border: 0;
+  border-radius: var(--vbg-radius);
+  background: var(--vbg-background-200);
+  padding: var(--vbg-space-5);
+}
+
+:where(.vbg-report) .vbg-callout[data-tone="info"] { background: var(--vbg-blue-100); }
+:where(.vbg-report) .vbg-callout[data-tone="success"] { background: var(--vbg-green-100); }
+:where(.vbg-report) .vbg-callout[data-tone="warning"] { background: var(--vbg-amber-100); }
+:where(.vbg-report) .vbg-callout[data-tone="error"] { background: var(--vbg-red-100); }
+
+:where(.vbg-report) .vbg-note[data-tone="info"] { border-color: var(--vbg-color-info); }
+:where(.vbg-report) .vbg-note[data-tone="success"] { border-color: var(--vbg-color-success); }
+:where(.vbg-report) .vbg-note[data-tone="warning"] { border-color: var(--vbg-color-warning); }
+:where(.vbg-report) .vbg-note[data-tone="error"] { border-color: var(--vbg-color-error); }
+
+:where(.vbg-report) .vbg-table-wrap {
+  position: relative;
+  display: block;
+  align-self: stretch;
+  justify-self: stretch;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: auto;
+  border: 0;
+  container-type: inline-size;
+}
+
+/* Evidence tables always own the complete desktop evidence track. */
+:where(.vbg-report) :where(.vbg-section, .vbg-grid) > .vbg-table-wrap {
+  grid-column: 1 / -1;
+  inline-size: 100%;
+}
+
+:where(.vbg-report) .vbg-overflow-cue {
+  display: none;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--vbg-space-3);
+  inline-size: 100%;
+  max-inline-size: 100%;
+  margin-block: var(--vbg-space-2);
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-compact);
+  font-weight: var(--vbg-weight-regular);
+  line-height: var(--vbg-leading-compact);
+  overflow-wrap: break-word;
+}
+
+:where(.vbg-report) .vbg-overflow-cue::after {
+  content: "\2192";
+  flex: none;
+  color: var(--vbg-text-primary);
+  font-size: var(--vbg-type-body);
+  line-height: 1;
+}
+
+:where(.vbg-report[dir="rtl"]) .vbg-overflow-cue::after {
+  content: "\2190";
+}
+
+/* Full-width evidence is resilient when a shell-level reading wrapper is used by mistake. */
+@supports (width: 1cqi) {
+  :where(.vbg-report) .vbg-shell > :where(.vbg-reading, .vbg-section.vbg-reading) > :is(.vbg-table-wrap, .vbg-chart, .vbg-figure, .vbg-evidence, .vbg-comparison, .vbg-calculator, .vbg-result-group),
+  :where(.vbg-report) .vbg-shell > .vbg-section > .vbg-reading > :is(.vbg-table-wrap, .vbg-chart, .vbg-figure, .vbg-evidence, .vbg-comparison, .vbg-calculator, .vbg-result-group),
+  :where(.vbg-report) .vbg-shell > main > :where(.vbg-reading, .vbg-section.vbg-reading) > :is(.vbg-table-wrap, .vbg-chart, .vbg-figure, .vbg-evidence, .vbg-comparison, .vbg-calculator, .vbg-result-group),
+  :where(.vbg-report) .vbg-shell > main > .vbg-section > .vbg-reading > :is(.vbg-table-wrap, .vbg-chart, .vbg-figure, .vbg-evidence, .vbg-comparison, .vbg-calculator, .vbg-result-group),
+  :where(.vbg-report) .vbg-shell > .vbg-section > :where(.vbg-reading, .vbg-flow) > :is(.vbg-table-wrap, .vbg-chart, .vbg-figure, .vbg-evidence, .vbg-comparison, .vbg-calculator, .vbg-result-group),
+  :where(.vbg-report) .vbg-shell > main > .vbg-section > :where(.vbg-reading, .vbg-flow) > :is(.vbg-table-wrap, .vbg-chart, .vbg-figure, .vbg-evidence, .vbg-comparison, .vbg-calculator, .vbg-result-group) {
+    width: 100cqi;
+    max-width: 100cqi;
+  }
+}
+
+:where(.vbg-report) .vbg-figure,
+:where(.vbg-report) .vbg-chart {
+  min-width: 0;
+}
+
+:where(.vbg-report) .vbg-chart {
+  overflow: visible;
+}
+
+:where(.vbg-report) .vbg-chart-viewport > .vbg-chart-desktop {
+  display: block;
+}
+
+:where(.vbg-report) .vbg-chart-viewport > .vbg-chart-mobile {
+  display: none;
+}
+
+:where(.vbg-report) .vbg-chart-viewport {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+}
+
+:where(.vbg-report) .vbg-chart-header {
+  display: grid;
+  gap: var(--vbg-space-1);
+  margin-block-end: var(--vbg-space-4);
+}
+
+:where(.vbg-report) .vbg-chart-header > * {
+  max-width: var(--vbg-reading-width);
+  margin-block: 0;
+}
+
+:where(.vbg-report) .vbg-chart-title {
+  color: var(--vbg-text-primary);
+  font-size: var(--vbg-type-body);
+  font-weight: var(--vbg-weight-medium);
+  line-height: var(--vbg-leading-body);
+  letter-spacing: -0.02em;
+}
+
+:where(.vbg-report) .vbg-chart-description {
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-compact);
+  line-height: var(--vbg-leading-compact);
+}
+
+:where(.vbg-report) .vbg-chart-plot,
+:where(.vbg-report) .vbg-chart-viewport {
+  position: relative;
+  min-width: 0;
+}
+
+:where(.vbg-report) .vbg-chart :where(svg, .vbg-chart-plot) {
+  max-width: 100%;
+}
+
+/* A plot without a local viewport must reflow rather than widen the document. */
+:where(.vbg-report) .vbg-chart > :where(svg, .vbg-chart-plot) {
+  min-width: 0 !important;
+}
+
+:where(.vbg-report) .vbg-chart :where(svg) {
+  width: 100%;
+}
+
+:where(.vbg-report) .vbg-chart text {
+  fill: var(--vbg-text-secondary);
+  font-family: var(--vbg-font-sans);
+  font-size: 12px;
+}
+
+:where(.vbg-report) .vbg-chart text.vbg-mono {
+  font-family: var(--vbg-font-mono);
+}
+
+:where(.vbg-report) .vbg-chart :is(.vbg-chart-direct-label, .vbg-chart-annotation, .vbg-chart-value) {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+:where(.vbg-report) .vbg-chart :is(.vbg-chart-direct-label, .vbg-chart-value) {
+  fill: var(--vbg-text-primary);
+  color: var(--vbg-text-primary);
+  font-size: 14px;
+  font-weight: var(--vbg-weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.vbg-report) .vbg-chart .vbg-chart-annotation {
+  fill: var(--vbg-text-primary);
+  color: var(--vbg-text-primary);
+}
+
+:where(.vbg-report) .vbg-chart .vbg-chart-annotation-line {
+  fill: none;
+  stroke: var(--vbg-border-strong);
+  stroke-dasharray: 3 3;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+:where(.vbg-report) .vbg-chart-gridline {
+  fill: none;
+  stroke: var(--vbg-border-subtle);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+:where(.vbg-report) .vbg-chart-axis {
+  fill: none;
+  stroke: var(--vbg-border-default);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+:where(.vbg-report) .vbg-series-stroke {
+  fill: none;
+  stroke: var(--vbg-series-color, var(--vbg-chart-1));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+:where(.vbg-report) .vbg-series-fill {
+  fill: var(--vbg-series-color, var(--vbg-chart-1));
+}
+
+:where(.vbg-report) .vbg-data-point {
+  fill: var(--vbg-surface-primary);
+  stroke: var(--vbg-series-color, var(--vbg-chart-1));
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+:where(.vbg-report) table {
+  width: 100%;
+  border-collapse: collapse;
+  caption-side: top;
+  font-size: 0.875rem;
+  line-height: var(--vbg-leading-compact);
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.vbg-report) caption {
+  padding: 0 0 var(--vbg-space-3);
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-compact);
+  line-height: var(--vbg-leading-compact);
+  text-align: left;
+}
+
+/* Keep table context in the visible scrollport while columns move beneath it. */
+@supports (width: 1cqi) {
+  :where(.vbg-report) .vbg-table-wrap > table > caption {
+    position: sticky;
+    inset-inline-start: 0;
+    inline-size: 100cqi;
+    max-inline-size: 100cqi;
+    min-inline-size: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+}
+
+:where(.vbg-report) :where(th, td) {
+  border-bottom: 1px solid var(--vbg-border-subtle);
+  padding: 10px var(--vbg-space-3);
+  text-align: left;
+  vertical-align: baseline;
+}
+
+:where(.vbg-report) :where(th, td):first-child {
+  padding-inline-start: 0;
+}
+
+/* Preserve meaningful row labels. Prefer local table scrolling to character-by-character wrapping. */
+:where(.vbg-report) .vbg-table-wrap > table :is(th, td):first-child {
+  min-inline-size: 8ch;
+  overflow-wrap: break-word;
+  white-space: normal;
+  word-break: normal;
+}
+
+:where(.vbg-report) :where(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+:where(.vbg-report) thead th {
+  border-bottom-color: var(--vbg-border-default);
+  background: transparent;
+  color: var(--vbg-gray-900);
+  font-weight: var(--vbg-weight-medium);
+  hyphens: none;
+  overflow-wrap: normal;
+  vertical-align: bottom;
+  word-break: normal;
+}
+
+:where(.vbg-report) th > .vbg-meta {
+  display: block;
+  margin-block-start: var(--vbg-space-1);
+}
+
+:where(.vbg-report) .vbg-table-wrap > table thead th:first-child {
+  overflow-wrap: normal;
+}
+
+:where(.vbg-report) tbody th {
+  background: transparent;
+  color: var(--vbg-text-primary);
+  font-weight: var(--vbg-weight-medium);
+}
+
+/* Let long technical identifiers yield inside semantic ledger columns. */
+:where(.vbg-report) .vbg-table-wrap > table :is(th, td):not([data-align="numeric"]):not(.vbg-numeric) .vbg-mono:not(.vbg-numeric) {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+:where(.vbg-report) tbody tr:last-child > :where(th, td) { border-bottom-color: var(--vbg-border-default); }
+:where(.vbg-report) .vbg-numeric {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+:where(.vbg-report) :where(th, td)[data-align="numeric"],
+:where(.vbg-report) :where(th, td).vbg-numeric {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  text-align: right;
+}
+
+:where(.vbg-report) .vbg-table-wrap[data-density="compact"] :where(th, td) {
+  padding: 5px var(--vbg-space-2);
+}
+
+:where(.vbg-report) .vbg-table-wrap[data-variant="comparison"] tbody tr[data-recommended="true"],
+:where(.vbg-report) .vbg-table-wrap[data-variant="comparison"] :where(th, td)[data-recommended="true"],
+:where(.vbg-report) :where(tr, th, td).vbg-table-emphasis {
+  background: var(--vbg-background-200);
+}
+
+:where(.vbg-report) .vbg-table-wrap[data-variant="comparison"] tbody tr[data-recommended="true"] > :first-child {
+  font-weight: var(--vbg-weight-medium);
+}
+
+:where(.vbg-report) .vbg-table-wrap[data-variant="comparison"] :where(th, td)[data-recommended="true"] {
+  box-shadow: none;
+}
+
+:where(.vbg-report) .vbg-table-wrap[data-sticky-first="true"] :where(th, td):first-child {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  background: var(--vbg-surface-primary);
+  box-shadow: inset -1px 0 var(--vbg-border-subtle);
+}
+
+:where(.vbg-report) .vbg-table-wrap[data-sticky-first="true"] thead th:first-child {
+  z-index: 2;
+  background: var(--vbg-surface-secondary);
+}
+
+:where(.vbg-report) .vbg-table-wrap[data-sticky-first="true"][data-variant="comparison"] tbody tr[data-recommended="true"] > :first-child,
+:where(.vbg-report) .vbg-table-wrap[data-sticky-first="true"] :where(th, td):first-child.vbg-table-emphasis {
+  background: var(--vbg-background-200);
+  box-shadow: inset -1px 0 var(--vbg-border-subtle);
+}
+
+:where(.vbg-report) .vbg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vbg-space-3) var(--vbg-space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-compact);
+  line-height: var(--vbg-leading-compact);
+}
+
+:where(.vbg-report) .vbg-legend > li + li {
+  margin-block-start: 0;
+}
+
+:where(.vbg-report) .vbg-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-inline-end: var(--vbg-space-2);
+  border: 1px solid rgb(127 127 127 / 35%);
+  border-radius: 2px;
+  background: var(--vbg-series-color, var(--vbg-chart-1));
+}
+
+:where(.vbg-report) .vbg-series-1 { --vbg-series-color: var(--vbg-chart-1); }
+:where(.vbg-report) .vbg-series-2 { --vbg-series-color: var(--vbg-chart-2); }
+:where(.vbg-report) .vbg-series-3 { --vbg-series-color: var(--vbg-chart-3); }
+:where(.vbg-report) .vbg-series-4 { --vbg-series-color: var(--vbg-chart-4); }
+:where(.vbg-report) .vbg-series-5 { --vbg-series-color: var(--vbg-chart-5); }
+:where(.vbg-report) .vbg-series-6 { --vbg-series-color: var(--vbg-chart-6); }
+
+/* Stroke patterns keep monochrome series distinguishable without color alone. */
+:where(.vbg-report) .vbg-chart :where(
+  .vbg-series-stroke.vbg-series-2,
+  .vbg-series-2 .vbg-series-stroke
+) { stroke-dasharray: 8 4; }
+
+:where(.vbg-report) .vbg-chart :where(
+  .vbg-series-stroke.vbg-series-3,
+  .vbg-series-3 .vbg-series-stroke
+) { stroke-dasharray: 3 3; }
+
+:where(.vbg-report) .vbg-chart :where(
+  .vbg-series-stroke.vbg-series-4,
+  .vbg-series-4 .vbg-series-stroke
+) { stroke-dasharray: 10 3 2 3; }
+
+:where(.vbg-report) .vbg-chart :where(
+  .vbg-series-stroke.vbg-series-5,
+  .vbg-series-5 .vbg-series-stroke
+) { stroke-dasharray: 1 4; }
+
+:where(.vbg-report) .vbg-chart :where(
+  .vbg-series-stroke.vbg-series-6,
+  .vbg-series-6 .vbg-series-stroke
+) { stroke-dasharray: 12 4 3 4; }
+
+/* Narrative roles add emphasis without changing an assigned category color. */
+:where(.vbg-report) .vbg-chart :where(
+  .vbg-series-primary:not(.vbg-series-1, .vbg-series-2, .vbg-series-3, .vbg-series-4, .vbg-series-5, .vbg-series-6),
+  [data-role="primary"]:not(.vbg-series-1, .vbg-series-2, .vbg-series-3, .vbg-series-4, .vbg-series-5, .vbg-series-6)
+) {
+  --vbg-series-color: var(--vbg-chart-1);
+}
+
+:where(.vbg-report) .vbg-chart :where(
+  .vbg-series-stroke.vbg-series-primary,
+  .vbg-series-primary .vbg-series-stroke,
+  .vbg-series-stroke[data-role="primary"],
+  [data-role="primary"] .vbg-series-stroke
+) {
+  stroke-width: 2.5;
+}
+
+:where(.vbg-report) .vbg-chart :where(
+  .vbg-series-reference:not(.vbg-series-1, .vbg-series-2, .vbg-series-3, .vbg-series-4, .vbg-series-5, .vbg-series-6),
+  [data-role="reference"]:not(.vbg-series-1, .vbg-series-2, .vbg-series-3, .vbg-series-4, .vbg-series-5, .vbg-series-6)
+) {
+  --vbg-series-color: var(--vbg-gray-900);
+}
+
+:where(.vbg-report) .vbg-chart :where(
+  .vbg-series-stroke.vbg-series-reference,
+  .vbg-series-reference .vbg-series-stroke,
+  .vbg-series-stroke[data-role="reference"],
+  [data-role="reference"] .vbg-series-stroke
+) {
+  stroke-dasharray: 4 4;
+  stroke-width: 1.5;
+}
+
+:where(.vbg-report) :where(button, .vbg-button) {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  min-height: var(--vbg-control-height);
+  align-items: center;
+  justify-content: center;
+  gap: var(--vbg-space-2);
+  border: 1px solid var(--vbg-border-default);
+  border-radius: var(--vbg-radius-small);
+  background: var(--vbg-background-100);
+  color: var(--vbg-gray-1000);
+  padding: 7px var(--vbg-space-4);
+  font: var(--vbg-weight-medium) 0.875rem/var(--vbg-leading-compact) var(--vbg-font-sans);
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+:where(.vbg-report) :where(button, .vbg-button) > :where(img, svg) {
+  flex: none;
+}
+
+:where(.vbg-report) :where(button, .vbg-button):hover {
+  border-color: var(--vbg-border-default);
+  background: var(--vbg-gray-alpha-200);
+}
+
+:where(.vbg-report) :where(button, .vbg-button)[data-variant="primary"] {
+  border-color: var(--vbg-gray-1000);
+  background: var(--vbg-gray-1000);
+  color: var(--vbg-background-100);
+}
+
+:where(.vbg-report) :where(button, .vbg-button)[data-variant="primary"]:hover {
+  border-color: var(--vbg-gray-900);
+  background: var(--vbg-gray-900);
+}
+
+/*
+ * Chromium can retain the light branch of light-dark() on a descendant after
+ * an explicit runtime theme switch. Pin ordinary and secondary actions to the
+ * forced theme so reset controls never become light text on a light surface.
+ */
+.vbg-report.light-theme :is(button, .vbg-button):is(:not([data-variant]), [data-variant="secondary"]):not(.vbg-band[data-tone="contrast"] *),
+.vbg-report[data-theme="light"]:not(.light-theme):not(.dark-theme) :is(button, .vbg-button):is(:not([data-variant]), [data-variant="secondary"]):not(.vbg-band[data-tone="contrast"] *) {
+  border-color: oklch(0 0 0 / 0.08);
+  background: #ffffff;
+  color: #1f1f1f;
+  transition-property: border-color;
+}
+
+.vbg-report.dark-theme :is(button, .vbg-button):is(:not([data-variant]), [data-variant="secondary"]):not(.vbg-band[data-tone="contrast"] *),
+.vbg-report[data-theme="dark"]:not(.light-theme):not(.dark-theme) :is(button, .vbg-button):is(:not([data-variant]), [data-variant="secondary"]):not(.vbg-band[data-tone="contrast"] *) {
+  border-color: oklch(1 0 0 / 0.14);
+  background: #1f1f1f;
+  color: #ededed;
+  transition-property: border-color;
+}
+
+:where(.vbg-report) :where(button, .vbg-button)[data-variant="tertiary"] {
+  border-color: transparent;
+  background: transparent;
+}
+
+/*
+ * Chromium can retain the light branch of an inherited light-dark() token on
+ * a descendant when an explicit theme class is switched after first paint.
+ * Keep quiet actions legible through that runtime override path.
+ */
+.vbg-report.dark-theme :is(button, .vbg-button)[data-variant="tertiary"],
+.vbg-report[data-theme="dark"]:not(.light-theme):not(.dark-theme) :is(button, .vbg-button)[data-variant="tertiary"] {
+  color: #ededed;
+}
+
+:where(.vbg-report) :where(button, .vbg-button)[data-variant="tertiary"]:hover {
+  border-color: var(--vbg-gray-alpha-200);
+  background: var(--vbg-gray-alpha-200);
+}
+
+:where(.vbg-report) :where(button, .vbg-button):active {
+  background: var(--vbg-gray-alpha-300);
+}
+
+:where(.vbg-report) :where(button, .vbg-button)[data-variant="primary"]:active {
+  border-color: var(--vbg-gray-800);
+  background: var(--vbg-gray-800);
+}
+
+:where(.vbg-report) :where(
+  button[aria-pressed="true"],
+  .vbg-button[aria-pressed="true"],
+  button[data-selected="true"],
+  .vbg-button[data-selected="true"],
+  button[data-state="active"],
+  .vbg-button[data-state="active"]
+) {
+  border-color: var(--vbg-gray-1000);
+  background: var(--vbg-gray-1000);
+  color: var(--vbg-background-100);
+}
+
+:where(.vbg-report) :where(
+  button[aria-pressed="true"],
+  .vbg-button[aria-pressed="true"],
+  button[data-selected="true"],
+  .vbg-button[data-selected="true"],
+  button[data-state="active"],
+  .vbg-button[data-state="active"]
+):hover {
+  border-color: var(--vbg-gray-900);
+  background: var(--vbg-gray-900);
+}
+
+/*
+ * Explicit theme overrides have higher specificity than the generic selected
+ * state. Pin selected tertiary controls to definite accessible color pairs.
+ */
+.vbg-report.light-theme :is(button, .vbg-button)[data-variant="tertiary"]:is([aria-pressed="true"], [data-selected="true"], [data-state="active"]):not(:disabled):not([aria-disabled="true"]),
+.vbg-report[data-theme="light"]:not(.light-theme):not(.dark-theme) :is(button, .vbg-button)[data-variant="tertiary"]:is([aria-pressed="true"], [data-selected="true"], [data-state="active"]):not(:disabled):not([aria-disabled="true"]) {
+  border-color: #1f1f1f;
+  background: #1f1f1f;
+  color: #ffffff;
+}
+
+.vbg-report.dark-theme :is(button, .vbg-button)[data-variant="tertiary"]:is([aria-pressed="true"], [data-selected="true"], [data-state="active"]):not(:disabled):not([aria-disabled="true"]),
+.vbg-report[data-theme="dark"]:not(.light-theme):not(.dark-theme) :is(button, .vbg-button)[data-variant="tertiary"]:is([aria-pressed="true"], [data-selected="true"], [data-state="active"]):not(:disabled):not([aria-disabled="true"]) {
+  border-color: #ededed;
+  background: #ededed;
+  color: #1f1f1f;
+}
+
+.vbg-report .vbg-band[data-tone="contrast"] :is(button, .vbg-button)[data-variant="tertiary"]:is([aria-pressed="true"], [data-selected="true"], [data-state="active"]):not(:disabled):not([aria-disabled="true"]) {
+  border-color: #ededed;
+  background: #ededed;
+  color: #1f1f1f;
+}
+
+:where(.vbg-report) :where(button, .vbg-button):where(:disabled, [aria-disabled="true"]) {
+  border-color: var(--vbg-gray-alpha-400);
+  background: var(--vbg-gray-100);
+  color: var(--vbg-gray-700);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+:where(.vbg-report) :where(button, .vbg-button)[data-variant="tertiary"]:where(:disabled, [aria-disabled="true"]) {
+  border-color: transparent;
+  background: transparent;
+  color: var(--vbg-gray-700);
+  opacity: 0.5;
+}
+
+:where(.vbg-report) .vbg-action-row,
+:where(.vbg-report) .vbg-actions,
+:where(.vbg-report) .vbg-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--vbg-space-3);
+}
+
+:where(.vbg-report) :where(.vbg-action-row, .vbg-actions, .vbg-cluster) > * {
+  margin-block: 0;
+}
+
+:where(.vbg-report) :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea) {
+  width: 100%;
+  min-height: var(--vbg-control-height);
+  border: 1px solid var(--vbg-border-default);
+  border-radius: var(--vbg-radius-small);
+  background: var(--vbg-background-100);
+  color: var(--vbg-gray-1000);
+  padding: var(--vbg-space-2) var(--vbg-space-3);
+  font: var(--vbg-weight-regular) 0.875rem/1.4 var(--vbg-font-sans);
+}
+
+:where(.vbg-report) :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea):hover {
+  border-color: var(--vbg-border-strong);
+}
+
+:where(.vbg-report) :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea):disabled {
+  cursor: not-allowed;
+  background: var(--vbg-background-200);
+  color: var(--vbg-text-secondary);
+  opacity: 0.7;
+}
+
+:where(.vbg-report) :where(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"])[aria-invalid="true"],
+  select[aria-invalid="true"],
+  textarea[aria-invalid="true"],
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):user-invalid,
+  select:user-invalid,
+  textarea:user-invalid,
+  .vbg-field[data-invalid="true"] input,
+  .vbg-field[data-invalid="true"] select,
+  .vbg-field[data-invalid="true"] textarea
+) {
+  border-color: var(--vbg-color-error);
+}
+
+:where(.vbg-report) input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  accent-color: var(--vbg-text-primary);
+  cursor: pointer;
+}
+
+:where(.vbg-report) input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--vbg-border-default);
+}
+
+:where(.vbg-report) input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border: 2px solid var(--vbg-surface-primary);
+  border-radius: 50%;
+  background: var(--vbg-text-primary);
+  box-shadow: 0 0 0 1px var(--vbg-border-strong);
+}
+
+:where(.vbg-report) input[type="range"]::-moz-range-track {
+  height: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--vbg-border-default);
+}
+
+:where(.vbg-report) input[type="range"]::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--vbg-text-primary);
+}
+
+:where(.vbg-report) input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--vbg-surface-primary);
+  border-radius: 50%;
+  background: var(--vbg-text-primary);
+  box-shadow: 0 0 0 1px var(--vbg-border-strong);
+}
+
+:where(.vbg-report) input[type="range"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+:where(.vbg-report) .vbg-range-ends {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--vbg-space-4);
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-label);
+  line-height: var(--vbg-leading-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.vbg-report) :where(.vbg-range-min, .vbg-range-max) {
+  margin: 0;
+}
+
+:where(.vbg-report) .vbg-range-max {
+  margin-inline-start: auto;
+  text-align: end;
+}
+
+:where(.vbg-report) :where(input[type="checkbox"], input[type="radio"]) {
+  width: auto;
+  min-height: auto;
+  accent-color: var(--vbg-text-primary);
+}
+
+:where(.vbg-report) .vbg-calculator {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vbg-space-6);
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+:where(.vbg-report) :where(
+  .vbg-calculator[data-variant="contained"],
+  .vbg-calculator[data-contained="true"]
+) {
+  border: 1px solid var(--vbg-border-subtle);
+  border-radius: var(--vbg-radius);
+  padding: var(--vbg-space-6);
+}
+
+:where(.vbg-report) .vbg-calculator-layout,
+:where(.vbg-report) .vbg-calculator[data-layout="split"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vbg-space-6);
+}
+
+@supports selector(.vbg-calculator:has(> .vbg-calculator-inputs)) {
+  :where(.vbg-report) :where(.vbg-calculator, .vbg-calculator-layout):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) {
+    grid-template-columns: minmax(0, 5fr) minmax(260px, 4fr);
+    grid-template-areas: "inputs output";
+    gap: var(--vbg-space-8);
+    align-items: stretch;
+  }
+
+  :where(.vbg-report) :where(.vbg-calculator, .vbg-calculator-layout):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-inputs {
+    grid-area: inputs;
+  }
+
+  :where(.vbg-report) :where(.vbg-calculator, .vbg-calculator-layout):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-output {
+    grid-area: output;
+  }
+
+  /*
+   * Preferred calculator composition. Source order keeps the decisive result
+   * first on narrow screens while desktop places one control column beside one
+   * continuous result column. The generated grid line is the only divider.
+   */
+  :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) {
+    grid-template-columns: minmax(0, 5fr) 1px minmax(260px, 4fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas:
+      "inputs divider primary"
+      "inputs divider output";
+    column-gap: 0;
+    row-gap: var(--vbg-space-6);
+    align-items: start;
+  }
+
+  :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden]))::before {
+    content: "";
+    grid-area: divider;
+    align-self: stretch;
+    background: var(--vbg-border-subtle);
+  }
+
+  :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-result[data-priority="primary"] {
+    grid-area: primary;
+    border-block-start: 0;
+    padding-block-start: 0;
+    padding-inline-start: var(--vbg-space-8);
+  }
+
+  :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-inputs {
+    grid-area: inputs;
+    padding-inline-end: var(--vbg-space-8);
+  }
+
+  :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-output {
+    grid-area: output;
+    border-inline-start: 0;
+    padding-inline-start: var(--vbg-space-8);
+  }
+}
+
+:where(.vbg-report) :where(.vbg-calculator-inputs, .vbg-calculator-output) {
+  display: grid;
+  min-width: 0;
+  align-content: start;
+  gap: var(--vbg-space-6);
+}
+
+:where(.vbg-report) .vbg-calculator-output {
+  border-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+/* The output owns the split boundary instead of inheriting it from source order. */
+@supports selector(.vbg-calculator:has(> .vbg-calculator-inputs)) {
+  :where(.vbg-report) :where(.vbg-calculator, .vbg-calculator-layout):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-output {
+    border-inline-start: 1px solid var(--vbg-border-subtle);
+    padding-inline-start: var(--vbg-space-8);
+  }
+}
+
+:where(.vbg-report) .vbg-calculator-output > :where(h2, h3, h4, p) {
+  margin-block: 0;
+}
+
+:where(.vbg-report) .vbg-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vbg-space-2);
+}
+
+:where(.vbg-report) .vbg-control-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vbg-space-4);
+  min-width: 0;
+}
+
+:where(.vbg-report) .vbg-unit-field {
+  display: flex;
+  min-width: 0;
+  min-height: var(--vbg-control-height);
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--vbg-border-default);
+  border-radius: var(--vbg-radius-small);
+  background: var(--vbg-background-100);
+}
+
+:where(.vbg-report) .vbg-unit-field:hover {
+  border-color: var(--vbg-border-strong);
+}
+
+:where(.vbg-report) .vbg-unit-field:focus-within {
+  border-color: var(--vbg-focus);
+  outline: 2px solid var(--vbg-focus);
+  outline-offset: 2px;
+}
+
+:where(.vbg-report) .vbg-unit-field > input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  min-width: 0;
+  min-height: calc(var(--vbg-control-height) - 2px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding-inline: var(--vbg-space-3);
+  outline: 0;
+}
+
+:where(.vbg-report) .vbg-unit-field > :where(.vbg-unit-prefix, .vbg-unit-suffix, .vbg-unit) {
+  flex: none;
+  color: var(--vbg-text-secondary);
+  padding-inline: var(--vbg-space-3);
+  font-size: var(--vbg-type-compact);
+  line-height: var(--vbg-leading-compact);
+  white-space: nowrap;
+}
+
+:where(.vbg-report) .vbg-unit-field > .vbg-unit-prefix {
+  padding-inline-end: 0;
+}
+
+:where(.vbg-report) .vbg-unit-field > :where(.vbg-unit-suffix, .vbg-unit) {
+  padding-inline-start: 0;
+}
+
+:where(.vbg-report) :where(
+  .vbg-unit-field[data-invalid="true"],
+  .vbg-unit-field:has(> [aria-invalid="true"]),
+  .vbg-unit-field:has(> :user-invalid),
+  .vbg-field[data-invalid="true"] .vbg-unit-field
+) {
+  border-color: var(--vbg-color-error);
+}
+
+:where(.vbg-report) .vbg-helper,
+:where(.vbg-report) .vbg-error {
+  margin-block: 0;
+  font-size: var(--vbg-type-label);
+  line-height: var(--vbg-leading-caption);
+}
+
+:where(.vbg-report) .vbg-helper {
+  color: var(--vbg-text-secondary);
+}
+
+:where(.vbg-report) .vbg-error {
+  color: var(--vbg-color-error);
+  font-weight: var(--vbg-weight-medium);
+}
+
+:where(.vbg-report) .vbg-error:empty {
+  display: none;
+}
+
+:where(.vbg-report) :where(.vbg-calculator, .vbg-field, .vbg-result, .vbg-calculator > *) {
+  min-width: 0;
+}
+
+:where(.vbg-report) .vbg-result {
+  display: grid;
+  align-content: start;
+  gap: var(--vbg-space-1);
+  border-top: 1px solid var(--vbg-border-subtle);
+  padding-block-start: var(--vbg-space-4);
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.vbg-report) .vbg-opening-proof > .vbg-result[data-priority="primary"] {
+  border-block-start: 0;
+  padding-block-start: 0;
+}
+
+:where(.vbg-report) .vbg-calculator-output > .vbg-result:nth-child(1 of .vbg-result) {
+  border-top: 0;
+  padding-block-start: 0;
+}
+
+:where(.vbg-report) :is(
+  .vbg-result-label,
+  .vbg-result > .vbg-label:first-child
+) {
+  margin: 0;
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-label);
+  line-height: var(--vbg-leading-caption);
+}
+
+:where(.vbg-report) :is(
+  .vbg-result-value,
+  .vbg-result > :is(strong, output):nth-child(2)
+) {
+  margin: 0;
+  color: var(--vbg-text-primary);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: var(--vbg-weight-heading);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  max-inline-size: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+:where(.vbg-report) :where(.vbg-metric, .vbg-result)[data-priority="supporting"] :is(
+  .vbg-metric-value,
+  .vbg-result-value,
+  :is(strong, output):nth-child(2)
+),
+:where(.vbg-report) :where(.vbg-metric-value, .vbg-result-value)[data-priority="supporting"] {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+}
+
+:where(.vbg-report) :where(.vbg-stat, .vbg-metric, .vbg-result)[data-priority="primary"] :is(
+  .vbg-stat-value,
+  .vbg-metric-value,
+  .vbg-result-value,
+  :is(strong, output):nth-child(2)
+),
+:where(.vbg-report) :where(.vbg-stat-value, .vbg-metric-value, .vbg-result-value)[data-priority="primary"],
+:where(.vbg-report) .vbg-value-primary {
+  color: var(--vbg-text-primary);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: var(--vbg-weight-heading);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  max-inline-size: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@supports (font-size: 1cqi) {
+  :where(.vbg-report) :where(.vbg-stat-strip, .vbg-metrics, .vbg-result-group, .vbg-stat, .vbg-metric, .vbg-result) {
+    container-type: inline-size;
+  }
+
+  :where(.vbg-report) :is(
+    .vbg-stat-value,
+    .vbg-metric-value,
+    .vbg-result-value,
+    .vbg-stat > :is(strong, output):nth-child(2),
+    .vbg-metric > :is(strong, output):nth-child(2),
+    .vbg-result > :is(strong, output):nth-child(2)
+  ) {
+    font-size: clamp(1.25rem, 12cqi, 2rem);
+  }
+
+  :where(.vbg-report) :where(.vbg-stat, .vbg-metric, .vbg-result)[data-priority="primary"] :is(
+    .vbg-stat-value,
+    .vbg-metric-value,
+    .vbg-result-value,
+    :is(strong, output):nth-child(2)
+  ),
+  :where(.vbg-report) :where(.vbg-stat-value, .vbg-metric-value, .vbg-result-value)[data-priority="primary"] {
+    font-size: clamp(1.5rem, 14cqi, 2.5rem);
+  }
+}
+
+/* Visual peers keep one value role; priority must be expressed outside the peer group. */
+:where(.vbg-report) :is(
+  .vbg-stat-strip > .vbg-stat,
+  .vbg-metrics > .vbg-metric,
+  .vbg-result-group > .vbg-result
+) :is(.vbg-stat-value, .vbg-metric-value, .vbg-result-value) {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+:where(.vbg-report) :is(
+  .vbg-stat-strip > .vbg-stat,
+  .vbg-metrics > .vbg-metric,
+  .vbg-result-group > .vbg-result
+) > :is(strong, output):nth-child(2) {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+/* Keep peer values responsive to their owned track, including narrow split proofs. */
+@supports (font-size: 1cqi) {
+  :where(.vbg-report) :is(
+    .vbg-stat-strip > .vbg-stat,
+    .vbg-metrics > .vbg-metric,
+    .vbg-result-group > .vbg-result
+  ) :is(.vbg-stat-value, .vbg-metric-value, .vbg-result-value),
+  :where(.vbg-report) :is(
+    .vbg-stat-strip > .vbg-stat,
+    .vbg-metrics > .vbg-metric,
+    .vbg-result-group > .vbg-result
+  ) > :is(strong, output):nth-child(2) {
+    font-size: clamp(1.25rem, 4cqi, 2rem);
+  }
+}
+
+/*
+ * Numeric peer values stay atomic by default. On desktop, values with authored
+ * whitespace may use a second line inside their owned track; digits, currency,
+ * dates, and units never break internally. Stacked mobile values remain atomic.
+ */
+@media (min-width: 801px) {
+  :where(.vbg-report) :is(
+    .vbg-stat-strip > .vbg-stat,
+    .vbg-metrics > .vbg-metric,
+    .vbg-result-group > .vbg-result
+  ) :is(.vbg-stat-value, .vbg-metric-value, .vbg-result-value).vbg-numeric,
+  :where(.vbg-report) :is(
+    .vbg-stat-strip > .vbg-stat,
+    .vbg-metrics > .vbg-metric,
+    .vbg-result-group > .vbg-result
+  ) > :is(strong, output).vbg-numeric:nth-child(2) {
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    text-wrap: balance;
+  }
+}
+
+:where(.vbg-report) :is(
+  .vbg-result-detail,
+  .vbg-result > .vbg-meta
+) {
+  margin: var(--vbg-space-1) 0 0;
+  color: var(--vbg-text-secondary);
+  font-size: var(--vbg-type-compact);
+  line-height: var(--vbg-leading-compact);
+}
+
+:where(.vbg-report) .vbg-result-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--vbg-space-8);
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.vbg-report) .vbg-result-group > * {
+  min-width: 0;
+}
+
+/* Three equal peers stay one row on wide layouts and one deliberate stack on narrow layouts. */
+@media (min-width: 801px) {
+  @supports selector(.vbg-stat-strip:has(> :nth-child(3):last-child)) {
+    :where(.vbg-report) :is(.vbg-stat-strip, .vbg-metrics, .vbg-comparison, .vbg-result-group):has(> :nth-child(3):last-child) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  @supports selector(.vbg-stat-strip:has(> :nth-child(3):last-child)) {
+    :where(.vbg-report) :is(.vbg-stat-strip, .vbg-metrics, .vbg-comparison, .vbg-result-group):has(> :nth-child(3):last-child) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
+
+/* Horizontal result peers are one visual group, not a stack of ruled results. */
+:where(.vbg-report) .vbg-result-group > .vbg-result {
+  border-top: 0;
+  padding-block-start: 0;
+}
+
+/*
+ * Keep peer labels, values, and details on shared rows. The fallback reserves
+ * two compact lines for labels in engines without subgrid support.
+ */
+@supports not (grid-template-rows: subgrid) {
+  :where(.vbg-report) :is(
+    .vbg-stat-strip > .vbg-stat > :is(.vbg-stat-label, .vbg-label):first-child,
+    .vbg-metrics > .vbg-metric > :is(.vbg-metric-label, .vbg-label):first-child,
+    .vbg-result-group > .vbg-result > :is(.vbg-result-label, .vbg-label):first-child
+  ) {
+    min-block-size: calc(2 * var(--vbg-leading-compact));
+  }
+}
+
+@supports (grid-template-rows: subgrid) {
+  :where(.vbg-report) :is(.vbg-stat-strip, .vbg-metrics, .vbg-result-group) {
+    row-gap: var(--vbg-space-2);
+  }
+
+  :where(.vbg-report) :is(
+    .vbg-stat-strip > .vbg-stat,
+    .vbg-metrics > .vbg-metric,
+    .vbg-result-group > .vbg-result
+  ) {
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: var(--vbg-space-2);
+    container-type: normal;
+  }
+
+  :where(.vbg-report) :is(
+    .vbg-stat-strip > .vbg-stat,
+    .vbg-metrics > .vbg-metric,
+    .vbg-result-group > .vbg-result
+  ):not(:last-child) {
+    margin-block-end: calc(var(--vbg-space-8) - var(--vbg-space-2));
+  }
+}
+
+/* Frame a flat evidence or table region with a parent .vbg-surface; do not combine the classes on one node. */
+:where(.vbg-report) :where(.vbg-surface, .vbg-evidence, .vbg-calculator) :is(.vbg-surface, .vbg-evidence, .vbg-calculator, .vbg-table-wrap) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+:where(.vbg-report) .vbg-sources {
+  color: var(--vbg-text-secondary);
+  font-size: 0.8125rem;
+  line-height: var(--vbg-leading-caption);
+}
+
+:where(.vbg-report) .vbg-footer {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--vbg-space-6);
+  align-items: center;
+  border: 0;
+  padding-block: var(--vbg-space-16) 0;
+  color: var(--vbg-text-secondary);
+  font-size: 0.8125rem;
+  line-height: var(--vbg-leading-caption);
+}
+
+:where(.vbg-report) .vbg-footer > * {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin-block: 0;
+}
+
+:where(.vbg-report) .vbg-footer > .vbg-logo {
+  grid-column: 1;
+  color: var(--vbg-text-primary);
+}
+
+@supports selector(.vbg-footer:has(> :nth-child(2):last-child)) {
+  :where(.vbg-report) .vbg-footer:has(> .vbg-logo:first-child):has(> :nth-child(2):last-child) > :nth-child(2) {
+    grid-column: 8 / -1;
+    justify-self: end;
+    text-align: end;
+  }
+}
+
+:where(.vbg-report) select {
+  background-color: var(--vbg-background-100);
+}
+
+:where(.vbg-report) textarea { min-height: 96px; resize: vertical; }
+
+:where(.vbg-report) details {
+  border-top: 1px solid var(--vbg-border-subtle);
+  padding-block: var(--vbg-space-4);
+}
+
+:where(.vbg-report) summary {
+  font-weight: var(--vbg-weight-medium);
+  cursor: pointer;
+}
+
+:where(.vbg-report) .vbg-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+.vbg-skip-link {
+  position: fixed;
+  inset-block-start: var(--vbg-space-3, 12px);
+  inset-inline-start: var(--vbg-space-3, 12px);
+  z-index: 1000;
+  transform: translateY(calc(-100% - var(--vbg-space-6, 24px)));
+  border-radius: var(--vbg-radius-small, 6px);
+  background: var(--vbg-gray-1000, #000000);
+  color: var(--vbg-background-100, #ffffff);
+  padding: var(--vbg-space-2, 8px) var(--vbg-space-3, 12px);
+  font-family: var(--vbg-font-sans, "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 0.875rem;
+  font-weight: var(--vbg-weight-medium, 500);
+  line-height: 1.25rem;
+}
+
+.vbg-skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (min-width: 801px) and (max-width: 900px) {
+  :where(.vbg-report) .vbg-stat-strip[data-count="4"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@supports selector(.vbg-stat-strip:has(> .vbg-stat)) {
+  @media (min-width: 801px) and (max-width: 900px) {
+    :where(.vbg-report) .vbg-stat-strip:has(> .vbg-stat:nth-child(4):last-child) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1000px) {
+  :where(.vbg-report) :is(.vbg-header, .vbg-section, .vbg-footer, .vbg-grid) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  :where(.vbg-report) .vbg-opening {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  :where(.vbg-report) .vbg-opening[data-layout="split"] > .vbg-opening-claim {
+    grid-column: 1 / span 3;
+  }
+
+  :where(.vbg-report) .vbg-opening[data-layout="split"] > .vbg-opening-proof {
+    grid-column: 4 / -1;
+  }
+
+  :where(.vbg-report) .vbg-opening[data-layout="split"] > .vbg-opening-context {
+    grid-column: 1 / span 3;
+  }
+
+  :where(.vbg-report) .vbg-header > :where(h1, .vbg-title, .vbg-display) {
+    grid-column: 1 / span 5;
+  }
+
+  :where(.vbg-report) .vbg-header > :where(.vbg-summary, .vbg-lede),
+  :where(.vbg-report) .vbg-section > :where(h2, h3, h4, p, ul, ol, dl, blockquote, .vbg-reading) {
+    grid-column: 1 / span 4;
+  }
+
+  :where(.vbg-report) :where(.vbg-span-6, .vbg-span-7, .vbg-span-8, .vbg-span-12) {
+    grid-column: 1 / -1;
+  }
+
+  @supports selector(.vbg-footer:has(> :nth-child(2):last-child)) {
+    :where(.vbg-report) .vbg-footer:has(> .vbg-logo:first-child):has(> :nth-child(2):last-child) > :nth-child(2) {
+      grid-column: 4 / -1;
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  :where(.vbg-report) :is(.vbg-header, .vbg-section, .vbg-footer, .vbg-grid) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--vbg-space-4);
+  }
+
+  .vbg-report .vbg-grid > * {
+    grid-column: 1 / -1;
+  }
+
+  :where(.vbg-report) .vbg-opening,
+  :where(.vbg-report) .vbg-opening[data-layout="split"],
+  :where(.vbg-report) .vbg-opening[data-layout="stack"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  :where(.vbg-report) .vbg-header > :where(h1, .vbg-title, .vbg-display, .vbg-summary, .vbg-lede),
+  :where(.vbg-report) .vbg-section > :where(h2, h3, h4, p, ul, ol, dl, blockquote, .vbg-reading) {
+    grid-column: 1 / -1;
+  }
+
+  :where(.vbg-report) .vbg-footer > .vbg-logo {
+    grid-column: 1;
+  }
+
+  @supports selector(.vbg-footer:has(> :nth-child(2):last-child)) {
+    :where(.vbg-report) .vbg-footer:has(> .vbg-logo:first-child):has(> :nth-child(2):last-child) > :nth-child(2) {
+      grid-column: 2 / -1;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  :where(.vbg-report) .vbg-overflow-cue {
+    display: flex;
+  }
+
+  :where(.vbg-report) .vbg-shell {
+    width: 100%;
+    padding-inline-start: calc(var(--vbg-space-4) + env(safe-area-inset-left, 0px));
+    padding-inline-end: calc(var(--vbg-space-4) + env(safe-area-inset-right, 0px));
+    padding-block: var(--vbg-space-10);
+  }
+
+  :where(.vbg-report) .vbg-opening,
+  :where(.vbg-report) .vbg-opening[data-layout="split"],
+  :where(.vbg-report) .vbg-opening[data-layout="stack"] {
+    gap: var(--vbg-space-4);
+  }
+
+  :where(.vbg-report) .vbg-opening > .vbg-opening-claim,
+  :where(.vbg-report) .vbg-opening > .vbg-opening-proof,
+  :where(.vbg-report) .vbg-opening > .vbg-opening-context,
+  :where(.vbg-report) .vbg-opening[data-layout="split"] > .vbg-opening-claim,
+  :where(.vbg-report) .vbg-opening[data-layout="split"] > .vbg-opening-proof,
+  :where(.vbg-report) .vbg-opening[data-layout="split"] > .vbg-opening-context {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  :where(.vbg-report) h1 {
+    font-size: var(--vbg-type-title);
+    line-height: var(--vbg-leading-title);
+  }
+
+  :where(.vbg-report) .vbg-title {
+    font-size: var(--vbg-type-title);
+    line-height: var(--vbg-leading-title);
+  }
+
+  :where(.vbg-report) .vbg-display {
+    font-size: var(--vbg-type-title);
+    line-height: var(--vbg-leading-title);
+  }
+
+  :where(.vbg-report) .vbg-masthead {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .vbg-report .vbg-masthead > * {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  /* Match the desktop :has() specificity so known regions truly stack. */
+  @supports selector(.vbg-masthead:has(> .vbg-identity)) {
+    :where(.vbg-report) .vbg-masthead:has(> .vbg-identity):has(> .vbg-document-meta) > .vbg-identity,
+    :where(.vbg-report) .vbg-masthead:has(> .vbg-identity):has(> .vbg-document-meta) > .vbg-document-meta {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+  }
+
+  :where(.vbg-report) .vbg-document-meta {
+    justify-content: flex-start;
+  }
+
+  .vbg-report .vbg-split > * {
+    grid-column: 1 / -1;
+  }
+
+  .vbg-report .vbg-split,
+  .vbg-report .vbg-calculator-layout,
+  .vbg-report .vbg-calculator[data-layout="split"],
+  .vbg-report .vbg-result-group,
+  .vbg-report .vbg-next-step {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @supports selector(.vbg-calculator:has(> .vbg-calculator-inputs)) {
+    :where(.vbg-report) :where(.vbg-calculator, .vbg-calculator-layout):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: none;
+      gap: var(--vbg-space-6);
+    }
+
+    :where(.vbg-report) :where(.vbg-calculator, .vbg-calculator-layout):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-inputs,
+    :where(.vbg-report) :where(.vbg-calculator, .vbg-calculator-layout):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-output {
+      grid-area: auto;
+    }
+
+    :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden]))::before {
+      display: none;
+    }
+
+    :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: none;
+      grid-template-areas: none;
+      gap: var(--vbg-space-6);
+    }
+
+    :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-result[data-priority="primary"],
+    :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-inputs,
+    :where(.vbg-report) .vbg-calculator:has(> .vbg-result[data-priority="primary"]):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-output {
+      grid-area: auto;
+      padding-inline: 0;
+    }
+  }
+
+  :where(.vbg-report) :where(.vbg-calculator-inputs, .vbg-calculator-output) {
+    border-block-start: 0;
+    border-inline-start: 0;
+    padding-block-start: 0;
+    padding-inline-start: 0;
+  }
+
+  :where(.vbg-report) :where(.vbg-calculator, .vbg-calculator-layout):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-output:not(:first-child) {
+    border-block-start: 1px solid var(--vbg-border-subtle);
+    border-inline-start: 0;
+    padding-block-start: var(--vbg-space-6);
+    padding-inline-start: 0;
+  }
+
+  :where(.vbg-report) :where(.vbg-calculator, .vbg-calculator-layout):has(> .vbg-calculator-inputs:not([hidden])):has(> .vbg-calculator-output:not([hidden])) > .vbg-calculator-output:first-child:not(:last-child) {
+    border-block-end: 1px solid var(--vbg-border-subtle);
+    border-inline-start: 0;
+    padding-block-end: var(--vbg-space-6);
+    padding-inline-start: 0;
+  }
+
+  :where(.vbg-report) .vbg-next-step > .vbg-actions {
+    justify-self: start;
+  }
+
+  .vbg-report .vbg-next-step > * {
+    grid-column: 1 / -1;
+  }
+
+  /* Match the desktop exact-pair placement when the grid collapses. */
+  @supports selector(.vbg-next-step:has(> :nth-child(2):last-child)) {
+    :where(.vbg-report) .vbg-next-step:has(> :nth-child(2):last-child) > :first-child,
+    :where(.vbg-report) .vbg-next-step:has(> :nth-child(2):last-child) > :nth-child(2) {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+  }
+
+  :where(.vbg-report) :where(
+    .vbg-surface[data-variant="contained"],
+    .vbg-surface[data-contained="true"],
+    .vbg-calculator[data-variant="contained"],
+    .vbg-calculator[data-contained="true"]
+  ) {
+    padding: var(--vbg-space-4);
+  }
+
+  :where(.vbg-report) .vbg-evidence { padding-block: 0; }
+
+  :where(.vbg-report) :where(.vbg-surface, .vbg-evidence, .vbg-calculator) :is(.vbg-surface, .vbg-evidence, .vbg-calculator, .vbg-table-wrap) {
+    padding: 0;
+  }
+
+  :where(.vbg-report) :where(button, .vbg-button) { min-height: var(--vbg-control-height-touch); }
+
+  :where(.vbg-report) :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea) {
+    min-height: var(--vbg-control-height-touch);
+    font-size: 16px;
+  }
+
+  :where(.vbg-report) :where(.vbg-unit-field, input[type="range"]) {
+    min-height: var(--vbg-control-height-touch);
+  }
+
+  :where(.vbg-report) .vbg-unit-field > input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+    min-height: calc(var(--vbg-control-height-touch) - 2px);
+  }
+
+  :where(.vbg-report) .vbg-chart-viewport > .vbg-chart-desktop {
+    display: none;
+  }
+
+  :where(.vbg-report) .vbg-chart-viewport > .vbg-chart-mobile {
+    display: block;
+  }
+
+  :where(.vbg-report) .vbg-chart:not([data-mobile="scroll"]) :where(.vbg-chart-plot, .vbg-chart-viewport > svg) {
+    min-width: 0 !important;
+    max-width: 100%;
+  }
+
+  :where(.vbg-report) .vbg-chart[data-mobile="scroll"] .vbg-chart-viewport > :where(svg, .vbg-chart-plot) {
+    min-width: var(--vbg-chart-min-width) !important;
+    max-width: none;
+  }
+
+  :where(.vbg-report) .vbg-formula {
+    overflow: visible;
+  }
+
+  /* Preserve readable columns locally instead of compressing wide evidence into character-level labels. */
+  :where(.vbg-report) .vbg-table-wrap:is(
+    :not([data-mobile="stack"]),
+    [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+    [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+  ) > table:has(> thead > tr > :nth-child(5)) {
+    min-inline-size: 40rem;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap:is(
+    :not([data-mobile="stack"]),
+    [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+    [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+  ) > table:has(> thead > tr > :nth-child(7)) {
+    min-inline-size: 52rem;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) {
+    overflow: visible;
+    border: 0;
+  }
+
+  /* A successfully stacked table no longer scrolls, so an adjacent cue is stale. */
+  :where(.vbg-report) .vbg-overflow-cue:has(
+    + .vbg-table-wrap[data-mobile="stack"]
+  ):not(:has(
+    + .vbg-table-wrap[data-mobile="stack"] :where(tbody, tfoot) td:not([data-label]),
+    + .vbg-table-wrap[data-mobile="stack"] :where(tbody, tfoot) td[data-label=""]
+  )):not(:has(
+    + .vbg-table-wrap[data-mobile="stack"] tbody > tr:nth-child(6)
+  )),
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) + .vbg-overflow-cue {
+    display: none;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) :where(table, tbody, tfoot, tr, th, td) {
+    display: block;
+    width: 100%;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) caption {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) thead {
+    display: block !important;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) :where(tbody, tfoot) tr {
+    border-block: 1px solid var(--vbg-border-subtle);
+    padding: var(--vbg-space-4) 0;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) :where(tbody, tfoot) tr + tr {
+    margin-block-start: -1px;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) tfoot tr {
+    margin-block-start: -1px;
+    border-block-color: var(--vbg-border-strong);
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"][data-variant="comparison"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) tbody tr[data-recommended="true"] {
+    border-color: var(--vbg-border-strong);
+    background: var(--vbg-background-200);
+    padding-inline: var(--vbg-space-3);
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) :where(tbody, tfoot) th {
+    border: 0;
+    padding: 0 0 var(--vbg-space-2);
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) :where(tbody, tfoot) td {
+    display: grid;
+    grid-template-columns: minmax(100px, 0.8fr) minmax(0, 1fr);
+    gap: var(--vbg-space-3);
+    border: 0;
+    padding: var(--vbg-space-2) 0;
+    text-align: start;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) tfoot :where(th, td) {
+    font-weight: var(--vbg-weight-medium);
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"][data-sticky-first="true"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) :where(th, td):first-child {
+    position: static;
+    box-shadow: none;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"][data-sticky-first="true"][data-variant="comparison"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) tbody tr[data-recommended="true"] > :first-child {
+    box-shadow: none;
+  }
+
+  :where(.vbg-report) .vbg-table-wrap[data-mobile="stack"]:not(:has(tbody > tr:nth-child(6))):not(:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""])) :where(tbody, tfoot) td::before {
+    content: attr(data-label);
+    color: var(--vbg-text-secondary);
+    font-weight: var(--vbg-weight-regular);
+    overflow-wrap: break-word;
+    word-break: normal;
+    white-space: normal;
+  }
+
+}
+
+/*
+ * Defensive mobile safety for wide semantic tables. Canonical markup should
+ * still provide its own linked cue, but omitted attributes cannot make five
+ * or more columns visually undiscoverable. Valid stacks and narrower native
+ * tables remain unchanged.
+ */
+@media (max-width: 640px) {
+  @supports selector(.vbg-table-wrap:has(> table > thead > tr > :nth-child(5))) {
+    :where(.vbg-report) .vbg-table-wrap:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(5)) {
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+    }
+
+    :where(.vbg-report) .vbg-table-wrap:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(5)):not(.vbg-overflow-cue + .vbg-table-wrap)::before {
+      content: "Scroll horizontally to see all columns.  \2192";
+      position: sticky;
+      inset-inline-start: 0;
+      z-index: 4;
+      display: block;
+      inline-size: 100cqi;
+      padding-block: var(--vbg-space-2);
+      background: var(--vbg-background-100);
+      color: var(--vbg-text-secondary);
+      font-size: var(--vbg-type-compact);
+      font-weight: var(--vbg-weight-regular);
+      line-height: var(--vbg-leading-compact);
+      white-space: normal;
+    }
+
+    :where(.vbg-report[dir="rtl"]) .vbg-table-wrap:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(5)):not(.vbg-overflow-cue + .vbg-table-wrap)::before {
+      content: "Scroll horizontally to see all columns.  \2190";
+    }
+
+    :where(.vbg-report) .vbg-table-wrap:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(5)) :is(thead, tbody, tfoot) > tr > :first-child {
+      position: sticky;
+      inset-inline-start: 0;
+      z-index: 2;
+      background: var(--vbg-background-100);
+      box-shadow: inset -1px 0 var(--vbg-border-subtle);
+    }
+
+    :where(.vbg-report) .vbg-table-wrap:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(5)) thead > tr > :first-child {
+      z-index: 3;
+      background: var(--vbg-surface-secondary);
+    }
+
+    :where(.vbg-report) .vbg-table-wrap:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(5))[data-variant="comparison"] tbody tr[data-recommended="true"] > :first-child {
+      background: var(--vbg-background-200);
+    }
+
+    /* Replace a trailing authored cue with the source-ordered fallback above. */
+    :where(.vbg-report) .vbg-table-wrap:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(5)) + .vbg-overflow-cue {
+      display: none;
+    }
+  }
+}
+
+/*
+ * A four-column option comparison is wider than a narrow reading track even
+ * though it falls below the general five-column safety threshold. Preserve a
+ * valid authored stack; otherwise guarantee local overflow and expose it only
+ * while the shell is narrower than the 32rem evidence floor.
+ */
+@container vbg-shell (width < 32rem) {
+  @supports selector(.vbg-table-wrap:has(> table > thead > tr > :nth-child(4))) {
+    :where(.vbg-report) .vbg-table-wrap[data-variant="comparison"]:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(4)):not(:has(> table > thead > tr > :nth-child(5))):not(:has(> table > thead [colspan])) {
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+    }
+
+    :where(.vbg-report) .vbg-table-wrap[data-variant="comparison"]:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(4)):not(:has(> table > thead > tr > :nth-child(5))):not(:has(> table > thead [colspan])) > table {
+      min-inline-size: 32rem;
+    }
+
+    :where(.vbg-report) .vbg-table-wrap[data-variant="comparison"]:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(4)):not(:has(> table > thead > tr > :nth-child(5))):not(:has(> table > thead [colspan])):not(.vbg-overflow-cue + .vbg-table-wrap)::before {
+      content: "Scroll horizontally to see all columns.  \2192";
+      position: sticky;
+      inset-inline-start: 0;
+      z-index: 4;
+      display: block;
+      inline-size: 100cqi;
+      padding-block: var(--vbg-space-2);
+      background: var(--vbg-background-100);
+      color: var(--vbg-text-secondary);
+      font-size: var(--vbg-type-compact);
+      font-weight: var(--vbg-weight-regular);
+      line-height: var(--vbg-leading-compact);
+      white-space: normal;
+    }
+
+    :where(.vbg-report[dir="rtl"]) .vbg-table-wrap[data-variant="comparison"]:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(4)):not(:has(> table > thead > tr > :nth-child(5))):not(:has(> table > thead [colspan])):not(.vbg-overflow-cue + .vbg-table-wrap)::before {
+      content: "Scroll horizontally to see all columns.  \2190";
+    }
+
+    :where(.vbg-report) .vbg-table-wrap[data-variant="comparison"]:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(4)):not(:has(> table > thead > tr > :nth-child(5))):not(:has(> table > thead [colspan])) :is(thead, tbody, tfoot) > tr > :first-child {
+      position: sticky;
+      inset-inline-start: 0;
+      z-index: 2;
+      background: var(--vbg-background-100);
+      box-shadow: inset -1px 0 var(--vbg-border-subtle);
+    }
+
+    :where(.vbg-report) .vbg-table-wrap[data-variant="comparison"]:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(4)):not(:has(> table > thead > tr > :nth-child(5))):not(:has(> table > thead [colspan])) thead > tr > :first-child {
+      z-index: 3;
+      background: var(--vbg-surface-secondary);
+    }
+
+    :where(.vbg-report) .vbg-table-wrap[data-variant="comparison"]:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(4)):not(:has(> table > thead > tr > :nth-child(5))):not(:has(> table > thead [colspan])) tbody tr[data-recommended="true"] > :first-child {
+      background: var(--vbg-background-200);
+    }
+
+    :where(.vbg-report) .vbg-table-wrap[data-variant="comparison"]:is(
+      :not([data-mobile="stack"]),
+      [data-mobile="stack"]:has(:where(tbody, tfoot) td:not([data-label]), :where(tbody, tfoot) td[data-label=""]),
+      [data-mobile="stack"]:has(tbody > tr:nth-child(6))
+    ):has(> table > thead > tr > :nth-child(4)):not(:has(> table > thead > tr > :nth-child(5))):not(:has(> table > thead [colspan])) + .vbg-overflow-cue {
+      display: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.vbg-report *, .vbg-report *::before, .vbg-report *::after) {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
+  :where(.vbg-report) .vbg-stat-strip[data-count="4"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (forced-colors: active) {
+  :where(.vbg-report) :where(.vbg-surface, .vbg-callout, .vbg-table-wrap, .vbg-calculator, .vbg-evidence, .vbg-action, .vbg-decision, .vbg-recommendation, .vbg-next-step, .vbg-band, .vbg-stat-strip, .vbg-unit-field) {
+    border: 1px solid CanvasText;
+  }
+
+  :where(.vbg-report) :where(.vbg-surface, .vbg-evidence, .vbg-calculator) :is(.vbg-surface, .vbg-evidence, .vbg-calculator, .vbg-table-wrap) {
+    border: 0;
+  }
+
+  :where(.vbg-report) .vbg-stat {
+    background: Canvas;
+    outline: 1px solid CanvasText;
+    outline-offset: -1px;
+  }
+
+  :where(.vbg-report) .vbg-band[data-tone="contrast"] {
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  :where(.vbg-report) .vbg-band[data-tone="contrast"] :where(h1, h2, h3, h4, p, a, .vbg-link, .vbg-label, .vbg-meta, .vbg-stat-value) {
+    color: CanvasText;
+  }
+
+  :where(.vbg-report) :where(a, button, input, select, textarea):focus-visible {
+    outline-color: Highlight;
+  }
+
+  :where(.vbg-report) :where(
+    button[aria-pressed="true"],
+    .vbg-button[aria-pressed="true"],
+    button[data-selected="true"],
+    .vbg-button[data-selected="true"],
+    button[data-state="active"],
+    .vbg-button[data-state="active"]
+  ) {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+
+  :where(.vbg-report) input[type="range"]::-webkit-slider-runnable-track {
+    background: CanvasText;
+  }
+
+  :where(.vbg-report) input[type="range"]::-webkit-slider-thumb {
+    border-color: Canvas;
+    background: Highlight;
+  }
+
+  :where(.vbg-report) input[type="range"]::-moz-range-track {
+    background: CanvasText;
+  }
+
+  :where(.vbg-report) input[type="range"]::-moz-range-thumb {
+    border-color: Canvas;
+    background: Highlight;
+  }
+}
+
+/*
+ * Typography modifiers belong after component typography so they remain
+ * composable with any published component class without using !important.
+ */
+:where(.vbg-report) .vbg-mono {
+  font-family: var(--vbg-font-mono);
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* vbg-bundle:end */

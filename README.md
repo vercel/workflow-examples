@@ -5,6 +5,7 @@ This directory contains different examples of how to use the Workflow DevKit.
 - [AI SDK Workflow Patterns](https://github.com/vercel/workflow-examples/tree/main/ai-sdk-workflow-patterns) - Example of how to use the AI SDK to implement common workflow patterns with the Workflow DevKit.
 - [Birthday Card Generator](https://github.com/vercel/workflow-examples/tree/main/birthday-card-generator) - Example of how to use the Workflow DevKit to build a birthday card generator.
 - [Custom Adapter](https://github.com/vercel/workflow-examples/tree/main/custom-adapter) - Example of building a custom adapter to run workflows on other frameworks and runtimes, like Bun.
+- [Dynamic Workflows](https://github.com/vercel/workflow-examples/tree/main/dynamic-workflows) - A visual studio for composing orchestration after deployment, with parallel steps, durable waits, and human approvals.
 - [Flight Booking App](https://github.com/vercel/workflow-examples/tree/main/flight-booking-app) - Example of how to use the Workflow DevKit to build a flight booking app.
 - [FFmpeg Processing](https://github.com/vercel/workflow-examples/tree/main/ffmpeg-processing) - Express + Workflow DevKit example for building FFmpeg-based media processing workflows.
 - [Kitchen Sink](https://github.com/vercel/workflow-examples/tree/main/kitchen-sink) - Comprehensive reference implementation of all core workflow patterns including steps, control flow, streaming, AI integration, hooks, and batching.

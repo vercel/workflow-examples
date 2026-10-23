@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import vm from 'node:vm';
-import { DEFAULT_CONFIG, PRESETS } from './catalog';
+import { DEFAULT_CONFIG, PRESETS, STEP_BINDINGS } from './catalog';
 import { compileWorkflow } from './compile';
-import { processStep } from './tasks';
+import * as tasks from './tasks';
 import type { StepId, StepResult, StudioEvent, WorkflowConfig } from './types';
 import { ConfigError, validateConfig } from './validate';
 
@@ -30,14 +30,30 @@ async function executeDefinition(config: WorkflowConfig, approved = true) {
       emit: async (event: StudioEvent) => {
         events.push(event);
       },
-      execute: async (
-        stepId: StepId,
-        input: WorkflowConfig,
-        previous: StepResult[]
-      ) => {
-        inputs.push({ stepId, previous: previous.length });
-        return processStep(stepId, input, previous);
-      },
+      ...Object.fromEntries(
+        (Object.keys(STEP_BINDINGS) as StepId[]).map((stepId) => {
+          const alias = STEP_BINDINGS[stepId];
+          return [
+            alias,
+            async (input: WorkflowConfig, previous: StepResult[]) => {
+              inputs.push({ stepId, previous: previous.length });
+              events.push({
+                type: 'step-start',
+                stepId,
+                timestamp: new Date().toISOString(),
+              });
+              const output = tasks[alias](input, previous);
+              events.push({
+                type: 'step-complete',
+                stepId,
+                output,
+                timestamp: new Date().toISOString(),
+              });
+              return output;
+            },
+          ];
+        })
+      ),
     },
   });
   const workflow = new vm.Script(
@@ -63,6 +79,30 @@ test('rejects unknown and prototype-derived controls, duplicate steps, and unbou
       () => validateConfig({ ...DEFAULT_CONFIG, ...patch }),
       ConfigError
     );
+});
+
+test('calls every selected bespoke step directly without a generic dispatcher', async () => {
+  const config = {
+    ...DEFAULT_CONFIG,
+    steps: Object.keys(STEP_BINDINGS) as StepId[],
+    approval: false,
+    delaySeconds: 0,
+  };
+  const source = compileWorkflow(config);
+  for (const alias of Object.values(STEP_BINDINGS)) {
+    assert.ok(source.includes(`steps.${alias}(config, `));
+  }
+  assert.ok(!source.includes('steps.execute'));
+  assert.ok(!source.includes('runStep('));
+  const { inputs, result } = await executeDefinition(config);
+  assert.deepEqual(
+    inputs.map(({ stepId }) => stepId),
+    config.steps
+  );
+  assert.equal(result.steps.length, 8);
+  const selectedOnly = compileWorkflow({ ...config, steps: ['outline'] });
+  assert.ok(selectedOnly.includes('steps.buildOutline(config, '));
+  assert.ok(!selectedOnly.includes('steps.extractSignals('));
 });
 
 test('user text remains a serialized argument and cannot change executable source', () => {
@@ -161,11 +201,11 @@ test('incident timeline and quality checks operate on the supplied brief', () =>
     preset: 'incident' as const,
     brief: PRESETS.incident.brief,
   };
-  const timeline = processStep('timeline', config);
+  const timeline = tasks.buildTimeline(config);
   assert.equal(timeline.metrics.timestampedEvents, 4);
   assert.match(timeline.content, /09:14 UTC/);
   assert.match(timeline.content, /09:32 UTC/);
-  const quality = processStep('quality', config);
+  const quality = tasks.checkQuality(config);
   assert.equal(typeof quality.metrics.score, 'number');
   assert.match(quality.content, /not a factual verification/);
 });

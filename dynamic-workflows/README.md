@@ -42,7 +42,7 @@ The browser submits a structured workflow definition. The server validates that 
 ```ts
 const run = await start(source, [input], {
   experimental_dynamic: {
-    steps: deployedSteps,
+    steps: { emit, extractSignals, findAngle, writeAnnouncement, checkQuality },
   },
 });
 ```
@@ -50,6 +50,23 @@ const run = await start(source, [input], {
 Changing the orchestration produces a new dynamic definition immediately, without rebuilding the application. Each run retains its original code for durable replay. The steps remain part of the deployed application.
 
 The generated source uses `steps`, `sleep`, and `createHook`, which Workflow provides to dynamic workflows. Steps write progress to a durable workflow stream. The interface reads those events and run status from server routes.
+
+### Named steps in observability
+
+Each operation is its own deployed `"use step"` function. The generated source calls functions such as `steps.extractSignals(config, [])` and `steps.writeAnnouncement(config, outputs)` directly, and the start route binds only the selected operations. Their own step IDs, inputs, results, retries, and timing appear in Workflow observability.
+
+| Graph operation | Deployed function |
+| --- | --- |
+| Extract signals | `extractSignals` |
+| Find the angle | `findAngle` |
+| Write announcement | `writeAnnouncement` |
+| Build an outline | `buildOutline` |
+| Compose a draft | `composeDraft` |
+| Build a timeline | `buildTimeline` |
+| Plan the response | `planResponse` |
+| Check quality | `checkQuality` |
+
+Each operation writes its own start and completion events to the durable stream. The shared `emit` step records workflow lifecycle events such as starting, sleeping, waiting for approval, and completion.
 
 ### Refresh and reconnect
 

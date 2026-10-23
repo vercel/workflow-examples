@@ -6,6 +6,18 @@ import type {
   WorkflowConfig,
 } from './types';
 
+/** The deployed function each graph operation binds into dynamic source. */
+export const STEP_BINDINGS = {
+  analyze: 'extractSignals',
+  positioning: 'findAngle',
+  announcement: 'writeAnnouncement',
+  outline: 'buildOutline',
+  draft: 'composeDraft',
+  timeline: 'buildTimeline',
+  response: 'planResponse',
+  quality: 'checkQuality',
+} as const satisfies Record<StepId, string>;
+
 export const STEP_CATALOG: Record<StepId, StepDefinition> = {
   analyze: {
     id: 'analyze',

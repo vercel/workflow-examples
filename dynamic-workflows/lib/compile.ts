@@ -1,5 +1,10 @@
-import type { WorkflowConfig } from './types';
+import { STEP_BINDINGS } from './catalog';
+import type { StepId, WorkflowConfig } from './types';
 import { validateConfig } from './validate';
+
+function callStep(id: StepId, previous: string): string {
+  return `steps.${STEP_BINDINGS[id]}(config, ${previous})`;
+}
 
 /** Builds trusted orchestration. User text is passed as input, never as source. */
 export function compileWorkflow(value: WorkflowConfig): string {
@@ -10,22 +15,22 @@ export function compileWorkflow(value: WorkflowConfig): string {
   const parallel = [
     'const outputs = [];',
     ...(config.steps.includes('analyze')
-      ? ['outputs.push(await runStep("analyze", []));']
+      ? [`outputs.push(await ${callStep('analyze', '[]')});`]
       : []),
     ...(branches.length
       ? [
-          `const branches = await Promise.all([\n${branches.map((id) => `      runStep(${JSON.stringify(id)}, outputs),`).join('\n')}\n    ]);`,
+          `const branches = await Promise.all([\n${branches.map((id) => `      ${callStep(id, 'outputs')},`).join('\n')}\n    ]);`,
           'outputs.push(...branches);',
         ]
       : []),
     ...(config.steps.includes('quality')
-      ? ['outputs.push(await runStep("quality", outputs));']
+      ? [`outputs.push(await ${callStep('quality', 'outputs')});`]
       : []),
   ].join('\n    ');
   const execution =
     config.mode === 'parallel'
       ? parallel
-      : `const outputs = [];\n${config.steps.map((id) => `    outputs.push(await runStep(${JSON.stringify(id)}, outputs));`).join('\n')}`;
+      : `const outputs = [];\n${config.steps.map((id) => `    outputs.push(await ${callStep(id, 'outputs')});`).join('\n')}`;
   const approval = config.approval
     ? `await emit({ type: "waiting", message: "Paused for human approval. This run survives a page refresh." });
     const decision = await Promise.race([
@@ -46,13 +51,6 @@ export function compileWorkflow(value: WorkflowConfig): string {
   const gate = createHook({ token: input.approvalToken });
   await gate.getConflict();
   const emit = (event) => steps.emit({ ...event, timestamp: new Date().toISOString() });
-
-  async function runStep(stepId, previous) {
-    await emit({ type: "step-start", stepId, message: "Running a deployed step." });
-    const output = await steps.execute(stepId, config, previous);
-    await emit({ type: "step-complete", stepId, output, message: output.summary });
-    return output;
-  }
 
   try {
     await emit({ type: "started", config, message: "Executing a workflow assembled at runtime." });

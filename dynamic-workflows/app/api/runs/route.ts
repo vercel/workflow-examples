@@ -1,5 +1,6 @@
 import { randomBytes } from 'node:crypto';
 import { start } from 'workflow/api';
+import { STEP_BINDINGS } from '@/lib/catalog';
 import { compileWorkflow } from '@/lib/compile';
 import {
   approvalToken,
@@ -10,7 +11,28 @@ import {
 } from '@/lib/server';
 import type { StartRunResponse, WorkflowInput } from '@/lib/types';
 import { ConfigError, validateConfig } from '@/lib/validate';
-import { emit, execute } from '@/workflows/steps';
+import {
+  buildOutline,
+  buildTimeline,
+  checkQuality,
+  composeDraft,
+  emit,
+  extractSignals,
+  findAngle,
+  planResponse,
+  writeAnnouncement,
+} from '@/workflows/steps';
+
+const deployedSteps = {
+  extractSignals,
+  findAngle,
+  writeAnnouncement,
+  buildOutline,
+  composeDraft,
+  buildTimeline,
+  planResponse,
+  checkQuality,
+};
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -35,7 +57,17 @@ export async function POST(request: Request) {
       approvalToken: approvalToken(capability),
     };
     const run = await start(source, [input], {
-      experimental_dynamic: { steps: { emit, execute } },
+      experimental_dynamic: {
+        steps: {
+          emit,
+          ...Object.fromEntries(
+            config.steps.map((id) => {
+              const alias = STEP_BINDINGS[id];
+              return [alias, deployedSteps[alias]];
+            })
+          ),
+        },
+      },
     });
     return Response.json(
       {

@@ -10,6 +10,6 @@
     "vite": "npm:rolldown-vite"
   },
   "dependencies": {
-    "workflow": "5.0.1"
+    "workflow": "https://workflow-tarballs-o5bisxdwt.labs.vercel.dev/workflow.tgz"
   }
 }

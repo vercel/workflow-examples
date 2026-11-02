@@ -10,13 +10,13 @@
   "devDependencies": {
     "@swc/core": "1.15.3",
     "@types/bun": "latest",
-    "@workflow/swc-plugin": "5.0.0"
+    "@workflow/swc-plugin": "https://workflow-tarballs-o5bisxdwt.labs.vercel.dev/workflow-swc-plugin.tgz"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@workflow/world-local": "5.0.1",
-    "workflow": "5.0.1"
+    "@workflow/world-local": "https://workflow-tarballs-o5bisxdwt.labs.vercel.dev/workflow-world-local.tgz",
+    "workflow": "https://workflow-tarballs-o5bisxdwt.labs.vercel.dev/workflow.tgz"
   }
 }

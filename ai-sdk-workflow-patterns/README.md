@@ -38,6 +38,10 @@ This project shows common AI agent patterns using the Workflow DevKit to make ag
 
 4. Open [http://localhost:3000](http://localhost:3000) to see the app
 
+## Note on the `ai` version
+
+The workflows assign the Workflow SDK's `fetch` step to `globalThis.fetch` so AI SDK calls run inside workflow functions. `ai` is pinned to `5.0.206`: starting with `ai@5.0.207` (`@ai-sdk/provider-utils@3.0.28`), the AI SDK reads responses with `response.body.getReader()`, which `workflow@5.0.1` does not support inside workflow functions, so every model call fails with `AI_APICallError: Failed to process successful response`. Keep this pin until the example moves to a `workflow` release that supports reading response bodies inside workflow functions.
+
 ## Patterns Implemented
 
 - **Sequential Workflow** - Multi-step AI processing with quality checks and conditional regeneration

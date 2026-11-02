@@ -15,8 +15,8 @@ importers:
         specifier: ^1.2.3
         version: 1.2.3(@types/react@19.2.2)(react@19.2.3)
       ai:
-        specifier: ^5.0.76
-        version: 5.0.76(zod@4.1.11)
+        specifier: 5.0.206
+        version: 5.0.206(zod@4.1.11)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -75,20 +75,20 @@ importers:
 
 packages:
 
-  '@ai-sdk/gateway@2.0.0':
-    resolution: {integrity: sha512-Gj0PuawK7NkZuyYgO/h5kDK/l6hFOjhLdTq3/Lli1FTl47iGmwhH1IZQpAL3Z09BeFYWakcwUmn02ovIm2wy9g==}
+  '@ai-sdk/gateway@2.0.105':
+    resolution: {integrity: sha512-X0cdnJ/B422AvtKf5C2ZO8cyVf36utX8DORg6AHux1+a3EGYSLIy91L6MrUKOP68c7dL3WnAirOaiQrGL8rueQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/provider-utils@3.0.12':
-    resolution: {integrity: sha512-ZtbdvYxdMoria+2SlNarEk6Hlgyf+zzcznlD55EAl+7VZvJaSg2sqPvwArY7L6TfDEDJsnCq0fdhBSkYo0Xqdg==}
+  '@ai-sdk/provider-utils@3.0.27':
+    resolution: {integrity: sha512-JFhJK5ynprll2FR3e+sHagJJIwvIagsNA0FLbLPq2Os4yLUK2/eiaCU0jXsADik73/hhvcPPLmD+Uo8eu5kFaQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/provider@2.0.0':
-    resolution: {integrity: sha512-6o7Y2SeO9vFKB8lArHXehNuusnpddKPk7xqL7T2/b+OvXMRIXUO1rR4wcv1hAFUAT9avGZshty3Wlua/XA7TvA==}
+  '@ai-sdk/provider@2.0.3':
+    resolution: {integrity: sha512-h88OPkavHTiN9tMn2l5awAznGB0lXzjcLhgR1/rvjB2zlLprsNxbM2tt6OJsHUxduLC3klq0/eqaSf6fX5XVww==}
     engines: {node: '>=18'}
 
   '@alloc/quick-lru@5.2.0':
@@ -1305,8 +1305,8 @@ packages:
       ws:
         optional: true
 
-  '@vercel/oidc@3.0.3':
-    resolution: {integrity: sha512-yNEQvPcVrK9sIe637+I0jD6leluPxzwJKx/Haw6F4H77CdDsszUn5V3o96LPziXkSNE2B83+Z3mjqGKBK/R6Gg==}
+  '@vercel/oidc@3.1.0':
+    resolution: {integrity: sha512-Fw28YZpRnA3cAHHDlkt7xQHiJ0fcL+NRcIqsocZQUSmbzeIKRpwttJjik5ZGanXP+vlA4SbTg+AbA3bP363l+w==}
     engines: {node: '>= 20'}
 
   '@vercel/oidc@3.2.0':
@@ -1470,8 +1470,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  ai@5.0.76:
-    resolution: {integrity: sha512-ZCxi1vrpyCUnDbtYrO/W8GLvyacV9689f00yshTIQ3mFFphbD7eIv40a2AOZBv3GGRA7SSRYIDnr56wcS/gyQg==}
+  ai@5.0.206:
+    resolution: {integrity: sha512-LQ+Jh0VAXbLhpiLlkAs4WcBUFzh59B5WVb+YgAya15mMUuXeDdeozw2UduM6tKQ+i6uNaSqtV/bJkiG8Ogp6lA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -2770,21 +2770,21 @@ packages:
 
 snapshots:
 
-  '@ai-sdk/gateway@2.0.0(zod@4.1.11)':
+  '@ai-sdk/gateway@2.0.105(zod@4.1.11)':
     dependencies:
-      '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.12(zod@4.1.11)
-      '@vercel/oidc': 3.0.3
+      '@ai-sdk/provider': 2.0.3
+      '@ai-sdk/provider-utils': 3.0.27(zod@4.1.11)
+      '@vercel/oidc': 3.1.0
       zod: 4.1.11
 
-  '@ai-sdk/provider-utils@3.0.12(zod@4.1.11)':
+  '@ai-sdk/provider-utils@3.0.27(zod@4.1.11)':
     dependencies:
-      '@ai-sdk/provider': 2.0.0
+      '@ai-sdk/provider': 2.0.3
       '@standard-schema/spec': 1.0.0
       eventsource-parser: 3.0.6
       zod: 4.1.11
 
-  '@ai-sdk/provider@2.0.0':
+  '@ai-sdk/provider@2.0.3':
     dependencies:
       json-schema: 0.4.0
 
@@ -3748,7 +3748,7 @@ snapshots:
       '@aws-sdk/credential-provider-web-identity': 3.972.49
       ws: 8.22.0
 
-  '@vercel/oidc@3.0.3': {}
+  '@vercel/oidc@3.1.0': {}
 
   '@vercel/oidc@3.2.0': {}
 
@@ -4162,11 +4162,11 @@ snapshots:
 
   acorn@8.16.0: {}
 
-  ai@5.0.76(zod@4.1.11):
+  ai@5.0.206(zod@4.1.11):
     dependencies:
-      '@ai-sdk/gateway': 2.0.0(zod@4.1.11)
-      '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.12(zod@4.1.11)
+      '@ai-sdk/gateway': 2.0.105(zod@4.1.11)
+      '@ai-sdk/provider': 2.0.3
+      '@ai-sdk/provider-utils': 3.0.27(zod@4.1.11)
       '@opentelemetry/api': 1.9.0
       zod: 4.1.11
 

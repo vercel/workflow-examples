@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "nitro": "3.0.1-alpha.1",
+    "nitro": "3.0.260903-beta",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "workflow": "5.0.1"

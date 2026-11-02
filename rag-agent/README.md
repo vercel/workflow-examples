@@ -7,7 +7,7 @@ This example shows how to use Workflow to make RAG agents more durable and relia
 ### Prerequisites
 
 - An API key from [Vercel AI Gateway](https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai&title=Go+to+AI+Gateway)
-- A PostgreSQL database
+- A PostgreSQL database with the [pgvector](https://github.com/pgvector/pgvector) extension available (e.g. the `pgvector/pgvector:pg16` Docker image)
 
 ### Local Development
 
@@ -19,7 +19,7 @@ This example shows how to use Workflow to make RAG agents more durable and relia
    pnpm install
    ```
 
-2. Create a `.env.local` file in `examples/rag-agent/`:
+2. Create a `.env.local` file in `rag-agent/`:
 
    ```bash
    touch .env.local
@@ -32,19 +32,19 @@ This example shows how to use Workflow to make RAG agents more durable and relia
    DATABASE_URL=your_database_url_here
    ```
 
-3. Run the migrations:
+4. Run the migrations:
 
     ```bash
     pnpm db:migrate
     ```
 
-4. Start the development server:
+5. Start the development server:
 
    ```bash
    pnpm dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) to see the app
+6. Open [http://localhost:3000](http://localhost:3000) to see the app
 
 This project uses the following stack:
 

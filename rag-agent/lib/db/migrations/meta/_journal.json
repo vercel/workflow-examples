@@ -8,6 +8,13 @@
       "when": 1719997972944,
       "tag": "0000_yielding_bloodaxe",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793643213207,
+      "tag": "0001_common_boomer",
+      "breakpoints": true
     }
   ]
 }

@@ -40,7 +40,7 @@ This project shows common AI agent patterns using the Workflow DevKit to make ag
 
 ## How AI SDK calls run
 
-Each AI SDK call (`generateText()`, `generateObject()`) runs inside a `"use step"` function, and the workflow functions only orchestrate those steps. Steps have full Node.js access, so the AI SDK makes its requests and reads the responses as usual, and the step results are recorded so a replayed workflow does not call the model again. For tool-calling agents, use AI SDK's [`WorkflowAgent`](https://ai-sdk.dev/v7/docs/agents/workflow-agent), which runs each model call as a step for you.
+Each AI SDK call runs inside a `"use step"` function, and the workflow functions orchestrate those steps. For agents, use AI SDK's [`WorkflowAgent`](https://ai-sdk.dev/v7/docs/agents/workflow-agent).
 
 ## Patterns Implemented
 

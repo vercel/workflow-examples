@@ -44,7 +44,7 @@ async function implementFileChange(
       'You are an expert at safely removing code while ensuring no breaking changes.',
   }[file.changeType];
 
-  const { object } = await generateObject({
+  await generateObject({
     model: MODEL,
     schema: z.object({
       explanation: z.string(),
@@ -59,7 +59,6 @@ async function implementFileChange(
   });
 
   console.log('Finished file change step');
-  return { file, implementation: object };
 }
 
 export async function orchestratorWorkflow(featureRequest: string) {

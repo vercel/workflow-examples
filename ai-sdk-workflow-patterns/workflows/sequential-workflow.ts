@@ -1,26 +1,13 @@
-import { generateObject, generateText } from 'ai';
-import { fetch } from 'workflow';
+import { generateObject } from 'ai';
 import { z } from 'zod';
+import { generateTextStep } from './ai-steps';
 
 const MODEL = 'openai/o4-mini';
 
-export async function sequentialWorkflow(input: string) {
-  'use workflow';
+async function evaluateCopy(copy: string) {
+  'use step';
 
-  // Uses Workflow's "fetch" step. This allows AI SDK calls
-  // to automatically work as steps
-  globalThis.fetch = fetch;
-
-  // First step: Generate marketing copy
-  const { text: copy } = await generateText({
-    model: MODEL,
-    prompt: `Write persuasive marketing copy for: ${input}. Focus on benefits and emotional appeal.`,
-  });
-
-  console.log('[Step 1] Finished', { copy: copy.slice(0, 100) });
-
-  // Perform quality check on copy
-  const { object: qualityMetrics } = await generateObject({
+  const { object } = await generateObject({
     model: MODEL,
     schema: z.object({
       hasCallToAction: z.boolean(),
@@ -34,6 +21,22 @@ export async function sequentialWorkflow(input: string) {
 
     Copy to evaluate: ${copy}`,
   });
+  return object;
+}
+
+export async function sequentialWorkflow(input: string) {
+  'use workflow';
+
+  // First step: Generate marketing copy
+  const copy = await generateTextStep({
+    model: MODEL,
+    prompt: `Write persuasive marketing copy for: ${input}. Focus on benefits and emotional appeal.`,
+  });
+
+  console.log('[Step 1] Finished', { copy: copy.slice(0, 100) });
+
+  // Perform quality check on copy
+  const qualityMetrics = await evaluateCopy(copy);
 
   console.log('[Step 2] Finished', { qualityMetrics });
 
@@ -44,7 +47,7 @@ export async function sequentialWorkflow(input: string) {
     qualityMetrics.clarity < 7
   ) {
     console.log('Quality check failed, regenerating Step 2...');
-    const { text: improvedCopy } = await generateText({
+    const improvedCopy = await generateTextStep({
       model: MODEL,
       prompt: `Rewrite this marketing copy with:
       ${!qualityMetrics.hasCallToAction ? '- A clear call to action' : ''}

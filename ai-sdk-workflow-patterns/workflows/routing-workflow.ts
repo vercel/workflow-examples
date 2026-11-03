@@ -1,16 +1,11 @@
-import { generateObject, generateText } from 'ai';
-import { fetch } from 'workflow';
+import { generateObject } from 'ai';
 import { z } from 'zod';
+import { generateTextStep } from './ai-steps';
 
-export async function routingWorkflow(query: string) {
-  'use workflow';
+async function classifyQuery(query: string) {
+  'use step';
 
-  // Uses Workflow's "fetch" step. This allows AI SDK calls
-  // to automatically work as steps
-  globalThis.fetch = fetch;
-
-  // First step: Classify the query type
-  const { object: classification } = await generateObject({
+  const { object } = await generateObject({
     model: 'openai/gpt-4o',
     schema: z.object({
       reasoning: z.string(),
@@ -25,12 +20,20 @@ export async function routingWorkflow(query: string) {
     2. Complexity (simple or complex)
     3. Brief reasoning for classification`,
   });
+  return object;
+}
+
+export async function routingWorkflow(query: string) {
+  'use workflow';
+
+  // First step: Classify the query type
+  const classification = await classifyQuery(query);
 
   console.log('[Step 1] Finished', { classification });
 
   // Route based on classification
   // Set model and system prompt based on query type and complexity
-  const { text: response } = await generateText({
+  const response = await generateTextStep({
     model:
       classification.complexity === 'simple'
         ? 'openai/gpt-4o-mini'

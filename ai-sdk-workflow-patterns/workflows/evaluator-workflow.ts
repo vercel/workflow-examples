@@ -1,6 +1,34 @@
-import { generateObject, generateText } from 'ai';
-import { fetch } from 'workflow';
+import { generateObject } from 'ai';
 import { z } from 'zod';
+import { generateTextStep } from './ai-steps';
+
+async function evaluateTranslation(text: string, translation: string) {
+  'use step';
+
+  const { object } = await generateObject({
+    model: 'openai/gpt-4o', // use a larger model to evaluate
+    schema: z.object({
+      qualityScore: z.number().min(1).max(10),
+      preservesTone: z.boolean(),
+      preservesNuance: z.boolean(),
+      culturallyAccurate: z.boolean(),
+      specificIssues: z.array(z.string()),
+      improvementSuggestions: z.array(z.string()),
+    }),
+    system: 'You are an expert in evaluating literary translations.',
+    prompt: `Evaluate this translation:
+
+      Original: ${text}
+      Translation: ${translation}
+
+      Consider:
+      1. Overall quality
+      2. Preservation of tone
+      3. Preservation of nuance
+      4. Cultural accuracy`,
+  });
+  return object;
+}
 
 export async function evaluatorWorkflow(text: string, targetLanguage: string) {
   'use workflow';
@@ -9,12 +37,8 @@ export async function evaluatorWorkflow(text: string, targetLanguage: string) {
   let iterations = 0;
   const MAX_ITERATIONS = 3;
 
-  // Uses Workflow's "fetch" step. This allows AI SDK calls
-  // to automatically work as steps
-  globalThis.fetch = fetch;
-
   // Initial translation
-  const { text: translation } = await generateText({
+  const translation = await generateTextStep({
     model: 'openai/gpt-4o-mini', // use small model for first attempt
     system: 'You are an expert literary translator.',
     prompt: `Translate this text to ${targetLanguage}, preserving tone and cultural nuances:
@@ -32,28 +56,7 @@ export async function evaluatorWorkflow(text: string, targetLanguage: string) {
   // Evaluation-optimization loop
   while (iterations < MAX_ITERATIONS) {
     // Evaluate current translation
-    const { object: evaluation } = await generateObject({
-      model: 'openai/gpt-4o', // use a larger model to evaluate
-      schema: z.object({
-        qualityScore: z.number().min(1).max(10),
-        preservesTone: z.boolean(),
-        preservesNuance: z.boolean(),
-        culturallyAccurate: z.boolean(),
-        specificIssues: z.array(z.string()),
-        improvementSuggestions: z.array(z.string()),
-      }),
-      system: 'You are an expert in evaluating literary translations.',
-      prompt: `Evaluate this translation:
-
-      Original: ${text}
-      Translation: ${currentTranslation}
-
-      Consider:
-      1. Overall quality
-      2. Preservation of tone
-      3. Preservation of nuance
-      4. Cultural accuracy`,
-    });
+    const evaluation = await evaluateTranslation(text, currentTranslation);
 
     console.log(`[Step ${step}] Finished`, { evaluation });
 
@@ -70,7 +73,7 @@ export async function evaluatorWorkflow(text: string, targetLanguage: string) {
     }
 
     // Generate improved translation based on feedback
-    const { text: improvedTranslation } = await generateText({
+    const improvedTranslation = await generateTextStep({
       model: 'openai/gpt-4o', // use a larger model
       system: 'You are an expert literary translator.',
       prompt: `Improve this translation based on the following feedback:

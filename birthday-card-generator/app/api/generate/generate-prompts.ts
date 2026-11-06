@@ -1,4 +1,4 @@
-import { generateObject } from 'ai';
+import { generateText, Output } from 'ai';
 import { z } from 'zod';
 import { writeProgressEvent } from './stream-progress';
 
@@ -12,15 +12,17 @@ export const generatePrompts = async (userPrompt: string) => {
     message: 'Generating the text and image prompts.',
   });
 
-  const result = await generateObject({
+  const { output } = await generateText({
     model: 'google/gemini-3.1-flash-lite',
-    schema: z.object({
-      textPrompt: z
-        .string()
-        .describe('The prompt for generating birthday card text message'),
-      imagePrompt: z
-        .string()
-        .describe('The prompt for generating the birthday card image'),
+    output: Output.object({
+      schema: z.object({
+        textPrompt: z
+          .string()
+          .describe('The prompt for generating birthday card text message'),
+        imagePrompt: z
+          .string()
+          .describe('The prompt for generating the birthday card image'),
+      }),
     }),
     prompt: `You are a birthday card assistant. The user has provided the following request: "${userPrompt}"
 
@@ -40,7 +42,7 @@ If the user only provides one aspect, generate a reasonable prompt for the other
   });
 
   return {
-    textPrompt: result.object.textPrompt,
-    imagePrompt: result.object.imagePrompt,
+    textPrompt: output.textPrompt,
+    imagePrompt: output.imagePrompt,
   };
 };

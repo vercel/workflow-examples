@@ -55,6 +55,31 @@ This starter is a template for a Next.js project that uses Workflow DevKit with 
 
 ### Production Deployment
 
-The postgres world is incompatible with Vercel deployments (on Vercel, workflow deployments are automatically configured to use the Vercel World with zero configuration).
+On Vercel, workflows are automatically configured and optimized to use the [Vercel World](https://useworkflow.dev/worlds/vercel), which is secure and infinitely scalable by default. When using the Postgres World, you may want to self-host on your own infrastructure. Here's an example with Railway.
 
-Coming soon: instructions on deploying workflows using the Postgres World off-Vercel.
+### Self-Host on Railway
+
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/workflow-devkit?utm_campaign=workflow-devkit)
+
+This example is also available as a Railway template that deploys:
+
+- the `postgres` demo app
+- a PostgreSQL database for the Postgres World
+- a separate observability deployment for inspecting runs
+
+After deploying the template, trigger a workflow run against your app deployment:
+
+```bash
+curl -X POST \
+  -H 'content-type: application/json' \
+  --data '{"email":"your-test@example.com"}' \
+  https://YOUR-APP-URL/api/signup
+```
+
+You should get back:
+
+```json
+{"message":"User signup workflow started"}
+```
+
+Then open your observability deployment URL to watch the run progress, inspect the workflow steps, and confirm that the run completes successfully.

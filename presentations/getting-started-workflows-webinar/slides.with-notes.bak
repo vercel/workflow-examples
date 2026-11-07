@@ -1,0 +1,793 @@
+---
+theme: ./
+title: Getting Started with Vercel Workflows
+footerLogo: wordmark
+footerTitle: true
+layout: 1-title
+variant: title
+subtitle1Image: https://vercel.com/api/www/avatar/d86685cc0ac958594071ba9cf94e5c50a3551011
+subtitle2Icon: code
+subtitleSize: lg
+---
+
+::title::
+# Getting Started with Vercel Workflows
+
+::subtitle-1::
+Pranay Prakash, Head of Workflows
+
+::subtitle-2::
+Durable backends in plain TypeScript
+
+<!--
+Open by framing the session around a very simple promise: long-running backends should not require an infrastructure scavenger hunt. Say that this webinar is about how to keep writing application code even when the work spans time, failures, model calls, and human input. Briefly introduce yourself, then tell the audience they will see one playful but surprisingly realistic demo app that exercises the exact kinds of async edges teams usually struggle with.
+-->
+---
+---
+layout: 2-statement
+variant: large
+---
+
+::title::
+# Long-running backends should feel like writing application code
+
+::subtitle::
+Not stitching together queues, retries, schedulers, and state machines by hand.
+
+<!--
+Use this slide as the thesis for the whole talk. Mention the typical picture people have in their heads when they hear "durable workflow": queues, workers, dead-letter handling, cron, retry settings, some dashboard in a different tool, and a lot of glue code. Then contrast that with the promise of Workflow: the orchestration is visible directly in the TypeScript they already know how to read.
+-->
+---
+---
+layout: 1-title
+variant: agenda
+badge: Today's Flow
+---
+
+::item-1::
+Why async systems get messy fast
+
+::item-2::
+The Workflow mental model
+
+::item-3::
+Live demo: birthday card generator
+
+::item-4::
+What durability looks like in code
+
+::item-5::
+Human input, waiting, and resuming
+
+::item-6::
+Patterns beyond one demo app
+
+::item-7::
+How to adopt Workflow incrementally
+
+::item-8::
+Q&A
+
+<!--
+Set expectations for the pacing. Tell the audience the first half is about the mental model and one live demo, and the second half is about how the same model scales to more serious cases like approvals, agents, and framework integrations. Mention that you will come back to a practical migration recipe near the end so nobody has to reverse-engineer the "how do I start" question from the examples.
+-->
+---
+---
+layout: 2-statement
+variant: title-3
+tagPosition: inline
+---
+
+::title::
+# Why this matters
+
+::s1-tag::
+<Tag color="gray">Today</Tag>
+
+::s1-title::
+Async code is everywhere
+
+::s1-body::
+Background jobs, approval flows, delayed sends, retries, and agent loops show up in almost every modern app.
+
+::s2-tag::
+<Tag color="gray">Pain</Tag>
+
+::s2-title::
+The usual stack sprawls
+
+::s2-body::
+Queues, workers, cron, retry logic, and state tracking get split across services and become harder to reason about.
+
+::s3-tag::
+<Tag color="gray">Shift</Tag>
+
+::s3-title::
+Durability moves into your code
+
+::s3-body::
+Workflow turns plain TypeScript functions into resilient, observable processes without forcing a rearchitecture.
+
+<!--
+Land the pain clearly here. Good phrasing is: "The hard part is not writing the one happy-path async function. The hard part is everything that happens after the first timeout, retry, deploy, approval, or delayed send." Call out AI agents specifically as something that makes the problem more urgent because they combine tool calls, long runtimes, state, and human checkpoints.
+-->
+---
+---
+layout: 2-statement
+variant: cols-3
+tagPosition: inline
+---
+
+::title::
+# What you'll learn in this session
+
+::s1-tag::
+<Tag color="gray">Core</Tag>
+
+::s1-title::
+Two directives
+
+::s1-body::
+How `use workflow` and `use step` convert ordinary functions into durable execution boundaries.
+
+::s2-tag::
+<Tag color="gray">Practical</Tag>
+
+::s2-title::
+One real product flow
+
+::s2-body::
+We will build the mental model through a birthday card app with generation, approvals, waiting, and delivery.
+
+::s3-tag::
+<Tag color="gray">Adoption</Tag>
+
+::s3-title::
+One migration recipe
+
+::s3-body::
+How to take an existing async path or AI agent and convert it into a workflow in minutes.
+
+<!--
+Mirror the public webinar framing here. Say that the entire session can be reduced to three questions: what are the two directives, what does a real workflow look like, and how do I migrate one of my own flows without a rewrite. That sentence gives the audience a clean structure to hold onto.
+-->
+---
+---
+layout: 2-statement
+variant: transition
+transitionLabel: "Part 1 of 4"
+---
+
+::title::
+The fastest way to explain Workflow is through one product story
+
+::subtitle::
+We are going to use a playful app so the system design stays memorable.
+
+<!--
+Transition into the demo setup. Explain that the birthday card generator is intentionally whimsical, but the async requirements are not whimsical at all. It has the same ingredients as many internal tools and production features: user-triggered work, multiple model calls, outbound email, waiting on external events, and delayed completion.
+-->
+---
+---
+layout: 2-statement
+variant: title-3
+tagPosition: inline
+---
+
+::title::
+# Demo app: birthday card generator
+
+::s1-tag::
+<Tag color="gray">Parallel</Tag>
+
+::s1-title::
+Two AI tasks at once
+
+::s1-body::
+Generate an image and a message in parallel from one user prompt.
+
+::s2-tag::
+<Tag color="gray">Human Input</Tag>
+
+::s2-title::
+RSVPs as workflow events
+
+::s2-body::
+Invite friends, wait for replies, and resume the flow when real people interact.
+
+::s3-tag::
+<Tag color="gray">Scheduling</Tag>
+
+::s3-title::
+Deliver at the right moment
+
+::s3-body::
+Pause until the birthday, then send the final card and RSVP summary to the recipient.
+
+<!--
+Walk through the app shape in plain language. A user describes the kind of card they want, the app generates both an image and a message, invites friends to RSVP, waits until the birthday, and then sends the completed card to the recipient. Emphasize that this is already enough to demonstrate parallel work, human-in-the-loop behavior, and time-based scheduling in one cohesive story.
+-->
+---
+---
+layout: 4-mermaid
+variant: title-image
+chart: |
+  flowchart LR
+    A["User submits prompt"] --> B["POST /api/generate"]
+    B --> C["start(generateBirthdayCard)"]
+    C --> D["generatePrompts()"]
+    D --> E["generateImage()"]
+    D --> F["generateMessage()"]
+    C --> G["requestRsvp()"]
+    G --> H["createWebhook() waits for replies"]
+    H --> I["sleep(until birthday)"]
+    I --> J["sendRecipientEmail()"]
+    classDef accent fill:#111111,stroke:#666666,color:#ffffff;
+    class C,E,F,G,H,I,J accent;
+---
+
+::title::
+# One workflow, multiple real-world async patterns
+
+<!--
+Read the flow left to right. Avoid over-explaining the diagram. The point is to show that one user action fans out into multiple steps and then pauses at meaningful moments. Say something like: "If you squint, this could be onboarding, procurement approval, content generation, or any agent that needs tools plus waiting."
+-->
+---
+---
+layout: 10-code
+variant: right-list
+filename: app/api/generate/route.ts
+codeSize: sm
+---
+
+::code::
+```ts
+export const POST = async (request: Request) => {
+  const body = await request.json();
+
+  const run = await start(generateBirthdayCard, [
+    body.prompt,
+    body.recipientEmail,
+    body.rsvpEmails,
+    new Date(body.eventDate),
+  ]);
+
+  const values = await run.returnValue;
+  return NextResponse.json(values);
+};
+```
+
+::title::
+# Workflow starts from a normal route
+
+::item-1::
+No separate worker app
+
+::item-2::
+No custom queue producer
+
+::item-3::
+Your API returns workflow output
+
+::item-4::
+The call site stays easy to read
+
+<!--
+This is where you make the first important emotional point for developers: they do not need a second app or a dedicated queue producer to begin. Point out that the route receives a request, calls `start(...)`, waits for the return value, and responds normally. If you want a short memorable line, use: "The workflow enters through the same front door as the rest of your app."
+-->
+---
+---
+layout: 10-code
+variant: left-2
+filename: app/api/generate/generate-birthday-card.ts
+codeSize: xs
+---
+
+::code::
+```ts
+export const generateBirthdayCard = async (...) => {
+  'use workflow';
+
+  const { textPrompt, imagePrompt } = await generatePrompts(prompt);
+
+  const [image, text] = await Promise.all([
+    generateImage(imagePrompt),
+    generateMessage(textPrompt),
+  ]);
+
+  const webhooks = rsvpEmails.map(() => createWebhook());
+  await Promise.all(rsvpEmails.map((email, i) =>
+    requestRsvp(email, webhooks[i].url)
+  ));
+
+  const rsvpReplies = await Promise.all(webhooks);
+  await sleep(birthday!);
+  await sendRecipientEmail({ recipientEmail, cardImage: image, cardText: text, rsvpReplies });
+};
+```
+
+::s1-title::
+`use workflow`
+
+::s1-body::
+This function becomes the durable orchestrator for the whole flow.
+
+::s2-title::
+Read it top to bottom
+
+::s2-body::
+The control flow stays understandable even though the work spans time, models, emails, and human actions.
+
+<!--
+Spend a little extra time here because this is the heart of the mental model. Read the orchestration top to bottom and narrate it as a story, not as syntax. Generate prompts, run image and text generation in parallel, fan out RSVP requests, wait for responses, sleep until the event date, then send the final email. Call out that the source reads like the product requirement itself. Mention the small demo hack too: the birthday wait is shortened so the audience can see the pause-resume behavior live.
+-->
+---
+---
+layout: 10-code
+variant: right-list
+filename: app/api/generate/generate-image.ts + generate-message.ts
+codeSize: sm
+---
+
+::code::
+```ts
+export const generateImage = async (prompt: string) => {
+  'use step';
+  const { files } = await generateText({
+    model: 'google/gemini-2.5-flash-image',
+    prompt,
+  });
+  return files.at(0);
+};
+
+export const generateMessage = async (prompt: string) => {
+  'use step';
+  const { text } = await generateText({
+    model: 'openai/gpt-5-nano',
+    prompt,
+  });
+  return text;
+};
+```
+
+::title::
+# Each async boundary becomes explicit
+
+::item-1::
+Model calls are isolated into steps
+
+::item-2::
+Retries happen at the right boundary
+
+::item-3::
+Outputs are captured per step
+
+::item-4::
+Observability matches the code you wrote
+
+<!--
+Now explain why the step boundary matters. The point is not only retries. The point is that each important side effect gets a name, an execution boundary, and its own observability. Mention that model calls are great examples because they are expensive, failure-prone, and semantically important enough that teams want to see them as distinct units in production.
+-->
+---
+---
+layout: 2-statement
+variant: transition
+transitionLabel: "Live Demo"
+---
+
+::title::
+Switch from slides to the app
+
+::subtitle::
+The goal is not just to generate a card. The goal is to watch a durable workflow move through real states.
+
+<!--
+This is your cue to leave the deck. Take five to ten minutes here depending on energy and audience engagement. Keep the structure tight: fill the form, submit the workflow, show logs or workflow progress, point out the RSVP stage, and show how the flow resumes instead of restarting. If the demo feels slow, narrate the expected next state and keep momentum.
+-->
+---
+---
+layout: 2-statement
+variant: cols-4
+tagPosition: above
+---
+
+::title::
+# What to watch during the demo
+
+::s1-tag::
+<Tag color="gray">1</Tag>
+
+::s1-title::
+Start
+
+::s1-body::
+Submit one prompt and kick off the workflow from the UI.
+
+::s2-tag::
+<Tag color="gray">2</Tag>
+
+::s2-title::
+Parallel work
+
+::s2-body::
+Image and message generation can happen together.
+
+::s3-tag::
+<Tag color="gray">3</Tag>
+
+::s3-title::
+Pause
+
+::s3-body::
+The workflow waits for RSVP clicks and for the birthday delay.
+
+::s4-tag::
+<Tag color="gray">4</Tag>
+
+::s4-title::
+Resume
+
+::s4-body::
+The final email sends only after the required external events complete.
+
+<!--
+If you return to this slide before or after the live run, use it as a checklist. The audience does not need every implementation detail; they need to notice four state changes: start, parallel work, pause, and resume. If the live demo goes perfectly, this slide helps you summarize it. If the live demo is messy, this slide helps you recover and restate the intended behavior.
+-->
+---
+---
+layout: 2-statement
+variant: transition
+transitionLabel: "Part 2 of 4"
+---
+
+::title::
+What just happened is the product story
+
+::subtitle::
+Now let's turn that story into a reusable mental model you can apply to your own app.
+
+<!--
+Bring the audience back from the UI into the abstraction. Say that the real value of the demo was not the birthday card itself; it was seeing a durable process that could safely move across asynchronous boundaries without turning into a collection of disconnected systems.
+-->
+---
+---
+layout: 2-statement
+variant: title-4
+tagPosition: inline
+---
+
+::title::
+# Four primitives to remember
+
+::s1-tag::
+<Tag color="gray">Entrypoint</Tag>
+
+::s1-title::
+`use workflow`
+
+::s1-body::
+Marks the durable orchestrator.
+
+::s2-tag::
+<Tag color="gray">Boundary</Tag>
+
+::s2-title::
+`use step`
+
+::s2-body::
+Marks retryable units of work.
+
+::s3-tag::
+<Tag color="gray">External Event</Tag>
+
+::s3-title::
+`createWebhook`
+
+::s3-body::
+Lets humans or systems resume a waiting workflow.
+
+::s4-tag::
+<Tag color="gray">Time</Tag>
+
+::s4-title::
+`sleep`
+
+::s4-body::
+Lets a workflow pause and continue later without custom schedulers.
+
+<!--
+Make this a short mnemonic slide. `use workflow` is the story. `use step` is the durable boundary. `createWebhook` is how the outside world can re-enter the story. `sleep` is how time becomes part of the story without cron glue. If you want, ask the audience to remember exactly those four names because everything else builds on them.
+-->
+---
+---
+layout: 4-mermaid
+variant: left-list
+chart: |
+  flowchart TD
+    A["Workflow begins"] --> B["Step succeeds"]
+    B --> C["State + output recorded"]
+    C --> D["Next step runs"]
+    D --> E{"Failure?"}
+    E -->|yes| F["Retry only failed step"]
+    E -->|no| G["Continue forward"]
+    G --> H["Pause on webhook or sleep"]
+    H --> I["Resume without replaying completed work"]
+    classDef accent fill:#111111,stroke:#666666,color:#ffffff;
+    class B,C,D,F,H,I accent;
+---
+
+::title::
+# The event log is the superpower
+
+::item-1::
+Completed work is persisted
+
+::item-2::
+Retries target the failing boundary
+
+::item-3::
+Pauses become first-class state
+
+::item-4::
+Recovery does not mean starting over
+
+<!--
+This is the most conceptual slide in the deck. Explain that durability is really about what the system remembers. Completed work is recorded, failed work can be retried at the correct boundary, and waiting is treated as a first-class state rather than a weird edge case. Avoid going too deep into implementation internals unless the audience asks; the main takeaway is that recovery does not mean replaying everything from the beginning.
+-->
+---
+---
+layout: 2-statement
+variant: cols-3
+tagPosition: inline
+---
+
+::title::
+# Why this feels different from the usual stack
+
+::s1-tag::
+<Tag color="gray">Less Glue</Tag>
+
+::s1-title::
+Fewer moving parts
+
+::s1-body::
+You are not wiring queue producers, workers, retry policies, and schedulers as separate systems.
+
+::s2-tag::
+<Tag color="gray">More Clarity</Tag>
+
+::s2-title::
+Code matches runtime
+
+::s2-body::
+The observable units in the platform line up with the functions and steps in your source code.
+
+::s3-tag::
+<Tag color="gray">Safer AI</Tag>
+
+::s3-title::
+Agents become practical
+
+::s3-body::
+Long-running tool loops, approvals, and resumable streams stop being one-off infrastructure projects.
+
+<!--
+Connect back to developer ergonomics. Say that the reason Workflow feels good is not magic; it is alignment. The code, the runtime boundaries, and the observable events all map to each other. That alignment removes a lot of accidental complexity. This is also a good place to say that AI agents especially benefit because long-lived tool loops and approvals stop feeling like bespoke infrastructure work.
+-->
+---
+---
+layout: 2-statement
+variant: transition
+transitionLabel: "Part 3 of 4"
+---
+
+::title::
+The birthday card app is one example, not the whole story
+
+::subtitle::
+Once the mental model clicks, the same approach applies to agent patterns, framework integrations, and production workflows.
+
+<!--
+Use this slide to widen the lens. A good phrasing is: "Once you trust the mental model on a fun app, you can apply it to the serious stuff." That sets up the repo-tour section and tells the audience this is not a niche pattern for a toy demo.
+-->
+---
+---
+layout: 2-statement
+variant: cols-3
+tagPosition: inline
+---
+
+::title::
+# More examples from this repo
+
+::s1-tag::
+<Tag color="gray">Patterns</Tag>
+
+::s1-title::
+AI SDK workflow patterns
+
+::s1-body::
+Sequential, parallel, routing, orchestrator-worker, and evaluator loop patterns built on top of Workflow.
+
+::s2-tag::
+<Tag color="gray">Agents</Tag>
+
+::s2-title::
+Flight booking app
+
+::s2-body::
+A durable AI agent with tools, multi-turn state, retries, and stream reconnection.
+
+::s3-tag::
+<Tag color="gray">Reach</Tag>
+
+::s3-title::
+Framework integrations
+
+::s3-body::
+The examples repo already shows Workflow across Next.js, Astro, Hono, Nitro, Nuxt, SvelteKit, and Vite.
+
+<!--
+Do a compact second demo or repo tour here. Show `ai-sdk-workflow-patterns` if you want to talk about sequential, parallel, routing, and evaluator-loop patterns. Show `flight-booking-app` if you want to emphasize durable agents, tools, and multi-turn state. Keep this section shorter than the birthday card demo; it should feel like expansion, not a second full talk.
+-->
+---
+---
+layout: 2-statement
+variant: title-3
+tagPosition: inline
+---
+
+::title::
+# How to adopt Workflow incrementally
+
+::s1-tag::
+<Tag color="gray">Start Small</Tag>
+
+::s1-title::
+Pick one async path
+
+::s1-body::
+Choose a flow that already hurts: approvals, retries, delayed sends, or multi-step AI processing.
+
+::s2-tag::
+<Tag color="gray">Draw Boundaries</Tag>
+
+::s2-title::
+Mark the expensive edges
+
+::s2-body::
+Put model calls, external APIs, email sends, and side effects behind `use step`.
+
+::s3-tag::
+<Tag color="gray">Replace Glue</Tag>
+
+::s3-title::
+Keep your app, remove orchestration
+
+::s3-body::
+Start the workflow from your existing route or handler and let the platform manage durability underneath.
+
+<!--
+This is where you make the story actionable for people who are interested but cautious. Tell them not to "workflow-ify" their entire architecture at once. Instead, pick the one async path that already causes incidents, complexity, or product hesitation. Approvals, retries, delayed notifications, and multi-step AI calls are perfect starting points because the pain is usually visible already.
+-->
+---
+---
+layout: 10-code
+variant: right-list
+filename: next.config.ts
+codeSize: sm
+---
+
+::code::
+```ts
+import { withWorkflow } from 'workflow/next';
+
+const nextConfig = {};
+
+export default withWorkflow(nextConfig);
+```
+
+::title::
+# The setup story is intentionally small
+
+::item-1::
+Bring Workflow into the framework you already use
+
+::item-2::
+Keep routes, components, and deployment flow familiar
+
+::item-3::
+Add workflows where you need durability
+
+::item-4::
+Expand from one use case to many
+
+<!--
+Use this slide to lower the activation energy. Mention that the framework integration is deliberately lightweight and designed so teams can stay inside the framework they already use. This is also a good moment to mention framework breadth and the examples repo if you want the audience to feel there is a path whether they are in Next.js or elsewhere.
+-->
+---
+---
+layout: 2-statement
+variant: cols-3
+tagPosition: inline
+---
+
+::title::
+# Migration recipe you can use tomorrow
+
+::s1-tag::
+<Tag color="gray">1</Tag>
+
+::s1-title::
+Find the workflow
+
+::s1-body::
+Look for the place where one request turns into a multi-step process.
+
+::s2-tag::
+<Tag color="gray">2</Tag>
+
+::s2-title::
+Isolate the steps
+
+::s2-body::
+Move each durable boundary into a small, testable function with `use step`.
+
+::s3-tag::
+<Tag color="gray">3</Tag>
+
+::s3-title::
+Add time and humans
+
+::s3-body::
+Once the flow is durable, webhook waits, approvals, scheduling, and agent loops feel natural instead of scary.
+
+<!--
+Turn this into a three-step recipe and say it slowly. First, find the long-lived flow. Second, isolate the durable boundaries. Third, add the time and human edges that usually force teams into extra infrastructure. If you want a strong closing line here, use: "Most teams already know what their first workflow should be. It is the async path they complain about the most."
+-->
+---
+---
+layout: 2-statement
+variant: large
+---
+
+::title::
+# Durable systems should be easy to explain from the code itself
+
+::subtitle::
+That is the bar. If your team can read the workflow top to bottom, they can own it in production.
+
+<!--
+This is your closing thesis. Re-state that the real win is not only reliability; it is shared understanding. When product, engineering, and on-call developers can all point at the same top-to-bottom flow, the system becomes easier to build, debug, and evolve. Pause briefly here before moving to Q&A.
+-->
+---
+---
+layout: 8-special
+variant: qa
+badge: Q&A
+item1Icon: mail
+item2Icon: github
+item3Icon: book-open
+item4Icon: cake
+---
+
+::left::
+## Thank you
+
+Let's talk about the workflows you want to make durable next.
+
+::item-1::
+pranay@vercel.com
+
+::item-2::
+github.com/vercel/workflow-examples
+
+::item-3::
+useworkflow.dev
+
+::item-4::
+Birthday card demo + repo tour
+
+<!--
+Invite questions in three buckets so people know where to start: adoption, architecture, and AI agent use cases. If the room is quiet, seed the conversation yourself with one question like, "What is a good first workflow candidate in an existing app?" That usually unlocks practical discussion.
+-->

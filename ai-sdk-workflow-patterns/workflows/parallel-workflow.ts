@@ -1,4 +1,4 @@
-import { generateObject } from 'ai';
+import { generateText, Output } from 'ai';
 import { z } from 'zod';
 import { generateTextStep } from './ai-steps';
 
@@ -8,60 +8,66 @@ async function securityReview(code: string) {
   'use step';
 
   console.log('Started security review step');
-  const { object } = await generateObject({
+  const { output } = await generateText({
     model: MODEL,
     system:
       'You are an expert in code security. Focus on identifying security vulnerabilities, injection risks, and authentication issues.',
-    schema: z.object({
-      vulnerabilities: z.array(z.string()),
-      riskLevel: z.enum(['low', 'medium', 'high']),
-      suggestions: z.array(z.string()),
+    output: Output.object({
+      schema: z.object({
+        vulnerabilities: z.array(z.string()),
+        riskLevel: z.enum(['low', 'medium', 'high']),
+        suggestions: z.array(z.string()),
+      }),
     }),
     prompt: `Review this code:
       ${code}`,
   });
   console.log('Completed security review step');
-  return object;
+  return output;
 }
 
 async function performanceReview(code: string) {
   'use step';
 
   console.log('Started performance review step');
-  const { object } = await generateObject({
+  const { output } = await generateText({
     model: MODEL,
     system:
       'You are an expert in code performance. Focus on identifying performance bottlenecks, memory leaks, and optimization opportunities.',
-    schema: z.object({
-      issues: z.array(z.string()),
-      impact: z.enum(['low', 'medium', 'high']),
-      optimizations: z.array(z.string()),
+    output: Output.object({
+      schema: z.object({
+        issues: z.array(z.string()),
+        impact: z.enum(['low', 'medium', 'high']),
+        optimizations: z.array(z.string()),
+      }),
     }),
     prompt: `Review this code:
       ${code}`,
   });
   console.log('Completed performance review step');
-  return object;
+  return output;
 }
 
 async function maintainabilityReview(code: string) {
   'use step';
 
   console.log('Started maintainability review step');
-  const { object } = await generateObject({
+  const { output } = await generateText({
     model: MODEL,
     system:
       'You are an expert in code quality. Focus on code structure, readability, and adherence to best practices.',
-    schema: z.object({
-      concerns: z.array(z.string()),
-      qualityScore: z.number().min(1).max(10),
-      recommendations: z.array(z.string()),
+    output: Output.object({
+      schema: z.object({
+        concerns: z.array(z.string()),
+        qualityScore: z.number().min(1).max(10),
+        recommendations: z.array(z.string()),
+      }),
     }),
     prompt: `Review this code:
       ${code}`,
   });
   console.log('Completed maintainability review step');
-  return object;
+  return output;
 }
 
 export async function parallelWorkflow(code: string) {

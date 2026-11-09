@@ -1,16 +1,18 @@
-import { generateObject } from 'ai';
+import { generateText, Output } from 'ai';
 import { z } from 'zod';
 import { generateTextStep } from './ai-steps';
 
 async function classifyQuery(query: string) {
   'use step';
 
-  const { object } = await generateObject({
+  const { output } = await generateText({
     model: 'openai/gpt-4o',
-    schema: z.object({
-      reasoning: z.string(),
-      type: z.enum(['general', 'refund', 'technical']),
-      complexity: z.enum(['simple', 'complex']),
+    output: Output.object({
+      schema: z.object({
+        reasoning: z.string(),
+        type: z.enum(['general', 'refund', 'technical']),
+        complexity: z.enum(['simple', 'complex']),
+      }),
     }),
     prompt: `Classify this customer query:
     ${query}
@@ -20,7 +22,7 @@ async function classifyQuery(query: string) {
     2. Complexity (simple or complex)
     3. Brief reasoning for classification`,
   });
-  return object;
+  return output;
 }
 
 export async function routingWorkflow(query: string) {

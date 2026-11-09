@@ -1,13 +1,13 @@
 import { FatalError, sleep, getWritable } from 'workflow';
 import { z } from 'zod';
 import { bookingApprovalHook } from '../hooks/approval';
-import type { UIMessageChunk } from 'ai';
+import type { ChatStreamPart } from '@/lib/chat-stream';
 
 /**
  * Emit a tool-start event for realtime observability.
  */
 async function emitToolStart(toolName: string) {
-  const writable = getWritable<UIMessageChunk>();
+  const writable = getWritable<ChatStreamPart>();
   const writer = writable.getWriter();
   try {
     await writer.write({
@@ -17,7 +17,7 @@ async function emitToolStart(toolName: string) {
         toolName,
         timestamp: Date.now(),
       },
-    } as UIMessageChunk);
+    } as ChatStreamPart);
   } finally {
     writer.releaseLock();
   }
@@ -27,7 +27,7 @@ async function emitToolStart(toolName: string) {
  * Emit a tool-end event for realtime observability.
  */
 async function emitToolEnd(toolName: string) {
-  const writable = getWritable<UIMessageChunk>();
+  const writable = getWritable<ChatStreamPart>();
   const writer = writable.getWriter();
   try {
     await writer.write({
@@ -37,7 +37,7 @@ async function emitToolEnd(toolName: string) {
         toolName,
         timestamp: Date.now(),
       },
-    } as UIMessageChunk);
+    } as ChatStreamPart);
   } finally {
     writer.releaseLock();
   }

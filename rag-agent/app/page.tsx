@@ -1,7 +1,7 @@
 'use client';
 
 import { useChat } from '@ai-sdk/react';
-import { WorkflowChatTransport } from '@ai-sdk/workflow/client';
+import { WorkflowChatTransport } from '@ai-sdk/workflow';
 import { useState } from 'react';
 
 export default function Chat() {

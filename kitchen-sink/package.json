@@ -5,12 +5,12 @@
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
-    "@workflow/ai": "5.0.1",
-    "ai": "^6.0.168",
+    "@ai-sdk/workflow": "^2.0.98",
+    "ai": "^7.0.166",
     "lodash.chunk": "^4.2.0",
     "openai": "^6.9.0",
-    "workflow": "5.0.1",
-    "zod": "^4.1.12"
+    "workflow": "5.4.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^24.10.1"

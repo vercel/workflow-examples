@@ -1,4 +1,4 @@
-import { generateObject } from 'ai';
+import { generateText, Output } from 'ai';
 import { z } from 'zod';
 
 const MODEL = 'openai/o4-mini';
@@ -8,24 +8,26 @@ type ChangeType = 'create' | 'modify' | 'delete';
 async function planImplementation(featureRequest: string) {
   'use step';
 
-  const { object } = await generateObject({
+  const { output } = await generateText({
     model: MODEL,
-    schema: z.object({
-      files: z.array(
-        z.object({
-          purpose: z.string(),
-          filePath: z.string(),
-          changeType: z.enum(['create', 'modify', 'delete']),
-        })
-      ),
-      estimatedComplexity: z.enum(['low', 'medium', 'high']),
+    output: Output.object({
+      schema: z.object({
+        files: z.array(
+          z.object({
+            purpose: z.string(),
+            filePath: z.string(),
+            changeType: z.enum(['create', 'modify', 'delete']),
+          })
+        ),
+        estimatedComplexity: z.enum(['low', 'medium', 'high']),
+      }),
     }),
     system:
       'You are a senior software architect planning feature implementations.',
     prompt: `Analyze this feature request and create an implementation plan:
     ${featureRequest}`,
   });
-  return object;
+  return output;
 }
 
 async function implementFileChange(
@@ -44,11 +46,13 @@ async function implementFileChange(
       'You are an expert at safely removing code while ensuring no breaking changes.',
   }[file.changeType];
 
-  await generateObject({
+  await generateText({
     model: MODEL,
-    schema: z.object({
-      explanation: z.string(),
-      code: z.string(),
+    output: Output.object({
+      schema: z.object({
+        explanation: z.string(),
+        code: z.string(),
+      }),
     }),
     system: workerSystemPrompt,
     prompt: `Implement the changes for ${file.filePath} to support:

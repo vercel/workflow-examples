@@ -1,4 +1,4 @@
-import { generateObject } from 'ai';
+import { generateText, Output } from 'ai';
 import { z } from 'zod';
 import { generateTextStep } from './ai-steps';
 
@@ -7,12 +7,14 @@ const MODEL = 'openai/o4-mini';
 async function evaluateCopy(copy: string) {
   'use step';
 
-  const { object } = await generateObject({
+  const { output } = await generateText({
     model: MODEL,
-    schema: z.object({
-      hasCallToAction: z.boolean(),
-      emotionalAppeal: z.number().min(1).max(10),
-      clarity: z.number().min(1).max(10),
+    output: Output.object({
+      schema: z.object({
+        hasCallToAction: z.boolean(),
+        emotionalAppeal: z.number().min(1).max(10),
+        clarity: z.number().min(1).max(10),
+      }),
     }),
     prompt: `Evaluate this marketing copy for:
     1. Presence of call to action (true/false)
@@ -21,7 +23,7 @@ async function evaluateCopy(copy: string) {
 
     Copy to evaluate: ${copy}`,
   });
-  return object;
+  return output;
 }
 
 export async function sequentialWorkflow(input: string) {

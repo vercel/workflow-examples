@@ -8,6 +8,7 @@ This example shows how to use Workflow to make AI agents more reliable and produ
 
 ### Prerequisites
 
+- Node.js 22 or newer (required by AI SDK 7)
 - An API key from [Vercel AI Gateway](https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai&title=Go+to+AI+Gateway)
 
 ### Local Development
@@ -95,15 +96,15 @@ Learn more about the Workflow PostgreSQL World [here](https://useworkflow.dev/do
 
 ## Key Features
 
-- **DurableAgent** - `@workflow/ai`'s `DurableAgent` provides automatic retries, fault tolerance, and stream reconnection for AI SDK applications
+- **WorkflowAgent** - AI SDK's `WorkflowAgent` from `@ai-sdk/workflow` provides automatic retries, fault tolerance, and stream reconnection for AI SDK applications
 - **Multi-turn conversations** - Agent maintains conversation state across tool-calling loops and multiple LLM interactions
-- **Stream reconnection** - Client can reconnect to in-progress workflows using `WorkflowChatTransport` after network failures
+- **Stream reconnection** - Client can reconnect to in-progress workflows using `WorkflowChatTransport` from `@ai-sdk/workflow` after network failures
 - **Tool execution** - Five flight booking tools (search, status check, airport info, booking, baggage) showing real-world agent patterns
 - **PostgreSQL World** - Optional PostgreSQL backend for custom deployment needs beyond Vercel (Railway, Render, etc.)
 
 This project uses the following stack:
 
 - [Next.js](https://nextjs.org) 15 (App Router)
-- [Vercel AI SDK](https://ai-sdk.dev/docs) with `streamText` and tools
+- [AI SDK](https://ai-sdk.dev/docs) 7 with [`WorkflowAgent`](https://ai-sdk.dev/v7/docs/agents/workflow-agent) and tools
 - [Workflow DevKit](https://useworkflow.dev) for durability
 - [Tailwind CSS](https://tailwindcss.com) for styling

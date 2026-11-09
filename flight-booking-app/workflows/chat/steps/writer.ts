@@ -1,11 +1,11 @@
-import type { UIMessageChunk } from 'ai';
+import type { ChatStreamPart } from '@/lib/chat-stream';
 
 /**
  * Write request-received event (t=0)
  * This is emitted as the very first event when the API receives a request.
  */
 export async function writeRequestReceived(
-  writable: WritableStream<UIMessageChunk>,
+  writable: WritableStream<ChatStreamPart>,
   requestReceivedAt: number
 ) {
   'use step';
@@ -17,7 +17,7 @@ export async function writeRequestReceived(
         type: 'request-received',
         timestamp: requestReceivedAt,
       },
-    } as UIMessageChunk);
+    } as ChatStreamPart);
   } finally {
     writer.releaseLock();
   }
@@ -40,7 +40,7 @@ export interface TurnObservability {
  * Optionally includes observability data for workflow tracking.
  */
 export async function writeUserMessageMarker(
-  writable: WritableStream<UIMessageChunk>,
+  writable: WritableStream<ChatStreamPart>,
   content: string,
   messageId: string,
   observability?: TurnObservability
@@ -58,7 +58,7 @@ export async function writeUserMessageMarker(
           workflowStartedAt: observability.workflowStartedAt,
           timestamp: Date.now(),
         },
-      } as UIMessageChunk);
+      } as ChatStreamPart);
     }
 
     // Emit turn-start
@@ -70,7 +70,7 @@ export async function writeUserMessageMarker(
           turnNumber: observability.turnNumber,
           timestamp: Date.now(), // Use current time, not the passed-in turnStartedAt
         },
-      } as UIMessageChunk);
+      } as ChatStreamPart);
     }
 
     // Write a data chunk that the client can use to reconstruct user messages
@@ -83,7 +83,7 @@ export async function writeUserMessageMarker(
         content,
         timestamp: now,
       },
-    } as UIMessageChunk);
+    } as ChatStreamPart);
   } finally {
     writer.releaseLock();
   }
@@ -99,10 +99,11 @@ export interface WorkflowEndObservability {
 }
 
 /**
- * Write stream close with optional workflow-end observability data
+ * Write optional workflow-end observability data, then close the stream.
+ * Closing the stream is what makes the API routes emit the UI `finish` chunk.
  */
 export async function writeStreamClose(
-  writable: WritableStream<UIMessageChunk>,
+  writable: WritableStream<ChatStreamPart>,
   observability?: WorkflowEndObservability
 ) {
   'use step';
@@ -117,10 +118,9 @@ export async function writeStreamClose(
         turnCount: observability.turnCount,
         timestamp: Date.now(),
       },
-    } as UIMessageChunk);
+    } as ChatStreamPart);
   }
-  await writer.write({ type: 'finish' });
-  writer.releaseLock();
+  await writer.close();
 }
 
 /**
@@ -143,7 +143,7 @@ export interface StepData {
  * Returns the new total step count (for pass-by-value workflow semantics).
  */
 export async function writeTurnEnd(
-  writable: WritableStream<UIMessageChunk>,
+  writable: WritableStream<ChatStreamPart>,
   turnNumber: number,
   durationMs: number,
   steps?: StepData[],
@@ -165,7 +165,7 @@ export async function writeTurnEnd(
             tokenUsage: step.tokenUsage,
             timestamp: Date.now(),
           },
-        } as UIMessageChunk);
+        } as ChatStreamPart);
       }
     }
 
@@ -173,7 +173,7 @@ export async function writeTurnEnd(
     await writer.write({
       type: 'data-workflow',
       data: { type: 'turn-end', turnNumber, durationMs, timestamp: Date.now() },
-    } as UIMessageChunk);
+    } as ChatStreamPart);
   } finally {
     writer.releaseLock();
   }

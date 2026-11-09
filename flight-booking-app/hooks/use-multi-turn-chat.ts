@@ -2,7 +2,7 @@
 
 import type { UIMessage, UIDataTypes, ChatStatus } from 'ai';
 import { useChat } from '@ai-sdk/react';
-import { WorkflowChatTransport } from '@workflow/ai';
+import { WorkflowChatTransport } from '@ai-sdk/workflow/client';
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 
 const RUN_ID_PARAM = 'runId';

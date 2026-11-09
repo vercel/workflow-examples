@@ -1,5 +1,6 @@
 import { createUIMessageStreamResponse, type UIMessage } from 'ai';
 import { start } from 'workflow/api';
+import { createChatUIChunkTransform } from '@/lib/chat-stream';
 import { chat } from '@/workflows/chat';
 
 /**
@@ -21,10 +22,10 @@ export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
 
   const run = await start(chat, [messages, requestReceivedAt]);
-  const workflowStream = run.readable;
 
   return createUIMessageStreamResponse({
-    stream: workflowStream,
+    // The run stream holds raw WorkflowAgent parts; convert them to UI chunks
+    stream: run.readable.pipeThrough(createChatUIChunkTransform()),
     headers: {
       // The workflow run ID is used by the client to:
       // 1. Send follow-up messages via POST /api/chat/[id]

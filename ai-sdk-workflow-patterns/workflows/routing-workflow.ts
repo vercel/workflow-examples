@@ -6,7 +6,7 @@ async function classifyQuery(query: string) {
   'use step';
 
   const { output } = await generateText({
-    model: 'openai/gpt-4o',
+    model: 'openai/gpt-6-luna',
     output: Output.object({
       schema: z.object({
         reasoning: z.string(),
@@ -38,8 +38,8 @@ export async function routingWorkflow(query: string) {
   const response = await generateTextStep({
     model:
       classification.complexity === 'simple'
-        ? 'openai/gpt-4o-mini'
-        : 'openai/o4-mini',
+        ? 'openai/gpt-6-luna'
+        : 'openai/gpt-5.6-terra',
     system: {
       general:
         'You are an expert customer service agent handling general inquiries.',

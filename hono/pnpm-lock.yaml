@@ -1,7 +1,7 @@
 lockfileVersion: '9.0'
 
 settings:
-  autoInstallPeers: true
+  autoInstallPeers: false
   excludeLinksFromLockfile: false
 
 importers:
@@ -22,7 +22,7 @@ importers:
         version: 4.53.2
       workflow:
         specifier: 5.8.0
-        version: 5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@0.30.21)(mlly@1.8.2)(rolldown@1.2.12)(typescript@5.9.3)(ws@8.23.0)
+        version: 5.8.0(dotenv@17.4.2)(rolldown@1.2.12)(typescript@5.9.3)(ws@8.23.0)
     devDependencies:
       '@types/node':
         specifier: ^20.11.17
@@ -35,34 +35,6 @@ importers:
         version: 5.9.3
 
 packages:
-
-  '@aws-sdk/core@3.978.1':
-    resolution: {integrity: sha512-LbY9aGsEiznDWmUc30Nwv3aIX/+dbwTx8KfS0yOC3NPYMO+O91e6jkT1azf34FwjOndq8/Q+RcVVZz5xnerwdg==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws-sdk/credential-provider-web-identity@3.972.49':
-    resolution: {integrity: sha512-IYx1lN38MnnPXv+NBLpuATu0cZakbZ321TAfjW+aVkw7HIJF38YnEwdeEO55MSl3pl7hIX1IvvnD6EmnAzmAJw==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws-sdk/nested-clients@3.997.46':
-    resolution: {integrity: sha512-oRxtBcka/JGHGs9l9p9IVajGoTP8vTPmoAzdHGy4Qcy9P5vPnDf6nhIeM/COQNY9k/OahImTRaLkHftoXvfcmQ==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws-sdk/signature-v4-multi-region@3.996.47':
-    resolution: {integrity: sha512-Zk08macMvQTHzQJCLJVkOlviVoqwYMrpXv4lmLN7b7sAbiMoOK7Go0NYdR5UeF+MW8LIbRmwrNy9u/5VvX1U5g==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws-sdk/types@3.974.6':
-    resolution: {integrity: sha512-v/clNZzZnDxGyvpHMOGpJKVXFAExJzUNAAjaWGdcx8QAcXLGwTaOkw33p5SHAi0YAioK32xB3hWwOekRVfmfKg==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws-sdk/xml-builder@3.972.41':
-    resolution: {integrity: sha512-ctjVSyCMegrWfXlx6VqzSBFI6UqmQ5ZlnfMhdLIiWmhoH8UAQxSCP5N3OpG7X3k4LnS7ou74C4mt20+bfTW2aQ==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws/lambda-invoke-store@0.3.0':
-    resolution: {integrity: sha512-sl4Bm6yiMNYrZKkqqDFWN0UfnWhlS8ivKxrYl+6t0gCLrqr8y3B2IqZZbFRkfaVVp7C/baApyh71P+LeE1A2sQ==}
-    engines: {node: '>=18.0.0'}
 
   '@cbor-extract/cbor-extract-darwin-arm64@2.2.3':
     resolution: {integrity: sha512-qpUy9Yoisi6a7QHOVa+AlnqfN7eVstSRhpLwiLnwi6i3SNLkM5D2Z7MXl4LC5nUGA77mZEt479cPH3u8GD163Q==}
@@ -683,29 +655,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@smithy/core@3.35.1':
-    resolution: {integrity: sha512-i4YPS4B6ts7bjn7UwLnGjiZdprOvHvgGobFZsYK3GIY3E5hIqtj0rReU69BcTpGp+fvtraSNXeG1l+jtJvF55w==}
-    engines: {node: '>=18.0.0'}
-    deprecated: |-
-      Deprecated due to a bug in custom logger data redaction. Upgrade to the latest version. If you used a custom logger with this
-        version, review your logs and rotate any credentials or other secrets. See https://github.com/aws/aws-sdk-js-v3/issues/8393.
-
-  '@smithy/fetch-http-handler@5.8.0':
-    resolution: {integrity: sha512-ycSJu3tFAQ4v04CBB0agqFMVsSQ1iG3yw+SpgxRqKfaURpQD4CZ8Wn0zPMmSnOuTpTh65Vz+EA0rMrw089wvkA==}
-    engines: {node: '>=18.0.0'}
-
-  '@smithy/node-http-handler@4.12.1':
-    resolution: {integrity: sha512-ThMkboGeONWXAelq9FvGsuJC4rOi+qyC4/zhUF58xYpxUg5sQKx2VXZYJmtNjr4dSuBJ1HeJXETQILCz3wOHvw==}
-    engines: {node: '>=18.0.0'}
-
-  '@smithy/signature-v4@5.7.4':
-    resolution: {integrity: sha512-tHy0K0VtqNd5Y7Y41h0a0Lhh0L1GzC08dTWg0F7vRJWFtTENg7IZikf3wQkanYIRdb7ngoIPMTmqgUi401fEeQ==}
-    engines: {node: '>=18.0.0'}
-
-  '@smithy/types@4.19.0':
-    resolution: {integrity: sha512-r7jh49VJxGerfAcTQA6gXcKc+98zOp/tqRwzYjgOE+iSQsP6cEU1hq2QzbuipmP68QtYdY9wKEhiCQZIzHgZ4Q==}
-    engines: {node: '>=18.0.0'}
-
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
@@ -804,6 +753,9 @@ packages:
   '@vercel/cli-auth@0.0.1':
     resolution: {integrity: sha512-CnqiuMlZ4pjs2LCPYiR6aLKPPd3Xb8SBI1Y7eotXKgpx6qgrGNY+E7EIyUt5ErGHJGIrCZyGG5WEo4bHtVmz2Q==}
 
+  '@vercel/cli-config@0.3.0':
+    resolution: {integrity: sha512-kQLt5Pm8wKd7/imzDY9/9u0tf8OuRkAuXI+s7j057FSUrXapAmumJSKwDqnR4ZZqdWoUcNLlFAgVIAdiwcGTcw==}
+
   '@vercel/cli-config@0.4.0':
     resolution: {integrity: sha512-7+DnWjfcHA/u2FjiPMknhlqZFmJZZq1qS5ziIxNH+3zNBo2U4NQjkJABKDGMZlLBlBLK94RXuA2dceC4SCFumA==}
 
@@ -825,6 +777,10 @@ packages:
 
   '@vercel/oidc@3.2.0':
     resolution: {integrity: sha512-UycprH3T6n3jH0k44NHMa7pnFHGu/N05MjojYr+Mc6I7obkoLIJujSWwin1pCvdy/eOxrI/l3uDLQsmcrOb4ug==}
+    engines: {node: '>= 20'}
+
+  '@vercel/oidc@3.8.9':
+    resolution: {integrity: sha512-TcbdH3YtGS2KU98T99dN4sbf+E4vbJZsJTRN97wKQ7QWQ0BR7U02QX3KN4+5GHxBtKTj1c5CnvTTitc2ZRad0A==}
     engines: {node: '>= 20'}
 
   '@vercel/oidc@4.0.9':
@@ -873,15 +829,12 @@ packages:
       '@nestjs/common': '>=10.0.0'
       '@nestjs/core': '>=10.0.0'
       '@swc/cli': '>=0.4.0'
-      '@swc/core': '>=1.5.0'
     peerDependenciesMeta:
       '@nestjs/common':
         optional: true
       '@nestjs/core':
         optional: true
       '@swc/cli':
-        optional: true
-      '@swc/core':
         optional: true
 
   '@workflow/next@5.1.6':
@@ -949,11 +902,6 @@ packages:
   '@workflow/world@5.4.0':
     resolution: {integrity: sha512-PudtlSGr+yTJKFG0tHRpt0CSlPgVvwm9WzueDcRKWZCs4dvcy+2jNjYWTZzRYdc5eCOwY3zBI4/nlxDjNpVj7Q==}
 
-  acorn@8.16.0:
-    resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
-
   acorn@8.19.0:
     resolution: {integrity: sha512-oJlA3XiRm7Cyk6qFD2Jn8ak9B7jSy0qy00ADO3+8dpT0LSjFihQYv4C02LFCSYJV3Q37xYwwRy5m+IpIiUzqWw==}
     engines: {node: '>=0.4.0'}
@@ -1006,9 +954,6 @@ packages:
   balanced-match@4.0.4:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
-
-  bowser@2.13.1:
-    resolution: {integrity: sha512-OHawaAbjwx6rqICCKgSG0SAnT05bzd7ppyKLVUITZpANBaaMFBAsaNkto3LoQ31tyFP5kNujE8Cdx85G9VzOkw==}
 
   boxen@8.0.1:
     resolution: {integrity: sha512-F3PH5k5juxom4xktynS7MoFY+NUWH5LC4CnH11YB8NPew+HLpmBLCybSAEyb2F+4pRXhuhWqFesoQd6DAyc2hw==}
@@ -1066,12 +1011,6 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
-
-  confbox@0.1.8:
-    resolution: {integrity: sha512-RMtmw0iFkeR4YV+fUOSucriAQNb9g8zFR52MWCtl+cCZOFRNL6zeB395vPzFhEjjn4fMxXudmELnl/KF/WrK6w==}
-
-  confbox@0.3.1:
-    resolution: {integrity: sha512-cKUSoKa8YxFZZSmraVi7onONx3amu77ngK3kGpsYHDH7drPwCRkQE1RYMPlLRrMtnciRj274XNRxcHxnKmDSnA==}
 
   consola@3.4.2:
     resolution: {integrity: sha512-5IKcdX0nnYavi6G7TtOhwkYzyjfJlatbjMjuLSfE2kYT5pMDOilZ4OvMhi637CcDICTmz3wARPoyhqyX1Y+XvA==}
@@ -1231,10 +1170,6 @@ packages:
   get-tsconfig@4.13.0:
     resolution: {integrity: sha512-1VKTZJCwBrvbd+Wn3AOgQP/2Av+TfTCOlE4AcRJE72W1ksZXbAx8PPBR9RzgTeSPzlPMHrbANMH3LbltH73wxQ==}
 
-  giget@3.3.1:
-    resolution: {integrity: sha512-r+mvuDjrjMpsdw46Kmeydb8bdHm7wOKw8wNBtTndkjbPjgAp5oUJUxRE76wZFknxIPokfWvep2qSXK37aXE6zg==}
-    hasBin: true
-
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
@@ -1324,10 +1259,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  jiti@2.7.0:
-    resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
-    hasBin: true
-
   jose@5.10.0:
     resolution: {integrity: sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==}
 
@@ -1351,9 +1282,6 @@ packages:
     resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  magic-string@0.30.21:
-    resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
-
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
 
@@ -1375,9 +1303,6 @@ packages:
   mixpart@0.0.6:
     resolution: {integrity: sha512-CRdXtgfQH2jARmtNmPR0Q7jL20fiESbaYk1b0KvLD0jCdUuemepREtsbd8nbiY6BHV9OGGddAZITNXklupUPUQ==}
     engines: {node: '>=20.0.0'}
-
-  mlly@1.8.2:
-    resolution: {integrity: sha512-d+ObxMQFmbt10sretNDytwt85VrbkhhUA/JBGm1MPaWJ65Cl4wOgLaB1NYvJSZ0Ef03MMEU/0xpPMXUIQ29UfA==}
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -1448,9 +1373,6 @@ packages:
   picomatch@4.0.7:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
-
-  pkg-types@1.3.1:
-    resolution: {integrity: sha512-/Jm5M4RvtBFVkKWRu2BLUTNP8/M2a+UwuAX+ae4770q1qVGtfjG+WTCupoZixokjmHiry8uI+dlY8KXYV5HVVQ==}
 
   quickjs-wasi@3.7.0:
     resolution: {integrity: sha512-6nOShBtCglrQL6yH+hptIfEdA1WlSmvY/Mm5Ypn9IvtsaDsrYIg8x+xoIXQt02w66a0f1eLTAj1lhfgAbJ4WVw==}
@@ -1566,9 +1488,6 @@ packages:
     resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
     engines: {node: '>=12.0.0'}
 
-  tslib@2.8.1:
-    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
-
   tsx@4.20.6:
     resolution: {integrity: sha512-ytQKuwgmrrkDTFP4LjR0ToE2nqgy886GpvRSpU0JAnrdBYppuY5rLkRUYPU1yCryb24SsKBTL/hlDQAEFVwtZg==}
     engines: {node: '>=18.0.0'}
@@ -1586,9 +1505,6 @@ packages:
     resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
-
-  ufo@1.6.4:
-    resolution: {integrity: sha512-JFNbkD1Svwe0KvGi8GOeLcP4kAWQ609twvCdcHxq1oSL8svv39ZuSvajcD8B+5D0eL4+s1Is2D/O6KN3qcTeRA==}
 
   ulid@3.0.2:
     resolution: {integrity: sha512-yu26mwteFYzBAot7KVMqFGCVpsF6g8wXfJzQUHvu1no3+rRRSFcSV2nKeYvNPLD2J4b08jYBDhHUjeH0ygIl9w==}
@@ -1715,63 +1631,6 @@ packages:
     resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
 
 snapshots:
-
-  '@aws-sdk/core@3.978.1':
-    dependencies:
-      '@aws-sdk/types': 3.974.6
-      '@aws-sdk/xml-builder': 3.972.41
-      '@aws/lambda-invoke-store': 0.3.0
-      '@smithy/core': 3.35.1
-      '@smithy/signature-v4': 5.7.4
-      '@smithy/types': 4.19.0
-      bowser: 2.13.1
-      tslib: 2.8.1
-    optional: true
-
-  '@aws-sdk/credential-provider-web-identity@3.972.49':
-    dependencies:
-      '@aws-sdk/core': 3.978.1
-      '@aws-sdk/nested-clients': 3.997.46
-      '@aws-sdk/types': 3.974.6
-      '@smithy/core': 3.35.1
-      '@smithy/types': 4.19.0
-      tslib: 2.8.1
-    optional: true
-
-  '@aws-sdk/nested-clients@3.997.46':
-    dependencies:
-      '@aws-sdk/core': 3.978.1
-      '@aws-sdk/signature-v4-multi-region': 3.996.47
-      '@aws-sdk/types': 3.974.6
-      '@smithy/core': 3.35.1
-      '@smithy/fetch-http-handler': 5.8.0
-      '@smithy/node-http-handler': 4.12.1
-      '@smithy/types': 4.19.0
-      tslib: 2.8.1
-    optional: true
-
-  '@aws-sdk/signature-v4-multi-region@3.996.47':
-    dependencies:
-      '@aws-sdk/types': 3.974.6
-      '@smithy/signature-v4': 5.7.4
-      '@smithy/types': 4.19.0
-      tslib: 2.8.1
-    optional: true
-
-  '@aws-sdk/types@3.974.6':
-    dependencies:
-      '@smithy/types': 4.19.0
-      tslib: 2.8.1
-    optional: true
-
-  '@aws-sdk/xml-builder@3.972.41':
-    dependencies:
-      '@smithy/types': 4.19.0
-      tslib: 2.8.1
-    optional: true
-
-  '@aws/lambda-invoke-store@0.3.0':
-    optional: true
 
   '@cbor-extract/cbor-extract-darwin-arm64@2.2.3':
     optional: true
@@ -1960,7 +1819,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@nuxt/kit@4.6.4(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@0.30.21)(mlly@1.8.2)(rolldown@1.2.12)':
+  '@nuxt/kit@4.6.4(dotenv@17.4.2)(rolldown@1.2.12)':
     dependencies:
       consola: 3.4.2
       defu: 6.1.7
@@ -1978,14 +1837,10 @@ snapshots:
       std-env: 4.3.0
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
-      unctx: 3.0.1(magic-string@0.30.21)(rolldown@1.2.12)
+      unctx: 3.0.1(rolldown@1.2.12)
       verkit: 0.5.0
     optionalDependencies:
-      confbox: 0.3.1
       dotenv: 17.4.2
-      giget: 3.3.1
-      jiti: 2.7.0
-      mlly: 1.8.2
       rolldown: 1.2.12
     transitivePeerDependencies:
       - magic-string
@@ -2131,38 +1986,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.53.2':
     optional: true
 
-  '@smithy/core@3.35.1':
-    dependencies:
-      '@smithy/types': 4.19.0
-      tslib: 2.8.1
-    optional: true
-
-  '@smithy/fetch-http-handler@5.8.0':
-    dependencies:
-      '@smithy/core': 3.35.1
-      '@smithy/types': 4.19.0
-      tslib: 2.8.1
-    optional: true
-
-  '@smithy/node-http-handler@4.12.1':
-    dependencies:
-      '@smithy/core': 3.35.1
-      '@smithy/types': 4.19.0
-      tslib: 2.8.1
-    optional: true
-
-  '@smithy/signature-v4@5.7.4':
-    dependencies:
-      '@smithy/core': 3.35.1
-      '@smithy/types': 4.19.0
-      tslib: 2.8.1
-    optional: true
-
-  '@smithy/types@4.19.0':
-    dependencies:
-      tslib: 2.8.1
-    optional: true
-
   '@standard-schema/spec@1.1.0': {}
 
   '@sveltejs/load-config@0.2.3': {}
@@ -2234,6 +2057,11 @@ snapshots:
       xdg-app-paths: 5.5.1
       zod: 4.1.11
 
+  '@vercel/cli-config@0.3.0':
+    dependencies:
+      xdg-app-paths: 5.1.0
+      zod: 4.1.11
+
   '@vercel/cli-config@0.4.0':
     dependencies:
       xdg-app-paths: 5.1.0
@@ -2243,14 +2071,19 @@ snapshots:
     dependencies:
       execa: 5.1.1
 
-  '@vercel/functions@3.11.3(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@vercel/functions@3.11.3(ws@8.23.0)':
     dependencies:
       '@vercel/oidc': 4.0.9
     optionalDependencies:
-      '@aws-sdk/credential-provider-web-identity': 3.972.49
       ws: 8.23.0
 
   '@vercel/oidc@3.2.0': {}
+
+  '@vercel/oidc@3.8.9':
+    dependencies:
+      '@vercel/cli-config': 0.3.0
+      '@vercel/cli-exec': 1.0.1
+      jose: 5.10.0
 
   '@vercel/oidc@4.0.9':
     dependencies:
@@ -2260,16 +2093,16 @@ snapshots:
 
   '@vercel/queue@0.11.0':
     dependencies:
-      '@vercel/oidc': 3.2.0
+      '@vercel/oidc': 3.8.9
       minimatch: 10.2.6
       mixpart: 0.0.6
       picocolors: 1.1.1
 
-  '@workflow/astro@5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@workflow/astro@5.0.15(ws@8.23.0)':
     dependencies:
-      '@workflow/builders': 5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/rollup': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/vite': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/builders': 5.1.6(ws@8.23.0)
+      '@workflow/rollup': 5.0.15(ws@8.23.0)
+      '@workflow/vite': 5.0.15(ws@8.23.0)
     transitivePeerDependencies:
       - '@aws-sdk/credential-provider-web-identity'
       - '@opentelemetry/api'
@@ -2278,10 +2111,10 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@workflow/builders@5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@workflow/builders@5.1.6(ws@8.23.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/core': 5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/core': 5.8.0(ws@8.23.0)
       '@workflow/errors': 5.2.0
       '@workflow/swc-plugin': 5.0.2(@swc/core@1.15.3)
       '@workflow/utils': 5.1.1
@@ -2301,19 +2134,19 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@workflow/cli@5.3.3(@aws-sdk/credential-provider-web-identity@3.972.49)(typescript@5.9.3)(ws@8.23.0)':
+  '@workflow/cli@5.3.3(typescript@5.9.3)(ws@8.23.0)':
     dependencies:
       '@oclif/core': 4.11.4
       '@oclif/plugin-help': 6.2.37
       '@vercel/cli-auth': 0.0.1
-      '@workflow/builders': 5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/core': 5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/builders': 5.1.6(ws@8.23.0)
+      '@workflow/core': 5.8.0(ws@8.23.0)
       '@workflow/errors': 5.2.0
       '@workflow/utils': 5.1.1
       '@workflow/web': 5.3.3
       '@workflow/world': 5.4.0
       '@workflow/world-local': 5.6.0
-      '@workflow/world-vercel': 5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)
+      '@workflow/world-vercel': 5.8.0
       boxen: 8.0.1
       chalk: 5.6.2
       dotenv: 17.4.2
@@ -2333,18 +2166,18 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@workflow/core@5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@workflow/core@5.8.0(ws@8.23.0)':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@standard-schema/spec': 1.1.0
       '@types/ms': 2.1.0
-      '@vercel/functions': 3.11.3(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@vercel/functions': 3.11.3(ws@8.23.0)
       '@workflow/errors': 5.2.0
       '@workflow/serde': 5.0.1
       '@workflow/utils': 5.1.1
       '@workflow/world': 5.4.0
       '@workflow/world-local': 5.6.0
-      '@workflow/world-vercel': 5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)
+      '@workflow/world-vercel': 5.8.0
       acorn: 8.19.0
       devalue: 6.0.3
       ms: 2.1.3
@@ -2365,10 +2198,10 @@ snapshots:
       '@workflow/world': 5.4.0
       ms: 2.1.3
 
-  '@workflow/nest@5.1.13(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@workflow/nest@5.1.13(ws@8.23.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': 5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/builders': 5.1.6(ws@8.23.0)
       '@workflow/swc-plugin': 5.0.2(@swc/core@1.15.3)
       '@workflow/utils': 5.1.1
       esbuild: 0.28.2
@@ -2381,11 +2214,11 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@workflow/next@5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@workflow/next@5.1.6(ws@8.23.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': 5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/core': 5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/builders': 5.1.6(ws@8.23.0)
+      '@workflow/core': 5.8.0(ws@8.23.0)
       '@workflow/swc-plugin': 5.0.2(@swc/core@1.15.3)
       ignore: 7.0.14
       semver: 7.8.6
@@ -2398,12 +2231,12 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@workflow/nitro@5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@workflow/nitro@5.0.15(ws@8.23.0)':
     dependencies:
-      '@workflow/builders': 5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/core': 5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/rollup': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/vite': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/builders': 5.1.6(ws@8.23.0)
+      '@workflow/core': 5.8.0(ws@8.23.0)
+      '@workflow/rollup': 5.0.15(ws@8.23.0)
+      '@workflow/vite': 5.0.15(ws@8.23.0)
       '@workflow/web': 5.3.3
       pathe: 2.0.3
     transitivePeerDependencies:
@@ -2414,10 +2247,10 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@workflow/nuxt@5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@0.30.21)(mlly@1.8.2)(rolldown@1.2.12)(ws@8.23.0)':
+  '@workflow/nuxt@5.0.15(dotenv@17.4.2)(rolldown@1.2.12)(ws@8.23.0)':
     dependencies:
-      '@nuxt/kit': 4.6.4(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@0.30.21)(mlly@1.8.2)(rolldown@1.2.12)
-      '@workflow/nitro': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@nuxt/kit': 4.6.4(dotenv@17.4.2)(rolldown@1.2.12)
+      '@workflow/nitro': 5.0.15(ws@8.23.0)
     transitivePeerDependencies:
       - '@aws-sdk/credential-provider-web-identity'
       - '@nuxt/schema'
@@ -2436,10 +2269,10 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@workflow/rollup@5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@workflow/rollup@5.0.15(ws@8.23.0)':
     dependencies:
       '@swc/core': 1.15.3
-      '@workflow/builders': 5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/builders': 5.1.6(ws@8.23.0)
       '@workflow/swc-plugin': 5.0.2(@swc/core@1.15.3)
       exsolve: 1.2.0
     transitivePeerDependencies:
@@ -2452,12 +2285,12 @@ snapshots:
 
   '@workflow/serde@5.0.1': {}
 
-  '@workflow/sveltekit@5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@workflow/sveltekit@5.0.15(ws@8.23.0)':
     dependencies:
       '@sveltejs/load-config': 0.2.3
-      '@workflow/builders': 5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/rollup': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/vite': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/builders': 5.1.6(ws@8.23.0)
+      '@workflow/rollup': 5.0.15(ws@8.23.0)
+      '@workflow/vite': 5.0.15(ws@8.23.0)
       fs-extra: 11.4.1
     transitivePeerDependencies:
       - '@aws-sdk/credential-provider-web-identity'
@@ -2479,9 +2312,9 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
-  '@workflow/vite@5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)':
+  '@workflow/vite@5.0.15(ws@8.23.0)':
     dependencies:
-      '@workflow/builders': 5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/builders': 5.1.6(ws@8.23.0)
     transitivePeerDependencies:
       - '@aws-sdk/credential-provider-web-identity'
       - '@opentelemetry/api'
@@ -2507,9 +2340,9 @@ snapshots:
       undici: 7.30.2
       zod: 4.6.7
 
-  '@workflow/world-vercel@5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)':
+  '@workflow/world-vercel@5.8.0':
     dependencies:
-      '@vercel/functions': 3.11.3(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@vercel/functions': 3.11.3(ws@8.23.0)
       '@vercel/oidc': 3.2.0
       '@vercel/queue': 0.11.0
       '@workflow/errors': 5.2.0
@@ -2530,9 +2363,6 @@ snapshots:
       '@workflow/utils': 5.1.1
       ulid: 3.0.2
       zod: 4.6.7
-
-  acorn@8.16.0:
-    optional: true
 
   acorn@8.19.0: {}
 
@@ -2569,9 +2399,6 @@ snapshots:
   balanced-match@1.0.2: {}
 
   balanced-match@4.0.4: {}
-
-  bowser@2.13.1:
-    optional: true
 
   boxen@8.0.1:
     dependencies:
@@ -2634,12 +2461,6 @@ snapshots:
       color-name: 1.1.4
 
   color-name@1.1.4: {}
-
-  confbox@0.1.8:
-    optional: true
-
-  confbox@0.3.1:
-    optional: true
 
   consola@3.4.2: {}
 
@@ -2827,9 +2648,6 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
-  giget@3.3.1:
-    optional: true
-
   graceful-fs@4.2.11: {}
 
   h3@2.0.1-rc.32(crossws@0.4.12(srvx@1.0.5))(ocache@0.3.0):
@@ -2886,9 +2704,6 @@ snapshots:
       filelist: 1.0.4
       picocolors: 1.1.1
 
-  jiti@2.7.0:
-    optional: true
-
   jose@5.10.0: {}
 
   json5@2.2.3: {}
@@ -2907,11 +2722,6 @@ snapshots:
     dependencies:
       p-locate: 6.0.0
 
-  magic-string@0.30.21:
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.5
-    optional: true
-
   merge-stream@2.0.0: {}
 
   microdiff@1.6.0: {}
@@ -2927,14 +2737,6 @@ snapshots:
       brace-expansion: 2.0.2
 
   mixpart@0.0.6: {}
-
-  mlly@1.8.2:
-    dependencies:
-      acorn: 8.16.0
-      pathe: 2.0.3
-      pkg-types: 1.3.1
-      ufo: 1.6.4
-    optional: true
 
   ms@2.1.3: {}
 
@@ -3007,13 +2809,6 @@ snapshots:
   picocolors@1.1.1: {}
 
   picomatch@4.0.7: {}
-
-  pkg-types@1.3.1:
-    dependencies:
-      confbox: 0.1.8
-      mlly: 1.8.2
-      pathe: 2.0.3
-    optional: true
 
   quickjs-wasi@3.7.0: {}
 
@@ -3146,9 +2941,6 @@ snapshots:
       fdir: 6.5.0(picomatch@4.0.7)
       picomatch: 4.0.7
 
-  tslib@2.8.1:
-    optional: true
-
   tsx@4.20.6:
     dependencies:
       esbuild: 0.25.12
@@ -3162,14 +2954,10 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  ufo@1.6.4:
-    optional: true
-
   ulid@3.0.2: {}
 
-  unctx@3.0.1(magic-string@0.30.21)(rolldown@1.2.12):
+  unctx@3.0.1(rolldown@1.2.12):
     optionalDependencies:
-      magic-string: 0.30.21
       rolldown: 1.2.12
 
   undici-types@6.21.0: {}
@@ -3211,18 +2999,18 @@ snapshots:
 
   wordwrap@1.0.0: {}
 
-  workflow@5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@0.30.21)(mlly@1.8.2)(rolldown@1.2.12)(typescript@5.9.3)(ws@8.23.0):
+  workflow@5.8.0(dotenv@17.4.2)(rolldown@1.2.12)(typescript@5.9.3)(ws@8.23.0):
     dependencies:
-      '@workflow/astro': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/cli': 5.3.3(@aws-sdk/credential-provider-web-identity@3.972.49)(typescript@5.9.3)(ws@8.23.0)
-      '@workflow/core': 5.8.0(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/astro': 5.0.15(ws@8.23.0)
+      '@workflow/cli': 5.3.3(typescript@5.9.3)(ws@8.23.0)
+      '@workflow/core': 5.8.0(ws@8.23.0)
       '@workflow/errors': 5.2.0
-      '@workflow/nest': 5.1.13(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/next': 5.1.6(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/nitro': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/nuxt': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@0.30.21)(mlly@1.8.2)(rolldown@1.2.12)(ws@8.23.0)
-      '@workflow/rollup': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
-      '@workflow/sveltekit': 5.0.15(@aws-sdk/credential-provider-web-identity@3.972.49)(ws@8.23.0)
+      '@workflow/nest': 5.1.13(ws@8.23.0)
+      '@workflow/next': 5.1.6(ws@8.23.0)
+      '@workflow/nitro': 5.0.15(ws@8.23.0)
+      '@workflow/nuxt': 5.0.15(dotenv@17.4.2)(rolldown@1.2.12)(ws@8.23.0)
+      '@workflow/rollup': 5.0.15(ws@8.23.0)
+      '@workflow/sveltekit': 5.0.15(ws@8.23.0)
       '@workflow/typescript-plugin': 5.0.1(typescript@5.9.3)
       '@workflow/utils': 5.1.1
       ms: 2.1.3

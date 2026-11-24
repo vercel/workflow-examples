@@ -10,13 +10,13 @@
   "devDependencies": {
     "@swc/core": "1.15.3",
     "@types/bun": "latest",
-    "@workflow/swc-plugin": "5.0.0"
+    "@workflow/swc-plugin": "5.0.2"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@workflow/world-local": "5.0.1",
-    "workflow": "5.0.1"
+    "@workflow/world-local": "5.6.0",
+    "workflow": "5.8.0"
   }
 }
